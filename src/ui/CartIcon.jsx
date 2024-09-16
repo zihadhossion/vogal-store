@@ -1,7 +1,7 @@
 import React, { useContext, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import supabase from "../services/supabase";
-import { CartOpenContext } from "../context/CartOpenContext";
+import { CartContext } from "../context/CartContext";
 import { fetchTotalQuantity } from "../features/cart/cartSlice";
 import useWindowSize from "../hooks/useWindowSize";
 import { BsCart } from "react-icons/bs";
@@ -10,7 +10,7 @@ import IconBox from "./IconBox";
 function CartIcon({ onHandleClick }) {
     const dispatch = useDispatch();
     const totalQuantity = useSelector((state) => state.cart.totalQuantity);
-    const { cartOpen, isCartOpen } = useContext(CartOpenContext);
+    const { cartOpen, isCartOpen } = useContext(CartContext);
     const windowWidth = useWindowSize();
 
     useEffect(() => {
@@ -21,7 +21,7 @@ function CartIcon({ onHandleClick }) {
         const subscription = supabase
             .channel('public:cart')
             .on('postgres_changes', { event: '*', schema: 'public', table: 'cart' }, payload => {
-                console.log('Change received:', payload);
+                // console.log('Change received:', payload);
 
                 // Re-fetch the total quantity whenever there's a change
                 dispatch(fetchTotalQuantity());

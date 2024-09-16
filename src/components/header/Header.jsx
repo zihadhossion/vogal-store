@@ -3,7 +3,6 @@ import useWindowSize from "../../hooks/useWindowSize";
 import Topbar from "./Topbar";
 import Navbar from "./Navbar";
 import MobBar from "./MobBar";
-import CartSideBar from "../../features/cart/CartSideBar";
 
 function Header() {
     const windowWidth = useWindowSize();
@@ -23,7 +22,6 @@ function DeskBar() {
             <div className="w-full fixed top-0 z-30">
                 <Topbar />
                 <Navbar />
-                <CartSideBar />
             </div>
         </>
     )

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { IoMenu } from "react-icons/io5";
 import { RiHome3Line } from "react-icons/ri";
@@ -7,6 +7,8 @@ import IconBox from "../../ui/IconBox";
 import CartIcon from "../../ui/CartIcon";
 import AccountIcon from "../../ui/AccountIcon";
 import WishListIcon from "../../ui/WishListIcon";
+import { MenuContext } from "../../context/MenuContext";
+
 
 export default function MobBar() {
     return (
@@ -21,8 +23,14 @@ export default function MobBar() {
 };
 
 function MenuBar() {
+    const { menuOpen, setMenuOpen } = useContext(MenuContext);
+
+    function handleMenu() {
+        setMenuOpen(true);
+    }
+
     return (
-        <div className="min-w-10 max-w-10 flex items-center flex-1 mgr">
+        <div className="min-w-10 max-w-10 flex items-center flex-1 mgr" onClick={handleMenu}>
             <a href="#" className="block p-[5px]">
                 <IoMenu className="w-8 h-8" />
             </a>
@@ -43,7 +51,7 @@ function BottomFixed() {
 
     return (
         <>
-            <div className="bg-white w-full flex justify-around fixed bottom-0 py-3 z-[99]">
+            <div className="bg-white w-full flex justify-around fixed bottom-0 py-3 z-40">
                 <IconBox text={"Home"} svgIcon={<RiHome3Line />} onClick={handleHome} />
                 <AccountIcon />
                 <WishListIcon />

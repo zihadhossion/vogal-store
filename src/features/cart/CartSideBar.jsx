@@ -1,10 +1,9 @@
 import React, { useContext, useRef, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
-import { CartOpenContext } from "../../context/CartOpenContext";
+import { CartContext } from "../../context/CartContext";
 import useClickOutside from "../../hooks/useClickOutside";
 import { fetchCartItems } from "./cartSlice";
-import { useCart } from "./useCart";
 import { FiShoppingCart } from "react-icons/fi";
 import { IoCloseOutline } from "react-icons/io5";
 import CartItem from "./CartItem";
@@ -15,37 +14,35 @@ export default function CartSideBar() {
     const dispatch = useDispatch();
     const cartItems = useSelector((state) => state.cart.items);
     const isLoading = useSelector((state) => state.cart.isLoading);
-    const { cartOpen, isCartOpen } = useContext(CartOpenContext);
+    const { cartOpen, isCartOpen } = useContext(CartContext);
 
     useEffect(() => {
         dispatch(fetchCartItems());
     }, [dispatch]);
 
-    const sidebarRef = useRef(null);
+    const cartRef = useRef(null);
+
     function handleOutside() {
-        isCartOpen(false)
+        console.log('Clicked outside');
+        isCartOpen(false);
     }
 
-    useClickOutside(sidebarRef, handleOutside);
-
-    if (isLoading) return <Loader />;
+    useClickOutside(cartRef, handleOutside);
 
     return (
         <>
-            {cartOpen &&
-                <section className="cartpage w-full h-full fixed top-0 right-0 z-50 bg-[rgba(0,0,0,0.5)] flex justify-end transition-all duration-300" >
-                    <div ref={sidebarRef} className="cart relative w-3/12 bg-white p-[10px_15px] transition-all animate-[rightHide_300ms_linear] shadow-lg">
-                        <div className="h-full relative">
-                            <div className="flex justify-end mb-5">
-                                <button onClick={() => isCartOpen(false)}>
-                                    <IoCloseOutline className="w-7 h-7" />
-                                </button>
-                            </div>
-                            {!isLoading ? (cartItems.length > 0 ? <CartData cartItems={cartItems} isCartOpen={isCartOpen} /> : <NoItem isCartOpen={isCartOpen} />) : <Loader />}
+            <section className="w-full h-full fixed top-0 right-0 z-50 bg-[rgba(0,0,0,0.5)] flex justify-end transition-all duration-300">
+                <div ref={cartRef} className="relative w-3/12 bg-white p-[10px_15px] transition-all animate-[rightHide_300ms_linear] shadow-lg">
+                    <div className="h-full relative">
+                        <div className="flex justify-end mb-5">
+                            <button onClick={() => isCartOpen(false)}>
+                                <IoCloseOutline className="w-7 h-7" />
+                            </button>
                         </div>
+                        {!isLoading ? (cartItems.length > 0 ? <CartData cartItems={cartItems} isCartOpen={isCartOpen} /> : <NoItem isCartOpen={isCartOpen} />) : <Loader />}
                     </div>
-                </ section >
-            }
+                </div>
+            </ section >
         </>
     )
 }

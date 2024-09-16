@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useEffect, useContext } from 'react';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { BrowserRouter, Routes, Route, Outlet } from 'react-router-dom';
 import ProductDetail from './features/products/ProductDetail';
@@ -13,7 +13,10 @@ import WishList from "./pages/WishList";
 import ProtectedRoute from './features/authentication/ProtectedRoute';
 import SignupForm from './features/authentication/SignupForm';
 import LoginForm from './features/authentication/LoginForm';
-
+import { CartContext } from './context/CartContext';
+import CartSideBar from './features/cart/CartSideBar';
+import { MenuContext } from './context/MenuContext';
+import MenuSidebar from './ui/MenuSidebar';
 
 
 const queryClient = new QueryClient({
@@ -25,6 +28,7 @@ const queryClient = new QueryClient({
 });
 
 function Layout() {
+
   return (
     <>
       <Header />
@@ -34,13 +38,16 @@ function Layout() {
   );
 }
 
-
 export default function App() {
+  const { cartOpen, isCartOpen } = useContext(CartContext);
+  const { menuOpen } = useContext(MenuContext);
 
   return (
     <>
       <QueryClientProvider client={queryClient}>
         <BrowserRouter>
+          {cartOpen && <CartSideBar />}
+          {menuOpen && <MenuSidebar />}
           <Routes>
             <Route path='/' element={<Layout />}>
               <Route index element={<Home />} />

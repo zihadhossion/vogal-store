@@ -1,7 +1,7 @@
 import React, { useContext } from "react";
 import { useDispatch, } from "react-redux";
 import { Link } from "react-router-dom";
-import { CartOpenContext } from "../../context/CartOpenContext";
+import { CartContext } from "../../context/CartContext";
 import { addToCart, } from "../cart/cartSlice";
 import "./product.css";
 import { CiHeart, CiSearch } from "react-icons/ci";
@@ -68,7 +68,7 @@ export default function Product({ product }) {
 
 function ButtonSet({ product }) {
     const dispatch = useDispatch();
-    const { cartOpen, isCartOpen } = useContext(CartOpenContext);
+    const { cartOpen, isCartOpen } = useContext(CartContext);
 
     const handleAddToCart = (product) => {
         dispatch(addToCart({ ...product }));

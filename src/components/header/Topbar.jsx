@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 import SearchBox from "../../ui/SearchBox";
 import IconBox from "../../ui/IconBox";
-import { FaRegUserCircle, FaRegHeart } from "react-icons/fa";
 import CartIcon from "../../ui/CartIcon";
 import { Link } from "react-router-dom";
 import AccountIcon from "../../ui/AccountIcon";

@@ -34,9 +34,9 @@ export default function Hero() {
                     <SwiperSlide>
                         <article className='relative'>
                             <picture>
-                                <source srcSet='/slider1-small.jpg 350h' media='(max-width:575px)' />
+                                <source srcSet='/slider1-small.jpg' media='(max-width:575px)' />
                                 <source srcSet='/slider1-large.jpg' media='(min-width:576px)' />
-                                <img src="/slider1-large.jpg" alt="" />
+                                <img src="/slider1-large.jpg" alt="" className='hero-img' />
                             </picture>
                             <SliderText>
                                 <h3 className='text-xl lg:text-[80px] font-bold leading-none uppercase mb-[5px] md:mb-[15px]'>
@@ -52,9 +52,9 @@ export default function Hero() {
                     <SwiperSlide>
                         <article className='relative'>
                             <picture>
-                                <source srcSet='/slider2-small.jpg 350h' media='(max-width:575px) ' />
+                                <source srcSet='/slider2-small.jpg' media='(max-width:575px) ' />
                                 <source srcSet='/slider2-large.jpg' media='(min-width:576px)' />
-                                <img src="/slider2-large.jpg" alt="" />
+                                <img src="/slider2-large.jpg" alt="" className='hero-img' />
                             </picture>
                             <SliderText>
                                 <h3 className='text-xl lg:text-[80px] leading-none uppercase mb-[5px] md:mb-[15px] text-[#333]'>

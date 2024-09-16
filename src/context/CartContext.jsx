@@ -1,8 +1,8 @@
 import { createContext, useState, useEffect } from "react";
 
-export const CartOpenContext = createContext();
+export const CartContext = createContext();
 
-export function CartOpenProvider({ children }) {
+export function CartContextProvider({ children }) {
     const [cartOpen, isCartOpen] = useState(false);
 
     useEffect(() => {
@@ -16,8 +16,8 @@ export function CartOpenProvider({ children }) {
     }, [cartOpen]);
 
     return (
-        <CartOpenContext.Provider value={{ cartOpen, isCartOpen }}>
+        <CartContext.Provider value={{ cartOpen, isCartOpen }}>
             {children}
-        </CartOpenContext.Provider>
+        </CartContext.Provider>
     )
 }

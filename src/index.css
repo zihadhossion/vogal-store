@@ -38,7 +38,7 @@ svg {
 }
 
 .mgr {
-    @apply mr-4 sm:mr-[60px] lg:mr-[80px]
+    @apply mr-4 sm:mr-[60px] lg:mr-[80px];
 }
 
 .loader {
@@ -76,6 +76,7 @@ svg {
     @apply left-[calc(100%_+_20px)];
 }
 
+
 .formInput {
     @apply w-full h-12 text-base lg:text-lg font-medium text-black rounded pl-14 border-[1px] border-solid border-[#c4c3ca] transition-all placeholder:text-sm focus:placeholder:opacity-0;
 }
@@ -108,6 +109,17 @@ svg {
 
 .logIcon {
     @apply h-12 text-[#6e5e28] absolute top-0 left-5 transition-all;
+}
+
+.hero-img {
+    width: 100%;
+    height: auto;
+}
+
+@media (max-width:575px) {
+    .hero-img {
+        height: 30dvh;
+    }
 }
 
 /* footer section style*/
