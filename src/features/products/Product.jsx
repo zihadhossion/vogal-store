@@ -18,7 +18,7 @@ export default function Product({ product }) {
                 <article className="bg-white">
                     <div className="relative block group/product">
                         <div className="relative">
-                            <Link to={`/products/${id}`}>
+                            <Link to={`/collections/${id}`}>
                                 <div className="figure">
                                     <img className="sirv image-main" src={image} alt="" />
                                     <img className="sirv image-hover" src={hoverImage} alt="" />
@@ -27,8 +27,8 @@ export default function Product({ product }) {
                             <ButtonSet product={product} />
                             {offerPercentage && <span className="text-white bg-[#d75e78] p-1 rounded-full absolute top-5 left-5">-{offerPercentage}%</span>}
                         </div>
-                        <div className="mt-5 pb-5">
-                            <Link to={`/products/${id}`}>
+                        <div className="pb-5">
+                            <Link to={`/collections/${id}`}>
                                 <h1>{title}</h1>
                             </Link>
                             <p><span>${price}</span> {discountPrice && <span>${discountPrice}</span>} </p>
@@ -81,7 +81,7 @@ function ButtonSet({ product }) {
 
     return (
         <>
-            <div className="w-full flex gap-4 justify-center transition duration-300 ease-out invisible opacity-0 group-hover/product:visible group-hover/product:opacity-100 group-hover/product:animate-up-down">
+            <div className="w-full flex gap-4 justify-center transition duration-300 ease-out absolute bottom-7 invisible opacity-0 group-hover/product:visible group-hover/product:opacity-100 group-hover/product:animate-up-down">
                 <Btn text={"Add to wishlist"}>
                     <CiHeart />
                 </Btn>

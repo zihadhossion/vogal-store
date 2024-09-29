@@ -21,7 +21,7 @@ export default function SignupForm() {
     return (
         <section className="w-full flex items-center justify-center p-[30px_0]">
             <div>
-                <h1>Sign Up</h1>
+                <h1 className="text-xl font-medium text-center mb-3">Sign Up</h1>
                 <form className="max-w-[400px] border-[1px] border-solid border-[#ddd] p-10" onSubmit={handleSubmit(onHandleSubmit)}>
                     <FormRow>
                         <FaUser className="logIcon" />
@@ -53,8 +53,8 @@ export default function SignupForm() {
                         Sign Up
                     </button>
                 </form>
-                <div>
-                    <p>Have an account. </p>
+                <div className="mt-3 flex justify-around">
+                    <p>Have an account.</p>
                     <Link to={"/login"}>
                         <span>Log In here</span>
                     </Link>

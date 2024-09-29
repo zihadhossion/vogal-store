@@ -6,6 +6,7 @@ import Loader from "../../ui/Loader";
 function Categories() {
     const { isLoading, data: categories } = useGetCategoriesQuery();
 
+    if (!categories) return;
     if (isLoading) return <Loader />;
 
     return (

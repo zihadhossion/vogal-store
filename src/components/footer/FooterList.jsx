@@ -27,7 +27,7 @@ function DeskList() {
     return (
         <div className="footerList col-span-3  lg:col-span-2">
             <h1 className="text-[13px] lg:text-sm font-medium uppercase tracking-[1px] mb-2">Information</h1>
-            <ul>
+            <ul className="mt-6">
                 <li><a href="#">Latest News</a></li>
                 <li><a href="#">Career</a></li>
                 <li><a href="#">My Account</a></li>

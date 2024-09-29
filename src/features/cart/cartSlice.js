@@ -1,6 +1,7 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import supabase from "../../services/supabase";
 
+
 export const fetchCartItems = createAsyncThunk(
     'cart/fetchCartItems',
     async () => {
@@ -22,6 +23,22 @@ export const fetchTotalQuantity = createAsyncThunk(
             throw new Error(error.message);
         }
         return data.reduce((sum, item) => sum + item.quantity, 0);
+    }
+);
+
+export const fetchTotalAmount = createAsyncThunk(
+    'cart/fetchTotalAmount',
+    async () => {
+        const { data, error } = await supabase.from('cart')
+            .select('price, quantity');
+
+        if (error) {
+            throw new Error(error.message);
+        }
+
+        const totalAmount = data.reduce((sum, item) => sum + item.price * item.quantity, 0);
+
+        return totalAmount;
     }
 );
 
@@ -64,7 +81,7 @@ export const addToCart = createAsyncThunk(
 
 export const removeFromCart = createAsyncThunk(
     'cart/removeFromCart',
-    async (product, { getState }) => {
+    async (product, { getState, dispatch }) => {
         // Remove the product from Supabase
         const { error } = await supabase
             .from('cart')
@@ -80,6 +97,7 @@ export const removeFromCart = createAsyncThunk(
         if (fetchError) {
             throw new Error(fetchError.message);
         }
+        dispatch(fetchTotalAmount());
 
         return data;
     }
@@ -87,7 +105,7 @@ export const removeFromCart = createAsyncThunk(
 
 export const increaseQuantity = createAsyncThunk(
     'cart/increaseQuantity',
-    async (product, { getState }) => {
+    async (product, { getState, dispatch }) => {
         const { cart } = getState();
         const existingItem = cart.items.find(item => item.id === product.id);
 
@@ -108,13 +126,16 @@ export const increaseQuantity = createAsyncThunk(
         if (fetchError) {
             throw new Error(fetchError.message);
         }
+
+        dispatch(fetchTotalAmount());
+
         return data;
     }
 );
 
 export const decreaseQuantity = createAsyncThunk(
     'cart/decreaseQuantity',
-    async (product, { getState }) => {
+    async (product, { getState, dispatch }) => {
         const { cart } = getState();
         const existingItem = cart.items.find(item => item.id === product.id);
 
@@ -134,15 +155,20 @@ export const decreaseQuantity = createAsyncThunk(
         if (fetchError) {
             throw new Error(fetchError.message);
         }
+
+        dispatch(fetchTotalAmount());
+
         return data;
     }
 );
+
 
 const cartSlice = createSlice({
     name: 'cart',
     initialState: {
         items: [],
         totalQuantity: 0,
+        totalAmount: 0,
         isLoading: false,
     },
     reducers: {},
@@ -163,6 +189,18 @@ const cartSlice = createSlice({
                 state.totalQuantity = action.payload;
             })
             .addCase(addToCart.fulfilled, (state, action) => {
+
+                // action.payload.forEach(newItem => {
+                //     const existingItemIndex = state.items.findIndex(item => item.id === newItem.id);
+                //     if (existingItemIndex !== -1) {
+                //         state.items[existingItemIndex] = {
+                //             ...state.items[existingItemIndex],
+                //             quantity: newItem.quantity
+                //         };
+                //     } else {
+                //         state.items.push(newItem);
+                //     }
+                // })
                 state.items = action.payload;
                 state.totalQuantity = action.payload.reduce((sum, item) => sum + item.quantity, 0);
             })
@@ -174,13 +212,38 @@ const cartSlice = createSlice({
                 state.totalQuantity = action.payload.reduce((sum, item) => sum + item.quantity, 0);
             })
             .addCase(increaseQuantity.fulfilled, (state, action) => {
-                state.items = action.payload;
+                action.payload.forEach(updatedItem => {
+                    const existingItemIndex = state.items.findIndex(item => item.id === updatedItem.id);
+                    if (existingItemIndex !== -1) {
+                        // Update quantity in place without changing item position
+                        state.items[existingItemIndex] = {
+                            ...state.items[existingItemIndex],
+                            quantity: updatedItem.quantity
+                        };
+                    }
+                });
+                // state.items = action.payload;
                 state.totalQuantity = action.payload.reduce((sum, item) => sum + item.quantity, 0);
             })
             .addCase(decreaseQuantity.fulfilled, (state, action) => {
-                state.items = action.payload;
+                action.payload.forEach(updatedItem => {
+                    const existingItemIndex = state.items.findIndex(item => item.id === updatedItem.id);
+                    if (existingItemIndex !== -1) {
+                        // Update quantity in place without changing item position
+                        state.items[existingItemIndex] = {
+                            ...state.items[existingItemIndex],
+                            quantity: updatedItem.quantity
+                        };
+                    }
+                });
+
+                // state.items = action.payload;
                 state.totalQuantity = action.payload.reduce((sum, item) => sum + item.quantity, 0);
-            });
+            })
+            .addCase(fetchTotalAmount.fulfilled, (state, action) => {
+                state.totalAmount = action.payload;
+            })
+            ;
     }
 });
 

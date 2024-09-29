@@ -18,10 +18,8 @@ export default function LoginForm() {
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
-            const user = await login({ email, password }).unwrap();
+            await login({ email, password }).unwrap();
             await refetch();
-
-            console.log('User:', user);
 
             navigate('/account');
         } catch (err) {
@@ -35,7 +33,7 @@ export default function LoginForm() {
         <>
             <section className="w-full flex items-center justify-center p-[30px_0]">
                 <div className="">
-                    <h1 className="text-xl font-medium">Log In</h1>
+                    <h1 className="text-xl font-medium text-center mb-3">Log In</h1>
                     <form onSubmit={handleSubmit} className="max-w-[400px] border-[1px] border-solid border-[#ddd] p-10">
                         <FormRow>
                             <CiAt className="logIcon" />
@@ -50,7 +48,7 @@ export default function LoginForm() {
                         </button>
                     </form>
                     <hr />
-                    <div>
+                    <div className="mt-3 flex justify-around">
                         <p>Don't have an account yet? </p>
                         <Link to={"/signup"}>
                             <span>Registration here</span>

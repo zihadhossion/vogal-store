@@ -3,8 +3,8 @@ import { useLogoutMutation } from "../../services/apiAuth";
 
 export default function useLogout() {
     const navigate = useNavigate();
-    // const [logout, { isLoading }] = useLogoutMutation();
-    const { logout, isLoading } = useLogoutMutation();
+    const [logout, { isLoading }] = useLogoutMutation();
+    // const { logout, isLoading } = useLogoutMutation();
 
 
     const handleLogout = async () => {
@@ -17,6 +17,6 @@ export default function useLogout() {
         }
     };
 
-    return { logout: handleLogout, isLoading };
+    return { logout, handleLogout, isLoading };
 };
 

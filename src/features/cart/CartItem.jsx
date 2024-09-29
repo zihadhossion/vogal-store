@@ -1,9 +1,9 @@
 import React, { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { removeFromCart, increaseQuantity, decreaseQuantity } from "./cartSlice";
 import { FaPlus } from "react-icons/fa6";
 import { FaMinus } from "react-icons/fa6";
 import { RiDeleteBinLine } from "react-icons/ri";
-import { useDispatch, useSelector } from "react-redux";
-import { removeFromCart, increaseQuantity, decreaseQuantity } from "./cartSlice";
 
 function CartItem({ product }) {
     const { image, title, price, quantity } = product;
@@ -27,7 +27,7 @@ function CartItem({ product }) {
 
     return (
         <>
-            <article className="flex items-center my-2 py-1">
+            <article className="flex items-center my-2 py-1 border-b border-[#f5f5f5]">
                 <div className="w-32">
                     <img src={image} alt="" className="w-full h-full" />
                 </div>

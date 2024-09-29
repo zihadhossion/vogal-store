@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 import { CartContext } from "../../context/CartContext";
 import useClickOutside from "../../hooks/useClickOutside";
-import { fetchCartItems } from "./cartSlice";
+import { fetchCartItems, fetchTotalAmount } from "./cartSlice";
 import { FiShoppingCart } from "react-icons/fi";
 import { IoCloseOutline } from "react-icons/io5";
 import CartItem from "./CartItem";
@@ -23,7 +23,6 @@ export default function CartSideBar() {
     const cartRef = useRef(null);
 
     function handleOutside() {
-        console.log('Clicked outside');
         isCartOpen(false);
     }
 
@@ -49,13 +48,16 @@ export default function CartSideBar() {
 
 function CartData({ cartItems, isCartOpen }) {
     const navigate = useNavigate();
+    const dispatch = useDispatch();
+    const totalAmount = useSelector((state) => state.cart.totalAmount);
+
+    useEffect(() => {
+        dispatch(fetchTotalAmount());
+    }, [dispatch]);
 
     function handleViewCart() {
         isCartOpen(false);
         navigate("/carts");
-    }
-    function handleCheckOut() {
-        isCartOpen(false);
     }
 
     return (
@@ -64,6 +66,8 @@ function CartData({ cartItems, isCartOpen }) {
                 {cartItems?.map((item) => <CartItem key={item.id} product={item} />)}
             </div>
             <div className="cartBtn w-full py-1 bg-white absolute bottom-0">
+                <p className="text-[15px] font-semibold mb-2">Total : <span className="ml-[70%]">{totalAmount}</span></p>
+                <p className="mb-3">Tax included. Shipping calculated at checkout.</p>
                 <button className="bg-[#ad7a23] mb-3">Proceed to checkout</button>
                 <button className="bg-black" onClick={handleViewCart}>view cart</button>
             </div>
@@ -76,7 +80,12 @@ function NoItem({ isCartOpen }) {
 
     function handleShop() {
         isCartOpen(false);
-        navigate("/products");
+        navigate("/collections");
+    }
+
+    function handleLogin() {
+        isCartOpen(false);
+        navigate("/login")
     }
 
     return (
@@ -85,8 +94,8 @@ function NoItem({ isCartOpen }) {
                 <p className="mb-5"><FiShoppingCart className="w-16 h-16 text-[#ddd] fill-white" /></p>
                 <p className="mb-6">No Products in the Cart.</p>
                 <button onClick={handleShop} className="uppercase text-white bg-black p-[10px_30px] mb-10">Continue shopping</button>
-                <p>have an account?</p>
-                <p><Link to={""}>Log in</Link>  to check out faster.</p>
+                <p className="font-medium uppercase">have an account?</p>
+                <p><button onClick={handleLogin}>Log in</button>  to check out faster.</p>
             </div>
         </>
     )

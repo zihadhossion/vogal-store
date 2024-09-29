@@ -2,7 +2,6 @@
 @tailwind components;
 @tailwind utilities;
 
-
 /*base style*/
 
 @layer base {
@@ -11,7 +10,7 @@
     }
 
     input {
-        @apply outline-0 border-0 appearance-none;
+        @apply outline-0 border-0;
     }
 
     input::-webkit-search-cancel-button {
@@ -76,6 +75,20 @@ svg {
     @apply left-[calc(100%_+_20px)];
 }
 
+.bar {
+    width: calc(100% - -1559%);
+    background-size: 1rem 1rem;
+    background-image: linear-gradient(135deg, #f9a81a 0 25%, #0000 25% 50%, #f9a81a 50% 75%, #0000 75% 100%);
+    box-shadow: 0 0 5px #0000004d;
+}
+
+
+
+/*table style here*/
+
+.thCell {
+    @apply font-medium bg-[#F5F5F5] uppercase p-3;
+}
 
 .formInput {
     @apply w-full h-12 text-base lg:text-lg font-medium text-black rounded pl-14 border-[1px] border-solid border-[#c4c3ca] transition-all placeholder:text-sm focus:placeholder:opacity-0;

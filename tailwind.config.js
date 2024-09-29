@@ -21,12 +21,16 @@ export default {
         '100%': { transform: "scale(1)", opacity: "1" },
       },
       upDown: {
-        '0%': { transform: "translate3d(0, -50%, 0)", opacity: "0" },
+        '0%': { transform: "translate3d(0, -30%, 0)", opacity: "0" },
         '100%': { transform: "translate3d(0, 0%, 0)", opacity: "1" },
       },
       rightHide: {
         '0%': { transform: "translate(100%)", opacity: "0" },
         '100%': { transform: "translate(0)", opacity: "1" }
+      },
+      barProgress: {
+        '0%': { "background-position": "0 0" },
+        '100%': { "background-position": "-60px -60px" }
       },
       loading: {
         "100%": { transform: "rotate(1turn)" }

@@ -6,7 +6,6 @@ import Header from './components/header/Header';
 import Footer from './components/footer/Footer';
 import Home from './pages/Home';
 import Carts from './pages/Carts';
-import Products from './pages/Products';
 import NotFound from './pages/NotFound';
 import Account from './pages/Account';
 import WishList from "./pages/WishList";
@@ -17,7 +16,7 @@ import { CartContext } from './context/CartContext';
 import CartSideBar from './features/cart/CartSideBar';
 import { MenuContext } from './context/MenuContext';
 import MenuSidebar from './ui/MenuSidebar';
-
+import Collections from './pages/Collections';
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -52,8 +51,8 @@ export default function App() {
             <Route path='/' element={<Layout />}>
               <Route index element={<Home />} />
               <Route path='/carts' element={<Carts />} />
-              <Route path='/products' element={<Products />} />
-              <Route path='/products/:productId' element={<ProductDetail />} />
+              <Route path='/collections' element={<Collections />} />
+              <Route path='/collections/:productId' element={<ProductDetail />} />
               <Route path='/login' element={<LoginForm />} />
               <Route path='/signup' element={<SignupForm />} />
               <Route path='/account' element={<ProtectedRoute><Account /></ProtectedRoute>} />
