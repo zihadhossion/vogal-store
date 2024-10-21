@@ -5,11 +5,10 @@ import { GrFacebookOption } from "react-icons/gr";
 import { FaInstagram } from "react-icons/fa";
 import { FaLinkedin } from "react-icons/fa";
 import { FaYoutube } from "react-icons/fa";
-import { CiSearch } from "react-icons/ci";
 import FooterList from "./FooterList";
 
-
 export default function Footer() {
+
     return (
         <footer className="w-full pb-20 lg:pb-0">
             <section className="text-[#eee] bg-[#333] py-10">
@@ -68,6 +67,7 @@ function SocialLinks() {
 }
 
 function NewsLetter() {
+
     return (
         <div className="mb-7">
             <h1 className="footerLinkTitle mb-2">subscribe to our newsletter</h1>
@@ -85,6 +85,7 @@ function NewsLetter() {
 }
 
 function DownloadApp() {
+
     return (
         <div>
             <h1 className="footerLinkTitle">Download App</h1>

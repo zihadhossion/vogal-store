@@ -12,7 +12,6 @@ export const apiAuth = createApi({
                         email, password, options: {
                             data: {
                                 fullName,
-                                avatar: ""
                             }
                         }
                     })
@@ -72,8 +71,30 @@ export const apiAuth = createApi({
                 }
             },
         }),
+        updateUser: builder.mutation({
+            async queryFn({ password, fullName, phone }) {
+                try {
+                    let updateData = {};
+
+                    if (fullName) updateData.fullName = fullName;
+                    // if (phone) updateData.phone = String(phone);
+                    if (phone) updateData.phone = phone;
+                    if (password) updateData.password = password;
+                    console.log("Update Data:", updateData);
+
+                    const { data, error } = await supabase.auth.updateUser(updateData);
+                    if (error) {
+                        console.error("Supabase Update Error:", error);
+                        return { error: { status: 'CUSTOM_ERROR', error: error.message } };
+                    }
+                    return { data };
+                } catch (error) {
+                    return { error: { status: 'CUSTOM_ERROR', error: error.message } };
+                }
+            }
+        }),
     }),
 });
 
-export const { useSignupMutation, useLoginMutation, useLogoutMutation, useGetCurrentUserQuery } = apiAuth;
+export const { useSignupMutation, useLoginMutation, useLogoutMutation, useGetCurrentUserQuery, useUpdateUserMutation } = apiAuth;
 

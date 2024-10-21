@@ -1,12 +1,12 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import supabase from "../../services/supabase";
 
-
 export const fetchCartItems = createAsyncThunk(
     'cart/fetchCartItems',
     async () => {
         // Fetch cart items from Supabase
         const { data, error } = await supabase.from('cart').select('*');
+
         if (error) {
             throw new Error(error.message);
         }
@@ -53,7 +53,7 @@ export const addToCart = createAsyncThunk(
             // Update the quantity if the item is already in the cart
             const { error } = await supabase
                 .from('cart')
-                .update({ quantity: existingItem.quantity + 1 })
+                .update({ quantity: existingItem.quantity + product.quantity })
                 .eq('id', product.id);
 
             if (error) {
@@ -63,7 +63,13 @@ export const addToCart = createAsyncThunk(
             // Insert a new item if it's not in the cart
             const { error } = await supabase
                 .from('cart')
-                .insert({ id: product.id, title: product.title, image: product.image, price: product.price, quantity: 1 });
+                .insert({
+                    id: product.id,
+                    title: product.title,
+                    image: product.image,
+                    price: product.price,
+                    quantity: product.quantity
+                });
 
             if (error) {
                 throw new Error(error.message);
@@ -161,6 +167,28 @@ export const decreaseQuantity = createAsyncThunk(
         return data;
     }
 );
+export const updateQuantity = createAsyncThunk(
+    'cart/updateQuantity',
+    async ({ id, newQuantity }) => {
+        // Update the quantity in Supabase
+        const { error } = await supabase
+            .from('cart')
+            .update({ quantity: newQuantity })
+            .eq('id', id);
+
+        if (error) {
+            throw new Error(error.message);
+        }
+
+        // Fetch updated cart items
+        const { data, fetchError } = await supabase.from('cart').select('*');
+        if (fetchError) {
+            throw new Error(fetchError.message);
+        }
+
+        return data;
+    }
+);
 
 
 const cartSlice = createSlice({
@@ -188,60 +216,63 @@ const cartSlice = createSlice({
             .addCase(fetchTotalQuantity.fulfilled, (state, action) => {
                 state.totalQuantity = action.payload;
             })
+            .addCase(addToCart.pending, (state,) => {
+                state.isLoading = true;
+            })
             .addCase(addToCart.fulfilled, (state, action) => {
-
-                // action.payload.forEach(newItem => {
-                //     const existingItemIndex = state.items.findIndex(item => item.id === newItem.id);
-                //     if (existingItemIndex !== -1) {
-                //         state.items[existingItemIndex] = {
-                //             ...state.items[existingItemIndex],
-                //             quantity: newItem.quantity
-                //         };
-                //     } else {
-                //         state.items.push(newItem);
-                //     }
-                // })
+                state.isLoading = false;
                 state.items = action.payload;
-                state.totalQuantity = action.payload.reduce((sum, item) => sum + item.quantity, 0);
+                state.totalQuantity = action.payload.reduce((total, item) => total + item.quantity, 0);
+                state.totalAmount = action.payload.reduce((total, item) => total + item.price * item.quantity, 0);
             })
             .addCase(addToCart.rejected, (state, action) => {
+                state.isLoading = false;
                 state.error = action.error.message;
             })
             .addCase(removeFromCart.fulfilled, (state, action) => {
                 state.items = action.payload;
-                state.totalQuantity = action.payload.reduce((sum, item) => sum + item.quantity, 0);
+                state.totalQuantity = action.payload.reduce((total, item) => total + item.quantity, 0);
             })
             .addCase(increaseQuantity.fulfilled, (state, action) => {
                 action.payload.forEach(updatedItem => {
                     const existingItemIndex = state.items.findIndex(item => item.id === updatedItem.id);
                     if (existingItemIndex !== -1) {
-                        // Update quantity in place without changing item position
                         state.items[existingItemIndex] = {
                             ...state.items[existingItemIndex],
                             quantity: updatedItem.quantity
                         };
                     }
                 });
-                // state.items = action.payload;
-                state.totalQuantity = action.payload.reduce((sum, item) => sum + item.quantity, 0);
+                state.totalQuantity = action.payload.reduce((total, item) => total + item.quantity, 0);
             })
             .addCase(decreaseQuantity.fulfilled, (state, action) => {
                 action.payload.forEach(updatedItem => {
                     const existingItemIndex = state.items.findIndex(item => item.id === updatedItem.id);
                     if (existingItemIndex !== -1) {
-                        // Update quantity in place without changing item position
                         state.items[existingItemIndex] = {
                             ...state.items[existingItemIndex],
                             quantity: updatedItem.quantity
                         };
                     }
                 });
-
-                // state.items = action.payload;
-                state.totalQuantity = action.payload.reduce((sum, item) => sum + item.quantity, 0);
+                state.totalQuantity = action.payload.reduce((total, item) => total + item.quantity, 0);
             })
             .addCase(fetchTotalAmount.fulfilled, (state, action) => {
                 state.totalAmount = action.payload;
+            })
+            .addCase(updateQuantity.fulfilled, (state, action) => {
+                action.payload.forEach(updatedItem => {
+                    const existingItemIndex = state.items.findIndex(item => item.id === updatedItem.id);
+                    if (existingItemIndex !== -1) {
+                        state.items[existingItemIndex] = {
+                            ...state.items[existingItemIndex],
+                            quantity: updatedItem.quantity
+                        };
+                    }
+                });
+                // state.items = action.payload;
+
+                state.totalAmount = action.payload.reduce((sum, item) => sum + item.price * item.quantity, 0);
             })
             ;
     }

@@ -9,12 +9,31 @@
         @apply font-roboto text-[14px] text-[#333] min-h-dvh;
     }
 
-    input {
-        @apply outline-0 border-0;
+    input,
+    textarea {
+        @apply outline-0 border-0 transition;
+    }
+
+    button {
+        @apply rounded transition;
+    }
+
+    input:focus {
+        @apply border border-stone-500;
+    }
+
+    textarea:focus {
+        @apply border border-stone-500;
     }
 
     input::-webkit-search-cancel-button {
         appearance: none;
+    }
+
+    input::-webkit-outer-spin-button,
+    input::-webkit-inner-spin-button {
+        -webkit-appearance: none;
+        margin: 0;
     }
 }
 
@@ -24,16 +43,16 @@
     }
 }
 
+*:disabled {
+    cursor: not-allowed;
+}
+
 #root {
     @apply h-full overflow-x-hidden;
 }
 
 svg {
     @apply w-[17px] h-[17px] inline-block fill-current align-middle;
-}
-
-.transiTion {
-    @apply transition duration-300;
 }
 
 .mgr {
@@ -53,7 +72,7 @@ svg {
 }
 
 .pageWidth {
-    @apply m-[0_auto] px-[15px] max-w-[1300px];
+    @apply m-[0_auto] px-3 xs:px-4 sm:px-5 lg:px-7 xl:px-10 max-w-[1300px];
 }
 
 .sectionTitle {
@@ -66,12 +85,10 @@ svg {
 }
 
 .sectionTitle::before {
-    /* @apply right-[calc(70%_+_10px)] lg:right-[calc(60%_+_10px)]; */
     @apply right-[calc(100%_+_20px)];
 }
 
 .sectionTitle::after {
-    /* @apply left-[calc(70%_+_10px)] lg:left-[calc(60%_+_10px)]; */
     @apply left-[calc(100%_+_20px)];
 }
 
@@ -82,46 +99,24 @@ svg {
     box-shadow: 0 0 5px #0000004d;
 }
 
-
-
-/*table style here*/
-
-.thCell {
-    @apply font-medium bg-[#F5F5F5] uppercase p-3;
-}
-
 .formInput {
-    @apply w-full h-12 text-base lg:text-lg font-medium text-black rounded pl-14 border-[1px] border-solid border-[#c4c3ca] transition-all placeholder:text-sm focus:placeholder:opacity-0;
+    @apply w-full h-10 text-sm font-medium rounded border border-[#c4c3ca] transition placeholder:text-sm focus:placeholder:opacity-0;
 }
 
 .swiperButton {
-    @apply bg-white flex justify-center items-center w-10 h-10 md:w-14 md:h-14 top-[50%] translate-y-[-50%] rounded-full absolute z-10 shadow cursor-pointer focus:outline-none invisible opacity-0 transiTion ease-in-out group-hover/swiperBtn:visible group-hover/swiperBtn:opacity-100;
+    @apply bg-white flex justify-center items-center w-10 h-10 md:w-14 md:h-14 top-[50%] translate-y-[-50%] rounded-full absolute z-10 shadow cursor-pointer focus:outline-none invisible opacity-0 transition ease-in-out group-hover/swiperBtn:visible group-hover/swiperBtn:opacity-100;
 }
 
 .cartItemBtn {
-    @apply w-7 h-7 text-center border-[1px] border-solid border-[#ddd];
+    @apply w-8 h-7 text-center border border-[#ddd];
 }
 
 .cartItemBtn svg {
-    @apply w-4 h-4;
+    @apply w-[14px] h-[14px];
 }
-
-.cartBtn button {
-    @apply block w-full h-11 text-white tracking-wide uppercase;
-}
-
-
 
 .activeList svg {
     @apply rotate-180;
-}
-
-.cartAni {
-    @apply translate-x-0 transition duration-500 ease-in-out;
-}
-
-.logIcon {
-    @apply h-12 text-[#6e5e28] absolute top-0 left-5 transition-all;
 }
 
 .hero-img {
@@ -158,41 +153,6 @@ footer a {
 }
 
 /* header section custom style*/
-
-.mgmenu {
-    @apply bg-white flex justify-between p-[30px_35px_5px] absolute top-[100%] shadow-[0px_0px_6px_#eee] invisible opacity-0 translate-y-[20px] transition ease-in duration-300 group-hover/navLink:translate-y-0 group-hover/navLink:opacity-100 group-hover/navLink:visible;
-}
-
-.menuList {
-    @apply flex flex-1 gap-10 relative;
-}
-
-.menuList .sublinks a {
-    @apply text-[#555] text-[12px] inline-flex mb-[10px] cursor-pointer hover:text-black;
-}
-
-.cmgmenu {
-    @apply w-[950px] bg-white p-[30px_35px_20px] absolute top-0 left-[100%] shadow-[0px_0px_6px_#eee] min-h-[100%] max-h-[550px] invisible opacity-0 translate-y-[20px] transition ease-in duration-300 group-hover/catNavLink:visible group-hover/catNavLink:opacity-100 group-hover/catNavLink:translate-y-0;
-}
-
-.cateLink {
-    @apply text-[13px] p-[8px_20px_8px_25px] flex items-center;
-}
-
-
-/*
-
- invisible opacity-0 translate-y-[20px] transition ease-in duration-300
- 
-*/
-
-
-/* 
-
- translate-y-0 opacity-100 visible
-
-*/
-
 .btnIcon {
     @apply text-white bg-black p-3 rounded-md relative inline-block;
 }
@@ -236,4 +196,25 @@ footer a {
 .btnIcon:hover .tooltiptext {
     visibility: visible;
     opacity: 1;
+}
+
+input[type="range"]::-webkit-slider-thumb {
+    height: 17px;
+    width: 17px;
+    border-radius: 50%;
+    background: #17A2B8;
+    pointer-events: auto;
+    -webkit-appearance: none;
+    box-shadow: 0 0 6px rgba(0, 0, 0, 0.05);
+}
+
+input[type="range"]::-moz-range-thumb {
+    height: 17px;
+    width: 17px;
+    border: none;
+    border-radius: 50%;
+    background: #17A2B8;
+    pointer-events: auto;
+    -moz-appearance: none;
+    box-shadow: 0 0 6px rgba(0, 0, 0, 0.05);
 }

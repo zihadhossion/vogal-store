@@ -2,18 +2,24 @@ import React, { useState } from "react";
 import AllProducts from "../features/products/AllProducts";
 import PriceFilter from "../ui/PriceFilter";
 
-
 export default function Collections() {
+    const [priceRange, setPriceRange] = useState({ min: 0, max: 5000 });
+
+    const handlePriceChange = (min, max) => {
+        setPriceRange({ min, max });
+    };
 
     return (
         <section className="products">
             <Header />
-            <div className="flex">
-                <div>
-                    <FilterWrap />
-                    <PriceFilter />
+            <div className="p-3 sm:p-5 lg:p-10">
+                <div className="grid grid-cols-1 lg:grid-cols-[280px_1fr]">
+                    <div className="overflow-hidden">
+                        <PriceFilter onPriceChange={handlePriceChange} />
+                        <Stock />
+                    </div>
+                    <AllProducts priceRange={priceRange} />
                 </div>
-                <AllProducts />
             </div>
         </section>
     )
@@ -32,47 +38,28 @@ function Header() {
     )
 }
 
-function FilterWrap() {
-    return (
-        <section className="bg-white">
-            <article>
-                <h1>Price</h1>
-                <div>
-                    <div className="flex">
-                        <input type="text" placeholder="$01" className="block max-w-[10px] border border-[#ddd] px-[10px] py-[5px]" />
-                        <span>-</span>
-                        <input type="text" placeholder="$01" className="block max-w-[10px] border border-[#ddd] px-[10px] py-[5px]" />
-                    </div>
-                    <input type="range" />
-                </div>
-            </article>
-            <article>
-                <h1>Availability</h1>
-                <div>
-                    <CheckBox />
-                </div>
-            </article>
-        </section>
-    )
-}
-
-function CheckBox() {
+function Stock() {
     const [selectedRadio, setSelectedRadio] = useState(null);
 
     const handleRadioChange = (event) => {
-        setSelectedRadio(event.target.value); // Set the clicked radio button's value as selected
+        setSelectedRadio(event.target.value);
     };
 
     return (
-        <>
-            <div>
-                <input type="radio" value={"radio1"} checked={selectedRadio === "radio1"} onChange={handleRadioChange} name="stock" id="instock" className="" />
-                <label htmlFor="instock">In Stock</label>
-            </div>
-            <div>
-                <input type="radio" value={"radio2"} checked={selectedRadio === "radio2"} onChange={handleRadioChange} name="stock" id="outstock" className="" />
-                <label htmlFor="outstock">Out Stock</label>
-            </div>
-        </>
+        <div className="bg-white">
+            <article className="mb-5">
+                <h1 className="text-lg mb-4">Availability</h1>
+                <div>
+                    <div>
+                        <input type="radio" value={"radio1"} checked={selectedRadio === "radio1"} onChange={handleRadioChange} name="stock" id="instock" className="" />
+                        <label htmlFor="instock">In Stock</label>
+                    </div>
+                    <div>
+                        <input type="radio" value={"radio2"} checked={selectedRadio === "radio2"} onChange={handleRadioChange} name="stock" id="outstock" className="" />
+                        <label htmlFor="outstock">Out Stock</label>
+                    </div>
+                </div>
+            </article>
+        </div>
     )
 }

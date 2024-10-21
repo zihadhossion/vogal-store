@@ -1,11 +1,8 @@
 import React, { useState, useEffect } from "react";
-import SearchBox from "../../ui/SearchBox";
-import IconBox from "../../ui/IconBox";
-import CartIcon from "../../ui/CartIcon";
 import { Link } from "react-router-dom";
+import SearchBox from "../../ui/SearchBox";
+import CartIcon from "../../ui/CartIcon";
 import AccountIcon from "../../ui/AccountIcon";
-import WishListIcon from "../../ui/WishListIcon";
-
 
 export default function Topbar() {
 
@@ -49,7 +46,6 @@ function IconsCol() {
     return (
         <div className="flex items-center gap-[8px] ml-auto lg:ml-[unset]">
             <AccountIcon />
-            <WishListIcon />
             <CartIcon />
         </div>
     )

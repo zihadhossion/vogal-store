@@ -6,13 +6,21 @@ export default {
   ],
   theme: {
     extend: {
+      transitionDuration: {
+        DEFAULT: '300ms',
+      },
+      transitionTimingFunction: {
+        DEFAULT: 'linear',
+      },
       fontFamily: {
         "roboto": ["Roboto", 'sans-serif']
       },
       screens: {
-        'xs': '380px',
+        'xs': '350px',
         'sm': '576px',
+        'md': '768px',
         'lg': '992px',
+        'xl': "1100px"
       },
     },
     keyframes: {

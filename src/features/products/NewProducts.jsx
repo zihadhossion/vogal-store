@@ -3,15 +3,11 @@ import { Link } from "react-router-dom";
 import { useGetProductsQuery } from "../../services/apiProducts";
 import Loader from "../../ui/Loader";
 import SectionContainer from "../../ui/SectionContainer";
-// import AllProducts from "./AllProducts";
 import Product from "./Product";
 
 
 export default function NewProducts() {
     const { isLoading, data: products } = useGetProductsQuery();
-
-    if (!products) return;
-    if (isLoading) return <Loader />;
 
     return (
         <>
@@ -28,8 +24,3 @@ export default function NewProducts() {
         </>
     )
 };
-
-
-
-
-{/* <section className="relative bg-[#FAFAFA] hidden lg:block"></section> */ }

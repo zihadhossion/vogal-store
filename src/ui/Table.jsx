@@ -3,17 +3,16 @@ import React from "react";
 
 export default function Table({ children }) {
     return (
-        <table className="w-full">
+        <table className="w-full overflow-hidden">
             <thead className="bg-yellow-200">
                 <tr>
-                    <td className="thCell">Product</td>
-                    <td className="thCell">Price</td>
-                    <td className="thCell">Quantity</td>
-                    <td className="thCell">Total</td>
+                    <td className="font-medium bg-[#F5F5F5] uppercase p-3">Product</td>
+                    <td className="font-medium bg-[#F5F5F5] uppercase p-3">Price</td>
+                    <td className="font-medium bg-[#F5F5F5] uppercase p-3">Quantity</td>
+                    <td className="font-medium bg-[#F5F5F5] uppercase p-3">Total</td>
                 </tr>
             </thead>
-            <tbody>
-                {/* <TableRow /> */}
+            <tbody className="overflow-hidden">
                 {children}
             </tbody>
         </table>

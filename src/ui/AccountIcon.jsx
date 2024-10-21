@@ -7,7 +7,7 @@ export default function AccountIcon() {
     return (
         <>
             <Link to={"/account"}>
-                <IconBox text={"Account"} svgIcon={<FaRegUserCircle />} />
+                <IconBox text={"Account"} svgIcon={<FaRegUserCircle style={{ width: "20px", height: "20px" }} />} />
             </Link>
         </>
     )

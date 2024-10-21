@@ -7,7 +7,7 @@ function IconBox({ svgIcon, text, children, onClick }) {
                 {svgIcon}
                 <p className="text-[11px] pt-[3px] uppercase">{text}</p>
                 {children}
-            </div>
+            </div >
         </>
     )
 };

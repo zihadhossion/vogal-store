@@ -2,7 +2,6 @@ import { useState } from "react";
 import { FaChevronDown } from "react-icons/fa";
 import useWindowSize from "../../hooks/useWindowSize";
 
-
 export default function FooterList() {
     const windowWidth = useWindowSize();
 

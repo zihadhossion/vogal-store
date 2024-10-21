@@ -6,7 +6,6 @@ import SearchBox from "../../ui/SearchBox";
 import IconBox from "../../ui/IconBox";
 import CartIcon from "../../ui/CartIcon";
 import AccountIcon from "../../ui/AccountIcon";
-import WishListIcon from "../../ui/WishListIcon";
 import { MenuContext } from "../../context/MenuContext";
 
 
@@ -52,9 +51,8 @@ function BottomFixed() {
     return (
         <>
             <div className="bg-white w-full flex justify-around fixed bottom-0 py-3 z-40">
-                <IconBox text={"Home"} svgIcon={<RiHome3Line />} onClick={handleHome} />
+                <IconBox text={"Home"} svgIcon={<RiHome3Line style={{ width: "25px", height: "25px" }} />} onClick={handleHome} />
                 <AccountIcon />
-                <WishListIcon />
                 <CartIcon onHandleClick={handleCart} />
             </div>
         </>

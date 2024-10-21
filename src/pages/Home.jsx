@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React from "react";
 import Categories from "../features/categories/Categories";
 import NewProducts from "../features/products/NewProducts";
 import Blogs from "../features/blogs/Blogs";
