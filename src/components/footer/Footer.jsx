@@ -14,7 +14,7 @@ export default function Footer() {
             <section className="text-[#eee] bg-[#333] py-10">
                 <article className="pageWidth grid grid-cols-12 text-left">
                     <div className="col-span-full sm:col-span-6 mb-5 lg:col-span-3">
-                        <div className="max-w-[300px]">
+                        {/* <div className="max-w-[300px]">
                             <div className="max-w-[150px] mb-4">
                                 <img src="./logo-white.png" alt="" />
                             </div>
@@ -23,7 +23,8 @@ export default function Footer() {
                             <p className="flex items-center gap-1 mb-3"><SlPhone /><span>: (440) 000 000 0000</span></p>
                             <p className="flex items-center gap-1 mb-3"><MdOutlineEmail /><span>: sales@yousite.com</span></p>
                             <SocialLinks />
-                        </div>
+                        </div> */}
+                        <CompanyInfo />
                     </div>
                     <FooterList />
                     <div className="col-span-full sm:col-span-9 lg:col-span-3">
@@ -32,7 +33,7 @@ export default function Footer() {
                     </div>
                 </article>
                 <hr className="h-[1px] my-5" />
-                <article className="">
+                <article>
                     <div className="flex flex-col lg:flex-row items-center md:items-stretch gap-3 md:justify-between pageWidth">
                         <div className="mb-3">
                             <img src="./payments.png" alt="" />
@@ -46,6 +47,20 @@ export default function Footer() {
         </footer>
     )
 };
+
+function CompanyInfo() {
+    return (
+        <div className="max-w-[300px]">
+            <div className="max-w-[150px] mb-4">
+                <img src="./logo-white.png" alt="Company Logo" />
+            </div>
+            <p className="mb-6">Our aim is to provide high quality, easy to use, fastest and affordable Shopify themes.</p>
+            <p className="flex items-center gap-1 mb-3"><SlPhone /><span>: (440) 000 000 0000</span></p>
+            <p className="flex items-center gap-1 mb-3"><MdOutlineEmail /><span>: sales@yousite.com</span></p>
+            <SocialLinks />
+        </div>
+    );
+}
 
 function SocialLinks() {
     return (

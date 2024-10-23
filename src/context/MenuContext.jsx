@@ -1,19 +1,12 @@
-import { createContext, useState, useEffect } from "react";
+import { createContext, useState, } from "react";
+import { useToggleScroll } from "../hooks/useToggleScroll";
 
 export const MenuContext = createContext();
 
 export function MenuContextProvider({ children }) {
     const [menuOpen, setMenuOpen] = useState(false);
 
-    useEffect(() => {
-        if (menuOpen) {
-            document.documentElement.classList.add('overflow-hidden');
-            document.documentElement.classList.remove('overflow-x-hidden');
-        } else {
-            document.documentElement.classList.remove('overflow-hidden');
-            document.documentElement.classList.add('overflow-x-hidden');
-        }
-    }, [menuOpen]);
+    useToggleScroll(menuOpen);
 
     return (
         <MenuContext.Provider value={{ menuOpen, setMenuOpen }}>

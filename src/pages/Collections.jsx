@@ -50,11 +50,11 @@ function Stock() {
             <article className="mb-5">
                 <h1 className="text-lg mb-4">Availability</h1>
                 <div>
-                    <div>
+                    <div className="flex items-center gap-1">
                         <input type="radio" value={"radio1"} checked={selectedRadio === "radio1"} onChange={handleRadioChange} name="stock" id="instock" className="" />
                         <label htmlFor="instock">In Stock</label>
                     </div>
-                    <div>
+                    <div className="flex items-center gap-1">
                         <input type="radio" value={"radio2"} checked={selectedRadio === "radio2"} onChange={handleRadioChange} name="stock" id="outstock" className="" />
                         <label htmlFor="outstock">Out Stock</label>
                     </div>

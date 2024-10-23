@@ -1,5 +1,6 @@
-import { createContext, useState, useEffect } from "react";
+import { createContext, useState, } from "react";
 import { useLocation } from "react-router-dom";
+import { useToggleScroll } from "../hooks/useToggleScroll";
 
 export const CartContext = createContext();
 
@@ -13,15 +14,7 @@ export function CartContextProvider({ children }) {
         }
     };
 
-    useEffect(() => {
-        if (cartOpen) {
-            document.documentElement.classList.add('overflow-hidden');
-            document.documentElement.classList.remove('overflow-x-hidden');
-        } else {
-            document.documentElement.classList.remove('overflow-hidden');
-            document.documentElement.classList.add('overflow-x-hidden');
-        }
-    }, [cartOpen]);
+    useToggleScroll(cartOpen);
 
     return (
         <CartContext.Provider value={{ cartOpen, isCartOpen, toggleCartSidebar }}>

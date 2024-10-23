@@ -12,7 +12,7 @@ function Blogs() {
 
     return (<>
         <SectionContainer title={"latest blogs"}>
-            <div className="flex flex-wrap gap-4">
+            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-5">
                 {blogs?.map((item) => <Blog key={item.id} blog={item} />)}
             </div>
         </SectionContainer>

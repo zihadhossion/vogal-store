@@ -80,7 +80,7 @@ function Profile({ user }) {
                     <input type="email" id="email" disabled value={email} className="text-gray-500 bg-gray-200 p-2 formInput" />
                 </FormRow>
                 <div className="flex justify-end">
-                    <button className="w-40 text-white bg-blue-600 hover:bg-blue-900 rounded transition p-3">   {isLoading ? 'Updating...' : 'Update Profile'}</button>
+                    <button className="w-40 text-white bg-blue-600 hover:bg-blue-900 rounded transition p-3">{isLoading ? 'Updating...' : 'Update Profile'}</button>
                 </div>
             </form>
             <UpdatePasswordForm />
@@ -104,8 +104,19 @@ function MyAddress() {
     return (
         <article>
             <h2 className="text-base font-medium mb-3">Your Address</h2>
+            <form action="">
+                <FormRow label={"District"} customStyle={"grid grid-cols-[150px_1fr] items-centerm mb-3"}>
+                    <input type="text" id="district" className="formInput focus:border-blue-700 p-2" />
+                </FormRow>
+                <FormRow label={"Upazila"} customStyle={"grid grid-cols-[150px_1fr] items-center mb-3"}>
+                    <input type="text" id="upazila" className="formInput focus:border-blue-700 p-2" />
+                </FormRow>
+                <FormRow label={"Union"} customStyle={"grid grid-cols-[150px_1fr] items-center"}>
+                    <input type="text" id="upazila" className="formInput focus:border-blue-700 p-2" />
+                </FormRow>
+            </form>
             <div>
-                <button>Add new address</button>
+                <button className="w-40 text-white bg-blue-600 hover:bg-blue-900 rounded transition p-3">Add new address</button>
             </div>
         </article>
     )
