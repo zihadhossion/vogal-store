@@ -14,7 +14,9 @@ ReactDOM.createRoot(document.getElementById('root')).render(
       <BrowserRouter>
         <CartContextProvider>
           <MenuContextProvider>
-            <App />
+            <DrawerContextProvider>
+              <App />
+            </DrawerContextProvider>
           </MenuContextProvider>
         </CartContextProvider>
       </BrowserRouter>
@@ -25,5 +27,6 @@ ReactDOM.createRoot(document.getElementById('root')).render(
 
 // import function to register Swiper custom elements
 import { register } from 'swiper/element/bundle';
+import { DrawerContextProvider } from './context/DrawerContext.jsx';
 // register Swiper custom elements
 register();

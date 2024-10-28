@@ -7,6 +7,7 @@ import IconBox from "../../ui/IconBox";
 import CartIcon from "../../ui/CartIcon";
 import AccountIcon from "../../ui/AccountIcon";
 import { MenuContext } from "../../context/MenuContext";
+import { DrawerContext } from "../../context/DrawerContext";
 
 
 export default function MobBar() {
@@ -41,6 +42,8 @@ function MenuBar() {
 function BottomFixed() {
     const navigate = useNavigate();
 
+    const { openDrawer, } = useContext(DrawerContext);
+
     function handleHome() {
         navigate('/')
     }
@@ -49,12 +52,11 @@ function BottomFixed() {
     }
 
     return (
-        <>
-            <div className="bg-white w-full flex justify-around fixed bottom-0 py-3 z-40">
-                <IconBox text={"Home"} svgIcon={<RiHome3Line style={{ width: "25px", height: "25px" }} />} onClick={handleHome} />
-                <AccountIcon />
-                <CartIcon onHandleClick={handleCart} />
-            </div>
-        </>
+        <div className="bg-white w-full flex justify-around fixed bottom-0 py-3 z-40">
+            <IconBox text={"Home"} svgIcon={<RiHome3Line style={{ width: "25px", height: "25px" }} />} onClick={handleHome} />
+            <AccountIcon handleClick={openDrawer} />
+            <CartIcon onHandleClick={handleCart} />
+        </div>
+
     )
 }
