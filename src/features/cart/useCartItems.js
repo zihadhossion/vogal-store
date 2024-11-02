@@ -2,6 +2,7 @@ import React, { useEffect, useMemo } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import supabase from "../../services/supabase";
 import { fetchCartItems } from "./cartSlice";
+import { loadCartFromLocalStorage, saveCartToLocalStorage } from "../../utils/cartStorage";
 
 export default function useCartItems() {
     const cartItems = useSelector((state) => state.cart.items);
@@ -15,13 +16,14 @@ export default function useCartItems() {
         const channel = supabase
             .channel('cart-changes')
             .on('postgres_changes', { event: '*', schema: 'public', table: 'cart' }, (payload) => {
-                // dispatch(fetchCartItems());
+                dispatch(fetchCartItems());
             })
             .subscribe();
 
         return () => {
             supabase.removeChannel(channel);
         };
+
     }, [dispatch, cartItems.length]);
 
     const cachedCartItems = useMemo(() => cartItems, [cartItems]);

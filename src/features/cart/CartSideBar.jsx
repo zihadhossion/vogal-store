@@ -1,5 +1,5 @@
-import React, { useContext, useRef, } from "react";
-import { useSelector } from "react-redux";
+import React, { useContext, useRef, useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { AnimatePresence, motion } from "framer-motion";
 import { CartContext } from "../../context/CartContext";
@@ -11,22 +11,24 @@ import useCartItems from "./useCartItems";
 import useTotalAmount from "./useTotalAmount";
 import NoItem from "../../ui/NoItem";
 
-
 export default function CartSideBar() {
+    const dispatch = useDispatch();
     const isLoading = useSelector((state) => state.cart.isLoading);
-    const { cartOpen, isCartOpen, toggleCartSidebar } = useContext(CartContext);
+    const { isCartOpen, setCartOpen, toggleCartSidebar } = useContext(CartContext);
     const cachedCartItems = useCartItems();
+    // const user = useSelector((state) => state.auth?.user.id)
+
 
     const cartRef = useRef(null);
     function handleOutside() {
-        toggleCartSidebar()
-        // isCartOpen(false);
+        // toggleCartSidebar();
+        setCartOpen(false);
     }
     useClickOutside(cartRef, handleOutside);
 
     return (
         <AnimatePresence>
-            {cartOpen && (
+            {isCartOpen && (
                 <section className="w-full min-h-screen fixed top-0 right-0 z-50 bg-[rgba(0,0,0,0.5)] flex justify-end transition">
                     <motion.div
                         initial={{ opacity: 0, x: "100%" }}
@@ -42,7 +44,7 @@ export default function CartSideBar() {
                         }}
                         ref={cartRef}
                         className="relative w-96 bg-white p-[10px_15px] shadow-lg">
-                        <SideBar isCartOpen={isCartOpen} cachedCartItems={cachedCartItems} />
+                        <SideBar setCartOpen={setCartOpen} cachedCartItems={cachedCartItems} />
                     </motion.div>
                 </section >
             )}
@@ -50,31 +52,31 @@ export default function CartSideBar() {
     )
 }
 
-function SideBar({ isCartOpen, cachedCartItems }) {
+function SideBar({ setCartOpen, cachedCartItems }) {
     const isLoading = useSelector((state) => state.cart.isLoading);
 
     return (
         <div className="h-full relative">
             <div className="flex justify-end mb-5">
-                <button onClick={() => isCartOpen(false)}>
+                <button onClick={() => setCartOpen(false)}>
                     <IoCloseOutline className="w-7 h-7" />
                 </button>
             </div>
             {!isLoading ?
                 (cachedCartItems.length > 0 ?
-                    <CartData cartItems={cachedCartItems} isCartOpen={isCartOpen} /> :
+                    <CartData cartItems={cachedCartItems} setCartOpen={setCartOpen} /> :
                     <NoItem />) :
                 <Loader />}
         </div>
     )
 }
 
-function CartData({ cartItems, isCartOpen }) {
+function CartData({ cartItems, setCartOpen }) {
     const navigate = useNavigate();
     const cachedTotalAmount = useTotalAmount();
 
     function handleViewCart() {
-        isCartOpen(false);
+        setCartOpen(false);
         navigate("/carts");
     }
 

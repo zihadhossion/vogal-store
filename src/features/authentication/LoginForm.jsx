@@ -1,4 +1,5 @@
-import React, { useRef, useState } from "react";
+import React, { useRef, useState, useEffect } from "react";
+import { useDispatch } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 import { useLoginMutation } from "../../services/apiAuth";
 import { CiAt } from "react-icons/ci";
@@ -6,21 +7,29 @@ import { CiLock } from "react-icons/ci";
 import FormRow from "../../ui/FormRow";
 import useUser from "./useUser";
 import Loader from "../../ui/Loader";
+import { fetchCartItems, mergeCartOnLogin } from "../cart/cartSlice";
+import { setUser } from "../../slices/authSlice";
+
 
 export default function LoginForm() {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
-    const [login, { isLoading }] = useLoginMutation();
+    const [login, { isLoading, }] = useLoginMutation();
     const { refetch } = useUser()
     const navigate = useNavigate();
+    const dispatch = useDispatch()
 
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
-            await login({ email, password }).unwrap();
+            const { data, error } = await login({ email, password });
             await refetch();
 
-            navigate('/account');
+            if (data) {
+                navigate('/account');
+                dispatch(setUser(data?.user));
+                dispatch(fetchCartItems());
+            }
         } catch (err) {
             console.error('Failed to log in:', err);
         }
@@ -33,10 +42,9 @@ export default function LoginForm() {
             <section className="w-full flex items-center justify-center py-20">
                 <div className="relative">
                     <h1 className="text-xl font-medium text-center mb-3">Log In</h1>
-                    <form onSubmit={handleSubmit} className="max-w-[400px] border-[1px] border-solid border-[#ddd] p-10">
+                    <form onSubmit={handleSubmit} className="max-w-[400px] border border-[#ddd] p-10">
                         <FormRow customStyle={"block mb-4"}>
                             <CiAt className="h-10 text-[#6e5e28] absolute top-0 left-5 transition" />
-                            {/* <CiAt className="text-[#6e5e28] transition" /> */}
                             <input type="email" id="email" placeholder="Enter Your E-mail" className="formInput pl-10" value={email} onChange={(e) => setEmail(e.target.value)} />
                         </FormRow>
                         <FormRow customStyle={"block mb-4"}>

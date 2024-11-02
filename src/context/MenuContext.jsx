@@ -4,12 +4,12 @@ import { useToggleScroll } from "../hooks/useToggleScroll";
 export const MenuContext = createContext();
 
 export function MenuContextProvider({ children }) {
-    const [menuOpen, setMenuOpen] = useState(false);
+    const [isMenuOpen, setMenuOpen] = useState(false);
 
-    useToggleScroll(menuOpen);
+    useToggleScroll(isMenuOpen);
 
     return (
-        <MenuContext.Provider value={{ menuOpen, setMenuOpen }}>
+        <MenuContext.Provider value={{ isMenuOpen, setMenuOpen, }}>
             {children}
         </MenuContext.Provider>
     )

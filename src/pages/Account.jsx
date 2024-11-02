@@ -11,11 +11,14 @@ import useWindowSize from "../hooks/useWindowSize";
 import useClickOutside from "../hooks/useClickOutside";
 import { DrawerContext } from "../context/DrawerContext";
 import { IoCloseOutline } from "react-icons/io5";
+import { useSelector } from "react-redux";
 
 export default function Account() {
     const { isLoading, isAuthenticated, data } = useUser();
     const { isDrawerOpen, setDrawerOpen, activeSection, setActiveSection, } = useContext(DrawerContext);
     const windowWidth = useWindowSize();
+    // const isAuthenticated = useSelector((state) => state.auth?.isAuthenticated);
+
 
     useEffect(() => {
         if (isDrawerOpen) {
@@ -49,6 +52,7 @@ export default function Account() {
 }
 
 function DesktopAccount({ data, activeSection, onSectionChange }) {
+
     return (
         <article className="w-full grid grid-cols-1 lg:grid-cols-[200px_1fr] gap-10">
             <div>

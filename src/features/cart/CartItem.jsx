@@ -6,15 +6,15 @@ import QuantityBtnSet from "../../ui/QuantityBtnSet";
 function CartItem({ product }) {
     const { id, image, title, price, } = product;
     const navigate = useNavigate();
-    const { isCartOpen } = useContext(CartContext);
+    const { setCartOpen } = useContext(CartContext);
 
     function handleCollection() {
-        isCartOpen(false);
+        setCartOpen(false);
         navigate(`/collections/${id}`);
     };
 
     return (
-        <article className="flex items-center my-2 py-1 border-b border-[#f5f5f5]">
+        <article className="flex items-center my-2 py-1 border-b border-[#f5f5f5] justify-evenly">
             <div onClick={handleCollection} className="w-32 cursor-pointer">
                 <img src={image} alt="" className="w-full h-full" />
             </div>

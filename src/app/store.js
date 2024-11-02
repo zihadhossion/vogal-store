@@ -4,11 +4,12 @@ import { apiAuth } from "../services/apiAuth";
 import { apiBlogs } from "../services/apiBlogs";
 import { apiCategories } from "../services/apiCategories";
 import { apiProducts } from "../services/apiProducts";
-
+import authReducer from "../slices/authSlice";
 
 const store = configureStore({
     reducer: {
         cart: cartReducer,
+        auth: authReducer,
         [apiAuth.reducerPath]: apiAuth.reducer,
         [apiBlogs.reducerPath]: apiBlogs.reducer,
         [apiCategories.reducerPath]: apiCategories.reducer,

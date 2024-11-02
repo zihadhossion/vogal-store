@@ -11,7 +11,6 @@ export default function PriceFilter({ onPriceChange }) {
         if (maxPrice - value >= priceGap) {
             setMinPrice(value);
         }
-        // setMinPrice(value);
     };
 
     const handleMaxInputChange = (e) => {
@@ -19,7 +18,6 @@ export default function PriceFilter({ onPriceChange }) {
         if (value - minPrice >= priceGap) {
             setMaxPrice(value);
         }
-        // setMaxPrice(value);
     };
 
     const handleRangeMinChange = (e) => {
@@ -37,7 +35,6 @@ export default function PriceFilter({ onPriceChange }) {
     };
 
     useEffect(() => {
-        // console.log("Price changed:", minPrice, maxPrice);
         onPriceChange(minPrice, maxPrice);
     }, [minPrice, maxPrice,]);
 

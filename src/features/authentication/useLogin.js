@@ -8,11 +8,9 @@ export default function useLogin() {
 
     const handleLogin = async ({ email, password }) => {
         try {
-            // Trigger the login mutation
             const result = await login({ email, password }).unwrap();
 
             if (result) {
-                // If successful, navigate to the account page
                 navigate('/account', { replace: true });
             }
 

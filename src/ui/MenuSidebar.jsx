@@ -1,15 +1,24 @@
-import React, { useState, useContext } from "react";
+import React, { useState, useContext, useRef } from "react";
+import { AnimatePresence, motion } from "framer-motion";
 import { IoCloseOutline } from "react-icons/io5";
 import { MenuContext } from "../context/MenuContext";
-import { AnimatePresence, motion } from "framer-motion";
+import useClickOutside from "../hooks/useClickOutside";
 
 
 export default function MenuSidebar() {
-    const { menuOpen, setMenuOpen } = useContext(MenuContext);
+    const { isMenuOpen, setMenuOpen } = useContext(MenuContext);
+
+    const menubarRef = useRef(null);
+
+    function handleOutside() {
+        setMenuOpen(false);
+    }
+
+    useClickOutside(menubarRef, handleOutside);
 
     return (
         <AnimatePresence>
-            {menuOpen && (
+            {isMenuOpen && (
                 <section className="menu w-full h-full fixed top-0 left-0 z-50 bg-[rgba(0,0,0,0.5)]">
                     <motion.div
                         initial={{ opacity: 1, x: "-100%" }}
@@ -23,7 +32,10 @@ export default function MenuSidebar() {
                             x: "-100%",
                             transition: { duration: .25, ease: "easeOut" }
                         }}
-                        className="w-64 xs:w-80 h-full bg-white relative">
+                        className="w-64 xs:w-80 h-full bg-white relative"
+                        ref={menubarRef}
+                    >
+
                         <MenuBar />
                         <MenuClose onMenuOpen={setMenuOpen} />
                     </motion.div>
@@ -67,15 +79,13 @@ function MenuBar() {
     return (
         <div>
             <div className="text-white bg-black flex justify-between">
-                <button className="flex-1" onClick={() => setActiveMenu('menu')} style={{
-                    padding: '10px 20px',
-                    backgroundColor: activeMenu === 'menu' ? 'white' : 'transparent',
+                <button className="flex-1 px-2 py-3 rounded-none" onClick={() => setActiveMenu('menu')} style={{
                     color: activeMenu === 'menu' ? 'black' : 'white',
+                    backgroundColor: activeMenu === 'menu' ? 'white' : 'transparent',
                 }}>MENU</button>
-                <button className="flex-1" onClick={() => setActiveMenu('categories')} style={{
-                    padding: '10px 20px',
-                    backgroundColor: activeMenu === 'categories' ? 'white' : 'transparent',
+                <button className="flex-1 px-2 py-3 rounded-none" onClick={() => setActiveMenu('categories')} style={{
                     color: activeMenu === 'categories' ? 'black' : 'white',
+                    backgroundColor: activeMenu === 'categories' ? 'white' : 'transparent',
                 }}>CATEGORIES</button>
             </div>
 

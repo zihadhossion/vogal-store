@@ -3,7 +3,7 @@ import supabase, { supabaseUrl } from "./supabase";
 
 export const apiAuth = createApi({
     reducerPath: 'apiAuth',
-    baseQuery: fakeBaseQuery(), // We're not making HTTP requests, so we use fakeBaseQuery
+    baseQuery: fakeBaseQuery(),
     endpoints: (builder) => ({
         signup: builder.mutation({
             async queryFn({ fullName, email, password }) {
@@ -26,11 +26,11 @@ export const apiAuth = createApi({
         login: builder.mutation({
             async queryFn({ email, password }) {
                 try {
-                    const { user, error } = await supabase.auth.signInWithPassword({ email, password });
+                    const { data, error } = await supabase.auth.signInWithPassword({ email, password });
                     if (error) {
                         throw error;
                     }
-                    return { data: user };
+                    return { data };
                 } catch (error) {
                     return { error: { status: 'Log In Failed!!!', error: error.message } };
                 }
@@ -65,7 +65,7 @@ export const apiAuth = createApi({
                     if (error) throw new Error(error.message);
 
                     // Return the user data
-                    return { data: data?.user };
+                    return { data: data.user };
                 } catch (error) {
                     return { error: { status: 'CUSTOM_ERROR', error: error.message } };
                 }

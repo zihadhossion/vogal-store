@@ -14,16 +14,6 @@ export default function Footer() {
             <section className="text-[#eee] bg-[#333] py-10">
                 <article className="pageWidth grid grid-cols-12 text-left">
                     <div className="col-span-full sm:col-span-6 mb-5 lg:col-span-3">
-                        {/* <div className="max-w-[300px]">
-                            <div className="max-w-[150px] mb-4">
-                                <img src="./logo-white.png" alt="" />
-                            </div>
-                            <p className="mb-6">Our aim is to provide high quality, easy to use,
-                                fastest and affordable shopify themes.</p>
-                            <p className="flex items-center gap-1 mb-3"><SlPhone /><span>: (440) 000 000 0000</span></p>
-                            <p className="flex items-center gap-1 mb-3"><MdOutlineEmail /><span>: sales@yousite.com</span></p>
-                            <SocialLinks />
-                        </div> */}
                         <CompanyInfo />
                     </div>
                     <FooterList />

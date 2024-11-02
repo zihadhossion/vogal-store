@@ -20,7 +20,6 @@ function Layout() {
   const { pathname } = useLocation();
   const { isLoading } = useGetProductsQuery();
 
-
   useEffect(() => {
     window.scrollTo(0, 0);
   }, [pathname]);
@@ -58,6 +57,7 @@ export default function App() {
           <Route path='/collections/:productId' element={<ProductDetail />} />
           <Route path='/login' element={<LoginForm />} />
           <Route path='/signup' element={<SignupForm />} />
+          {/* <Route path='/account' element={<><Account /></>} /> */}
           <Route path='/account' element={<ProtectedRoute><Account /></ProtectedRoute>} />
         </Route>
         <Route path='/*' element={<NotFound />} />
