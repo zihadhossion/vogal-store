@@ -1,8 +1,7 @@
 import React from "react";
 import { CiDeliveryTruck } from "react-icons/ci";
 import { BiSupport } from "react-icons/bi";
-import { RiRefund2Line } from "react-icons/ri";
-import { RiSecurePaymentFill } from "react-icons/ri";
+import { RiRefund2Line, RiSecurePaymentFill } from "react-icons/ri";
 
 export default function Support() {
     return (
@@ -25,9 +24,9 @@ function Item({ icon, title, desc }) {
     return (<div className="flex-1 basis-1/3 md:basis-0">
         <article className="flex gap-2">
             <span className="w-10 h-10">{icon}</span>
-            <div>
-                <h2 className="text-sm font-bold uppercase">{title}</h2>
-                <p className="text-sm">{desc}</p>
+            <div className="text-sm">
+                <h2 className="font-bold uppercase">{title}</h2>
+                <p>{desc}</p>
             </div>
         </article>
     </div>)

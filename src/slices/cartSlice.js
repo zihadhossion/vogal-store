@@ -1,5 +1,5 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-import supabase from "../../services/supabase";
+import supabase from "../services/supabase";
 
 const calculateTotalQuantity = (items) => {
     const validItems = Array.isArray(items) ? items : [];
@@ -13,7 +13,6 @@ export const fetchCartItems = createAsyncThunk(
         const { auth } = getState();
         const userId = auth?.user ? auth.user.id : null;
         console.log(auth);
-
 
         if (userId) {
             const { data, error } = await supabase.from('cart').select('*').eq('user_id', userId);

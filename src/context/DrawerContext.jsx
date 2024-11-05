@@ -18,7 +18,7 @@ export function DrawerContextProvider({ children }) {
         setDrawerOpen(true);
     };
 
-    useToggleScroll(isDrawerOpen);
+    // useToggleScroll(isDrawerOpen);
 
     return (
         <DrawerContext.Provider value={{ isDrawerOpen, setDrawerOpen, activeSection, setActiveSection, openDrawer, }}>

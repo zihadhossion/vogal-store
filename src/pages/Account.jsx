@@ -14,11 +14,11 @@ import { IoCloseOutline } from "react-icons/io5";
 import { useSelector } from "react-redux";
 
 export default function Account() {
-    const { isLoading, isAuthenticated, data } = useUser();
     const { isDrawerOpen, setDrawerOpen, activeSection, setActiveSection, } = useContext(DrawerContext);
     const windowWidth = useWindowSize();
-    // const isAuthenticated = useSelector((state) => state.auth?.isAuthenticated);
-
+    const isAuthenticated = useSelector((state) => state?.auth?.isAuthenticated);
+    const isLoading = useSelector((state) => state?.auth?.isLoading);
+    const userData = useSelector((state) => state?.auth?.user);
 
     useEffect(() => {
         if (isDrawerOpen) {
@@ -35,11 +35,11 @@ export default function Account() {
             {isLoading ? (
                 <Loader />
             ) : (
-                windowWidth > 991 ? (
-                    <DesktopAccount data={data} activeSection={activeSection} onSectionChange={setActiveSection} />
+                windowWidth > 992 ? (
+                    <DesktopAccount data={userData} activeSection={activeSection} onSectionChange={setActiveSection} />
                 ) : (
                     <MobAccount
-                        data={data}
+                        data={userData}
                         activeSection={activeSection}
                         onSectionChange={setActiveSection}
                         isDrawerOpen={isDrawerOpen}

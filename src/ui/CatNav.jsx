@@ -1,7 +1,7 @@
 import { AnimatePresence, motion, } from "framer-motion";
 import SubNavList from "../ui/SubNavList";
 import { CiMenuFries } from "react-icons/ci";
-import { GoChevronDown } from "react-icons/go";
+import { GoChevronDown, GoChevronRight } from "react-icons/go";
 
 
 function CatNav() {
@@ -29,10 +29,10 @@ function CatNav() {
 
     return (
         <motion.div whileHover={"hover"} initial="initial" className="flex relative">
-            <div className="text-white min-w-[220px] flex items-center gap-3 relative border-r-2 border-solid border-[#666] pr-[15px] transition cursor-pointer hover:text-[#fdd162]">
+            <div className="text-white min-w-[220px] flex items-center gap-3 relative border-r-2 border-[#666] pr-[15px] transition cursor-pointer hover:text-[#fdd162]">
                 <CiMenuFries />
-                <span className="text-[12px] uppercase">Browse Categories</span>
-                <GoChevronDown className="" />
+                <span className="text-xs font-medium uppercase">Browse Categories</span>
+                <GoChevronDown />
                 <CatNavList childAnimation={childVariants} />
             </div>
         </motion.div>
@@ -46,16 +46,17 @@ function CatNavList({ childAnimation }) {
     const categories = [
         {
             name: "Smartwatches",
+        },
+        {
+            name: "Smart TVs",
+            link: "#",
+            icon: <GoChevronRight />,
             subList: [
                 <SubNavList key={1} />,
                 <SubNavList key={2} />,
                 <SubNavList key={3} />,
                 <SubNavList key={4} />
             ]
-        },
-        {
-            name: "Smart TVs",
-            link: "#",
         },
         {
             name: "Laptops & Computers",
@@ -110,15 +111,18 @@ function CatNavList({ childAnimation }) {
 
     return (
         <>
-            <motion.ul variants={childAnimation} className="w-[250px] bg-white absolute left-0 top-[100%] py-[12px] mr-[1px] rounded-[0px_0px_6px_6px] z-50">
+            <motion.ul variants={childAnimation} className="w-[250px] bg-white absolute left-0 top-full py-[12px] mr-[1px] rounded-[0px_0px_6px_6px] z-50">
                 {categories?.map((item, index) => (
                     <motion.li initial="initial" whileHover={"hover"} key={index}>
-                        <a href="#" className="text-sm p-[8px_20px_8px_25px] flex items-center">{item.name}</a>
+                        <a href="#" className="text-sm p-[8px_20px_8px_25px] flex items-center justify-between">
+                            <span>{item.name}</span>
+                            {item?.icon}
+                        </a>
                         {item?.subList && (
                             <AnimatePresence>
                                 <motion.div variants={subVariants}
-                                    className="min-h-[100%] max-h-[550px] min-w-[950px] bg-white p-[30px_35px_20px] absolute top-0">
-                                    <ul className=" flex flex-1 gap-10 relative">
+                                    className="min-h-full max-h-[550px] min-w-[950px] bg-white p-[30px_35px_20px] absolute top-0">
+                                    <ul className="flex flex-1 gap-10 relative">
                                         {item?.subList}
                                     </ul>
                                 </motion.div>

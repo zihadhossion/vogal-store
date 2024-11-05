@@ -1,8 +1,8 @@
 import React, { useEffect, useMemo } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import supabase from "../../services/supabase";
-import { fetchCartItems } from "./cartSlice";
-import { loadCartFromLocalStorage, saveCartToLocalStorage } from "../../utils/cartStorage";
+import { fetchCartItems } from "../../slices/cartSlice";
+
 
 export default function useCartItems() {
     const cartItems = useSelector((state) => state.cart.items);

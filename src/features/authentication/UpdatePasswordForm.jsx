@@ -13,7 +13,6 @@ export default function UpdatePasswordForm() {
         updateUser({ password }, { onSuccess: reset });
     }
 
-
     return (
         <article>
             <h1 className="text-base mb-5">Update Password</h1>

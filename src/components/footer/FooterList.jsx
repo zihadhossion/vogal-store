@@ -6,7 +6,6 @@ export default function FooterList() {
     const windowWidth = useWindowSize();
 
     return (
-
         <>
             {windowWidth > 575 ? <DeskLists /> : <MobLists />}
         </>
@@ -73,22 +72,6 @@ function MobList({ title, onClickList, isOpen }) {
                     <li><a href="#">Contact Us</a></li>
                 </ul>
             )}
-        </div>
-    );
-}
-
-function List({ title }) {
-    return (
-        <div className="footerList col-span-3 lg:col-span-2">
-            <h1 className="text-[13px] lg:text-sm font-medium uppercase tracking-[1px] mb-2">{title}</h1>
-            <ul className="mt-6">
-                <li><a href="#">Latest News</a></li>
-                <li><a href="#">Career</a></li>
-                <li><a href="#">My Account</a></li>
-                <li><a href="#">My Cart</a></li>
-                <li><a href="#">Orders and Returns</a></li>
-                <li><a href="#">Contact Us</a></li>
-            </ul>
         </div>
     );
 }

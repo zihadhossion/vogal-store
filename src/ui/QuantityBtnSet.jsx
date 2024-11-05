@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { removeFromCart, updateQuantity, fetchTotalAmount, fetchCartItems, fetchTotalQuantity } from "../features/cart/cartSlice";
+import { removeFromCart, updateQuantity, fetchTotalAmount, fetchCartItems, fetchTotalQuantity } from "../slices/cartSlice";
 import { FaPlus } from "react-icons/fa6";
 import { FaMinus } from "react-icons/fa6";
 import { RiDeleteBinLine } from "react-icons/ri";

@@ -1,13 +1,15 @@
 // authSlice.js
 import { createSlice } from '@reduxjs/toolkit';
 import { apiAuth } from "../services/apiAuth";
-import { fetchCartItems } from '../features/cart/cartSlice';
 
+
+// get data from local storage
+const userFromStorage = JSON.parse(localStorage.getItem('user'));
 
 const initialState = {
-    user: JSON.parse(localStorage.getItem('user')) || null,
-    isAuthenticated: !!localStorage.getItem('user'),
-    isLoading: true,
+    user: userFromStorage || null,
+    isLoading: false,
+    isAuthenticated: !!userFromStorage,
 };
 
 const authSlice = createSlice({
@@ -15,12 +17,9 @@ const authSlice = createSlice({
     initialState,
     reducers: {
         setUser(state, action) {
-            console.log(action.payload);
-
             state.user = action.payload;
-            state.isAuthenticated = !!action.payload;
             state.isLoading = false;
-            // fetchCartItems();
+            state.isAuthenticated = !!action.payload;
             localStorage.setItem('user', JSON.stringify(action.payload)); // Save to local storage
         },
         clearUser(state) {
@@ -32,20 +31,27 @@ const authSlice = createSlice({
     },
     extraReducers: (builder) => {
         builder
+            .addMatcher(apiAuth.endpoints.getCurrentUser.matchPending, (state, { payload }) => {
+                state.isLoading = true;
+            })
             .addMatcher(apiAuth.endpoints.getCurrentUser.matchFulfilled, (state, { payload }) => {
                 state.user = payload;
-                state.isAuthenticated = !!payload;
                 state.isLoading = false;
-                // fetchCartItems();
-
+                state.isAuthenticated = !!payload;
                 localStorage.setItem('user', JSON.stringify(payload));
+            })
+            .addMatcher(apiAuth.endpoints.getCurrentUser.matchRejected, (state, { payload }) => {
+                state.isLoading = false;
+            })
+            .addMatcher(apiAuth.endpoints.logout.matchPending, (state) => {
+                state.isLoading = true;
             })
             .addMatcher(apiAuth.endpoints.logout.matchFulfilled, (state) => {
                 state.user = null;
                 state.isLoading = false;
                 state.isAuthenticated = false;
                 localStorage.removeItem('user');
-            });
+            })
     },
 });
 

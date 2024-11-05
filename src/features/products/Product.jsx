@@ -2,7 +2,7 @@ import React, { useContext, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import { CartContext } from "../../context/CartContext";
-import { addToCart, } from "../cart/cartSlice";
+import { addToCart, } from "../../slices/cartSlice";
 import useWindowSize from "../../hooks/useWindowSize";
 import { motion } from "framer-motion";
 import { CiHeart, CiSearch } from "react-icons/ci";
@@ -104,7 +104,11 @@ export default function Product({ product }) {
                         <Link to={`/collections/${id}`} className="inline-block mb-2">
                             <h1 className="text-sm lg:text-base transition hover:text-red-500">{title}</h1>
                         </Link>
-                        <p className="text-sm lg:text-base font-semibold"><span>${price}</span> {discountPrice && <del className="font-normal">${discountPrice}</del>}</p>
+                        {discountPrice ? <>
+                            <p className="text-sm lg:text-base font-semibold flex justify-center items-center gap-3"><span>${discountPrice}</span><del className="text-sm font-normal">${price}</del></p>
+                        </> :
+                            <p className="text-sm lg:text-base font-semibold flex justify-center items-center gap-3">${price}</p>
+                        }
                     </div>
                 </motion.div>
             </article>
@@ -145,7 +149,7 @@ export default function Product({ product }) {
                                     <button onClick={handleIncrease} className="cartItemBtn"><FaPlus /></button>
                                 </div>
                                 <button className="w-full text-white bg-black p-[10px_0] mb-3 uppercase" onClick={() => handleAddToCart(product)}>Add to Cart</button>
-                                <Link to={`/collections/${id}`} className="inline-block w-full text-[#f9a81a] hover:text-[#092143] text-base font-semibold text-center p-[10px_0] capitalize transition">
+                                <Link to={`/collections/${id}`} className="inline-block w-full text-[#cf9530] hover:text-[#092143] text-base font-semibold text-center p-[10px_0] capitalize transition">
                                     <span>
                                         View more details
                                     </span>

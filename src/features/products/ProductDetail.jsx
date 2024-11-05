@@ -3,7 +3,7 @@ import { useParams, } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { useGetProductsQuery } from '../../services/apiProducts';
 import { CartContext } from '../../context/CartContext';
-import { addToCart } from '../cart/cartSlice';
+import { addToCart } from "../../slices/cartSlice";
 import Loader from '../../ui/Loader';
 import Modal, { ModalContext } from '../../ui/Modal';
 import { FaMinus, FaPlus } from "react-icons/fa6";

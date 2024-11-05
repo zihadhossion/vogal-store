@@ -1,14 +1,10 @@
 import React, { useRef, useState } from 'react';
 import { motion } from 'framer-motion';
+import { IoIosArrowBack, IoIosArrowForward } from "react-icons/io";
 // Import Swiper React components
 import { Swiper, SwiperSlide } from 'swiper/react';
-import { IoIosArrowBack, IoIosArrowForward } from "react-icons/io";
-
-// Import Swiper styles
 import 'swiper/css';
-// import 'swiper/css/navigation';
 import 'swiper/css/effect-fade';
-
 // import required modules
 import { Autoplay, EffectFade, Navigation, } from 'swiper/modules';
 

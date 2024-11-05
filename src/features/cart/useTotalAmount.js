@@ -1,7 +1,7 @@
 import React, { useEffect, useMemo } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import supabase from "../../services/supabase";
-import { fetchTotalAmount } from "./cartSlice";
+import { fetchTotalAmount } from "../../slices/cartSlice";
 
 
 export default function useTotalAmount() {

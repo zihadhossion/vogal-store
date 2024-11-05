@@ -2,7 +2,7 @@ import { useNavigate } from "react-router-dom";
 import { useGetCurrentUserQuery, useLogoutMutation } from "../../services/apiAuth";
 import { useDispatch } from "react-redux";
 import { clearUser } from "../../slices/authSlice";
-import { fetchCartItems } from "../cart/cartSlice";
+import { fetchCartItems } from "../../slices/cartSlice";
 
 
 export default function useUser() {
@@ -16,7 +16,7 @@ export default function useUser() {
     const handleLogout = async () => {
         try {
             await logout();
-            await refetch();
+            // await refetch();
             navigate('/login', { replace: true });
             dispatch(clearUser());
             dispatch(fetchCartItems());

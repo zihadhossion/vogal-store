@@ -1,5 +1,6 @@
 import { useEffect, useContext } from 'react';
 import { BrowserRouter, Routes, Route, Outlet, useLocation } from 'react-router-dom';
+import toast, { Toaster } from "react-hot-toast";
 import { useGetProductsQuery } from './services/apiProducts';
 import ProtectedRoute from './features/authentication/ProtectedRoute';
 import ProductDetail from './features/products/ProductDetail';
@@ -57,11 +58,26 @@ export default function App() {
           <Route path='/collections/:productId' element={<ProductDetail />} />
           <Route path='/login' element={<LoginForm />} />
           <Route path='/signup' element={<SignupForm />} />
-          {/* <Route path='/account' element={<><Account /></>} /> */}
           <Route path='/account' element={<ProtectedRoute><Account /></ProtectedRoute>} />
         </Route>
         <Route path='/*' element={<NotFound />} />
       </Routes>
+      <Toaster
+        position="top-center"
+        gutter={12}
+        containerStyle={{ margin: "8px" }}
+        toastOptions={{
+          success: { duration: 3000 },
+          error: { duration: 5000 },
+          style: {
+            fontSize: "16px",
+            maxWidth: "500px",
+            padding: "16px 24px",
+            color: "#fff",
+            backgroundColor: "black",
+          },
+        }}
+      />
     </>
   )
 }

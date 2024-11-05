@@ -2,7 +2,7 @@ import React, { useContext, useEffect, useMemo } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import supabase from "../services/supabase";
 import { CartContext } from "../context/CartContext";
-import { fetchTotalQuantity } from "../features/cart/cartSlice";
+import { fetchTotalQuantity } from "../slices/cartSlice";
 import useWindowSize from "../hooks/useWindowSize";
 import { BsCart } from "react-icons/bs";
 import IconBox from "./IconBox";

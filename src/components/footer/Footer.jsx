@@ -23,14 +23,14 @@ export default function Footer() {
                     </div>
                 </article>
                 <hr className="h-[1px] my-5" />
-                <article>
-                    <div className="flex flex-col lg:flex-row items-center md:items-stretch gap-3 md:justify-between pageWidth">
+                <article className="pageWidth">
+                    <div className="flex flex-col lg:flex-row items-center md:items-stretch gap-3 md:justify-between">
                         <div className="mb-3">
                             <img src="./payments.png" alt="" />
                         </div>
-                        <div>
+                        <p>
                             © 2024 Vogal. All Rights Reserved
-                        </div>
+                        </p>
                     </div>
                 </article>
             </section>
@@ -77,10 +77,10 @@ function NewsLetter() {
         <div className="mb-7">
             <h1 className="footerLinkTitle mb-2">subscribe to our newsletter</h1>
             <p className="footerLinkDesc mb-3">Get notified about product launches, special offers and news.</p>
-            <div className="rounded-[5px] relative border-[1px] border-solid border-[rgba(0,0,0,0)]">
+            <div className="rounded-[5px] relative border border-[rgba(0,0,0,0)]">
                 <div className="flex items-center">
-                    <input type="search" className="w-full h-[42px] text-[14px] text-[#444] bg-[#f5f5f5] rounded-[5px] relative px-[10px] appearance-none" placeholder="Email address" />
-                    <button type="submit" className=" absolute right-[3px] text-[12px] text-white font-semibold bg-black p-[8px_10px] rounded-[40px] uppercase tracking-[1px]">
+                    <input type="search" className="w-full h-[42px] text-sm text-[#444] bg-[#f5f5f5] rounded-[5px] relative px-[10px] appearance-none" placeholder="Email address" />
+                    <button type="submit" className=" absolute right-[3px] text-xs text-white font-semibold bg-black p-[8px_10px] rounded-3xl uppercase tracking-[1px]">
                         subscribe
                     </button>
                 </div>
