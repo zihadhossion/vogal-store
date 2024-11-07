@@ -19,7 +19,7 @@ import MenuSidebar from './ui/MenuSidebar';
 import Loader from './ui/Loader';
 import ResetProtectedRoute from './features/authentication/ResetProtectedRoute';
 import UpdatePasswordForm from './features/authentication/UpdatePasswordForm';
-import Checkout from './pages/CheckOut';
+import Checkout from './pages/Checkout';
 
 
 function Layout() {
