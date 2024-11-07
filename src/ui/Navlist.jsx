@@ -1,29 +1,7 @@
 import { GoChevronDown } from "react-icons/go";
 import SubNavList from "./SubNavList";
-import { motion, } from "framer-motion";
 
 function Navlist() {
-
-    const childVariants = {
-        hover: {
-            y: 0,
-            opacity: 1,
-            display: "flex",
-            transition: {
-                ease: "easeIn",
-                duration: 0.3
-            },
-        },
-        initial: {
-            y: 20,
-            opacity: 0,
-            display: "none",
-            transition: {
-                ease: "easeOut",
-                duration: 0.3
-            },
-        },
-    };
 
     const navTitles = [
         { title: "HOME", subList: [<SubNavList key={1} />, <SubNavList key={2} />, <NavImage key={3} />] },
@@ -38,20 +16,16 @@ function Navlist() {
     return (
         <ul className="flex items-center">
             {navTitles?.map((item, index) => (
-                <motion.li
-                    key={index}
-                    initial="initial" animate="initial"
-                    whileHover="hover"
-                    className="relative group/navLink">
+                <li className="relative group/navList">
                     <a href="#" className="text-white text-xs font-medium flex items-center gap-[2px] px-3 py-4 xl:px-4 uppercase">
                         <span>{item.title}</span><GoChevronDown style={{ width: "15px", height: "15px" }} />
                     </a>
-                    <motion.div variants={childVariants} className="bg-white flex justify-between p-[30px_35px_5px] absolute">
+                    <div className="h-auto bg-white flex justify-between p-[30px_35px_5px] absolute invisible group-hover/navList:visible scale-y-0 group-hover/navList:scale-y-100 opacity-0 group-hover/navList:opacity-100 origin-[0_0] transition ease-in-out">
                         <ul className="flex flex-1 gap-10 relative">
                             {item?.subList}
                         </ul>
-                    </motion.div>
-                </motion.li>
+                    </div>
+                </li>
             ))}
         </ul>
     )

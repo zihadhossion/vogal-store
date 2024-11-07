@@ -8,7 +8,7 @@ function Header() {
     const windowWidth = useWindowSize();
 
     return (
-        <header className="w-full relative mb-[76px] lg:mb-[141px]">
+        <header className="w-full relative pb-[76px] lg:pb-[148px]">
             {windowWidth > 992 ? <DeskBar /> : <MobBar />}
         </header>
     )

@@ -1,5 +1,5 @@
 import React, { useState, useContext } from 'react';
-import { useParams, } from 'react-router-dom';
+import { Link, useParams, } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { useGetProductsQuery } from '../../services/apiProducts';
 import { CartContext } from '../../context/CartContext';
@@ -15,7 +15,7 @@ import { useGetCurrentUserQuery } from '../../services/apiAuth';
 
 export default function ProductDetail() {
     const { productId } = useParams();
-    const { cartOpen, isCartOpen } = useContext(CartContext);
+    const { isCartOpen, setIsCartOpen, } = useContext(CartContext);
     const { isAuthenticated, data } = useUser();
     const [modalQuantity, setModalQuantity] = useState(1);
     const { isLoading, data: products } = useGetProductsQuery();
@@ -31,7 +31,7 @@ export default function ProductDetail() {
 
     const handleAddToCart = (product) => {
         if (windowWidth > 991) {
-            isCartOpen(true);
+            setIsCartOpen(true);
         }
         dispatch(addToCart({ ...product, quantity: modalQuantity }));
     };
@@ -60,7 +60,7 @@ export default function ProductDetail() {
     return (
         <section className='pt-3 md:pt-12'>
             <div className='pageWidth'>
-                {offerPercentage && <p>{offerPercentage}%</p>}
+                {offerPercentage && <span className='text-white bg-red-600 p-1 rounded-full'>{offerPercentage}%</span>}
                 <article className='grid grid-cols-1 md:grid-cols-[60%_1fr]'>
                     <div className='overflow-hidden flex justify-center'>
                         <div className='max-w-96 group/imgHover'>
@@ -74,7 +74,7 @@ export default function ProductDetail() {
                                 <>
                                     <span className='font-semibold'>${discountPrice}.00</span>
                                     <del className='text-xl text-slate-500'>${price}.00</del>
-                                    <span className='text-white text-sm bg-red-600 py-1 px-3 rounded'>Save ${discountPrice}.00</span>
+                                    <span className='text-white text-sm bg-red-600 py-1 px-3 rounded'>Save ${price - discountPrice}.00</span>
                                 </>
                                 : <span>${price}.00</span>
                             }
@@ -94,7 +94,7 @@ export default function ProductDetail() {
                             </Modal>
                         </div>
                         <button className="w-full text-white hover:text-black text-xs lg:text-sm bg-black hover:bg-white py-3 mb-3 border rounded uppercase transition" onClick={() => handleAddToCart(curProduct)}>Add to Cart</button>
-                        <button className="w-full text-black hover:text-white text-xs lg:text-sm bg-white hover:bg-black py-3 mb-3 border rounded uppercase transition">But it now</button>
+                        <Link to={"/checkout"} className="block w-full text-center text-black hover:text-white text-xs lg:text-sm bg-white hover:bg-black py-3 mb-3 border rounded uppercase transition">But it now</Link>
                     </div>
                 </article>
             </div>

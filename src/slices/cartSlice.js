@@ -12,7 +12,6 @@ export const fetchCartItems = createAsyncThunk(
     async (_, { getState }) => {
         const { auth } = getState();
         const userId = auth?.user ? auth.user.id : null;
-        console.log(auth);
 
         if (userId) {
             const { data, error } = await supabase.from('cart').select('*').eq('user_id', userId);
@@ -240,96 +239,6 @@ export const updateQuantity = createAsyncThunk(
         }
     }
 );
-export const mergeCartOnLogin = createAsyncThunk(
-    'cart/mergeCartOnLogin',
-    async (_, { getState }) => {
-        const { auth } = getState();
-        const userId = auth?.user ? auth.user.id : null;
-
-        if (!userId || !sessionId) {
-            // No need to merge if the user isn't logged in or has no session
-            return;
-        }
-
-        try {
-            // 1. Fetch the session cart items
-            const { data: sessionCartItems, error: sessionError } = await supabase
-                .from('cart')
-                .select('*')
-                .eq('session_id', sessionId);
-
-            if (sessionError) {
-                throw new Error(sessionError.message);
-            }
-
-            // 2. For each item in the session cart:
-            for (const item of sessionCartItems) {
-                // a. Check if the item already exists in the user's cart
-                const { data: existingItem, error: existingError } = await supabase
-                    .from('cart')
-                    .select('*')
-                    .eq('user_id', userId)
-                    .eq('id', item.id)
-                    .single(); // Use .single() to get a single row
-
-                if (existingError && existingError.code !== 'PGRST116') {
-                    // 'PGRST116' means no row was found, which is expected if the item doesn't exist
-                    throw new Error(existingError.message);
-                }
-
-                if (existingItem) {
-                    // b. If the item exists, update the quantity
-                    const newQuantity = existingItem.quantity + item.quantity;
-                    const { error: updateError } = await supabase
-                        .from('cart')
-                        .update({ quantity: newQuantity })
-                        .eq('user_id', userId)
-                        .eq('id', item.id);
-
-                    if (updateError) {
-                        throw new Error(updateError.message);
-                    }
-                } else {
-                    // c. If the item doesn't exist, insert it with the user_id
-                    const { error: insertError } = await supabase
-                        .from('cart')
-                        .insert({ ...item, user_id: userId, session_id: null }); // Associate with user, remove session
-
-                    if (insertError) {
-                        throw new Error(insertError.message);
-                    }
-                }
-            }
-
-            // 3. Delete the session cart items
-            const { error: deleteError } = await supabase
-                .from('cart')
-                .delete()
-                .eq('session_id', sessionId);
-
-            if (deleteError) {
-                throw new Error(deleteError.message);
-            }
-
-            // 4. Fetch the updated cart items (now associated with the user)
-            const { data, error: fetchError } = await supabase
-                .from('cart')
-                .select('*')
-                .eq('user_id', userId);
-
-            if (fetchError) {
-                throw new Error(fetchError.message);
-            }
-
-            return data;
-
-        } catch (error) {
-            console.error("Error merging cart on login:", error);
-            // Handle the error appropriately (e.g., display an error message to the user)
-            throw error;
-        }
-    }
-);
 
 const cartSlice = createSlice({
     name: 'cart',
@@ -413,13 +322,6 @@ const cartSlice = createSlice({
                     }
                 });
                 state.totalAmount = calculateTotalAmount(action.payload);
-            })
-            .addCase(mergeCartOnLogin.fulfilled, (state, action) => {
-                if (action.payload) { // Check if payload exists
-                    state.items = action.payload;
-                    state.totalQuantity = calculateTotalQuantity(action.payload);
-                    state.totalAmount = calculateTotalAmount(action.payload);
-                }
             });
     }
 });

@@ -15,7 +15,7 @@ import NoItem from "../ui/NoItem";
 
 export default function Carts() {
     const isLoading = useSelector((state) => state.cart.isLoading);
-    const { isCartOpen } = useContext(CartContext);
+    const { isCartOpen, setIsCartOpen } = useContext(CartContext);
     const windowWidth = useWindowSize();
     const cachedCartItems = useCartItems();
     const cachedTotalAmount = useTotalAmount();
@@ -27,7 +27,7 @@ export default function Carts() {
             {cachedCartItems?.length > 0 ?
                 (<div className="w-full">
                     {windowWidth > 767 ? (
-                        <Table><RenderCartItems cartItems={cachedCartItems} isCartOpen={isCartOpen} /></Table>
+                        <Table><RenderCartItems cartItems={cachedCartItems} isCartOpen={setIsCartOpen} /></Table>
                     ) : (
                         <><RenderMobileCartItems cartItems={cachedCartItems} /></>
                     )}
@@ -55,7 +55,7 @@ function Shipping({ totalPrice, price }) {
                     <Link to={"/collections"} className="block w-full text-center text-black hover:text-white text-xs lg:text-sm bg-white hover:bg-black uppercase p-[15px_30px] border rounded mb-3 lg:mb-0 tracking-wider transition">
                         Continue shopping
                     </Link>
-                    <Link className="block w-full text-center text-white hover:text-black text-xs lg:text-sm bg-black hover:bg-white uppercase p-[15px_30px] border rounded tracking-wider transition">
+                    <Link to={"/checkout"} className="block w-full text-center text-white hover:text-black text-xs lg:text-sm bg-black hover:bg-white uppercase p-[15px_30px] border rounded tracking-wider transition">
                         Proceed to checkout
                     </Link>
                 </div>

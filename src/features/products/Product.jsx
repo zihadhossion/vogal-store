@@ -23,7 +23,7 @@ import 'swiper/css/navigation';
 import { Navigation } from 'swiper/modules';
 
 export default function Product({ product }) {
-    const { cartOpen, isCartOpen } = useContext(CartContext);
+    const { isCartOpen, setIsCartOpen } = useContext(CartContext);
     const { id, title, image, hoverImage, price, discountPrice, offerPercentage, desc } = product;
     const [modalQuantity, setModalQuantity] = useState(1);
     const windowWidth = useWindowSize();
@@ -31,7 +31,7 @@ export default function Product({ product }) {
 
     const handleAddToCart = (product) => {
         dispatch(addToCart({ ...product, quantity: modalQuantity }));
-        isCartOpen(true);
+        setIsCartOpen(true);
     };
 
     const handleDecrease = () => {
@@ -164,11 +164,11 @@ export default function Product({ product }) {
 
 function ButtonSet({ product }) {
     const dispatch = useDispatch();
-    const { cartOpen, isCartOpen } = useContext(CartContext);
+    const { setIsCartOpen, } = useContext(CartContext);
 
     const handleAddToCart = (product) => {
         dispatch(addToCart({ ...product, quantity: 1 }));
-        isCartOpen(true);
+        setIsCartOpen(true);
     };
 
 

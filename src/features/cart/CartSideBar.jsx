@@ -1,6 +1,6 @@
 import React, { useContext, useRef, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { AnimatePresence, motion } from "framer-motion";
 import { CartContext } from "../../context/CartContext";
 import useClickOutside from "../../hooks/useClickOutside";
@@ -14,7 +14,7 @@ import NoItem from "../../ui/NoItem";
 export default function CartSideBar() {
     const dispatch = useDispatch();
     const isLoading = useSelector((state) => state.cart.isLoading);
-    const { isCartOpen, setCartOpen, toggleCartSidebar } = useContext(CartContext);
+    const { isCartOpen, setIsCartOpen, toggleCartSidebar } = useContext(CartContext);
     const cachedCartItems = useCartItems();
     // const user = useSelector((state) => state.auth?.user.id)
 
@@ -22,7 +22,7 @@ export default function CartSideBar() {
     const cartRef = useRef(null);
     function handleOutside() {
         // toggleCartSidebar();
-        setCartOpen(false);
+        setIsCartOpen(false);
     }
     useClickOutside(cartRef, handleOutside);
 
@@ -44,7 +44,7 @@ export default function CartSideBar() {
                         }}
                         ref={cartRef}
                         className="relative w-96 bg-white p-[10px_15px] shadow-lg">
-                        <SideBar setCartOpen={setCartOpen} cachedCartItems={cachedCartItems} />
+                        <SideBar setCartOpen={setIsCartOpen} cachedCartItems={cachedCartItems} />
                     </motion.div>
                 </section >
             )}
@@ -80,6 +80,11 @@ function CartData({ cartItems, setCartOpen }) {
         navigate("/carts");
     }
 
+    function handleCheckout() {
+        setCartOpen(false);
+        navigate("/checkout");
+    }
+
     return (
         <>
             <div className="overflow-y-auto h-full pb-[60%]">
@@ -88,8 +93,8 @@ function CartData({ cartItems, setCartOpen }) {
             <div className="cartBtn w-full py-1 bg-white absolute bottom-0">
                 <p className="text-[15px] font-semibold mb-2">Total : <span className="ml-[70%]">{cachedTotalAmount}</span></p>
                 <p className="mb-3">Tax included. Shipping calculated at checkout.</p>
-                <button className="bg-[#ad7a23]  block w-full h-11 text-white tracking-wide uppercase mb-3">Proceed to checkout</button>
-                <button className="bg-black  block w-full h-11 text-white tracking-wide uppercase" onClick={handleViewCart}>view cart</button>
+                <button onClick={handleCheckout} className="block w-full h-11 text-white hover:text-[#9c742e] bg-[#ad7a23] hover:bg-white tracking-wide uppercase mb-3 transition">Proceed to checkout</button>
+                <button className="block w-full h-11 text-white hover:text-black bg-black hover:bg-white border tracking-wide uppercase transition" onClick={handleViewCart}>view cart</button>
             </div>
         </>
     )

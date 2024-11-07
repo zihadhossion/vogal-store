@@ -5,17 +5,17 @@ import { useToggleScroll } from "../hooks/useToggleScroll";
 export const CartContext = createContext();
 
 export function CartContextProvider({ children }) {
-    const [isCartOpen, setCartOpen] = useState(false);
+    const [isCartOpen, setIsCartOpen] = useState(false);
     let location = useLocation();
 
     const toggleCartSidebar = () => {
-        setCartOpen((prevIsOpen) => !prevIsOpen && location.pathname === "/carts" ? false : !prevIsOpen);
+        setIsCartOpen((prevIsOpen) => !prevIsOpen && location.pathname === "/carts" ? false : !prevIsOpen);
     };
 
     useToggleScroll(isCartOpen);
 
     return (
-        <CartContext.Provider value={{ isCartOpen, setCartOpen, toggleCartSidebar }}>
+        <CartContext.Provider value={{ isCartOpen, setIsCartOpen, toggleCartSidebar }}>
             {children}
         </CartContext.Provider>
     )

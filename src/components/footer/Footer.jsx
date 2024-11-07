@@ -29,7 +29,7 @@ export default function Footer() {
                             <img src="./payments.png" alt="" />
                         </div>
                         <p>
-                            © 2024 Vogal. All Rights Reserved
+                            &copy;                            2024 Vogal. All Rights Reserved
                         </p>
                     </div>
                 </article>

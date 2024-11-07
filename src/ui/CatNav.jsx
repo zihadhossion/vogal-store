@@ -1,47 +1,25 @@
-import { AnimatePresence, motion, } from "framer-motion";
 import SubNavList from "../ui/SubNavList";
 import { CiMenuFries } from "react-icons/ci";
 import { GoChevronDown, GoChevronRight } from "react-icons/go";
 
-
 function CatNav() {
 
-    const childVariants = {
-        hover: {
-            y: 0,
-            opacity: 1,
-            display: "block",
-            transition: {
-                ease: "easeIn",
-                duration: 0.3
-            },
-        },
-        initial: {
-            y: 20,
-            opacity: 0,
-            display: "none",
-            transition: {
-                ease: "easeOut",
-                duration: 0.3
-            },
-        },
-    };
-
     return (
-        <motion.div whileHover={"hover"} initial="initial" className="flex relative">
-            <div className="text-white min-w-[220px] flex items-center gap-3 relative border-r-2 border-[#666] pr-[15px] transition cursor-pointer hover:text-[#fdd162]">
+        <div className="flex-[1_0_22%] relative border-r-2 border-[#666] pr-[15px] transition">
+            {/* <div className="flex-[1_0_22%] self-center relative border-r-2 border-[#666] pr-[15px] transition"> */}
+            <span className="group/catnav text-white hover:text-[#fdd162] inline-flex items-center gap-3 py-4 transition cursor-pointer">
                 <CiMenuFries />
-                <span className="text-xs font-medium uppercase">Browse Categories</span>
+                <span className="block text-xs font-medium uppercase">Browse Categories</span>
                 <GoChevronDown />
-                <CatNavList childAnimation={childVariants} />
-            </div>
-        </motion.div>
+                <CatNavList />
+            </span>
+        </div>
     )
 };
 
 export default CatNav;
 
-function CatNavList({ childAnimation }) {
+function CatNavList() {
 
     const categories = [
         {
@@ -88,49 +66,25 @@ function CatNavList({ childAnimation }) {
         },
     ];
 
-    const subVariants = {
-        hover: {
-            left: "100%",
-            opacity: 1,
-            display: "block",
-            transition: {
-                ease: "easeIn",
-                duration: 0.3
-            },
-        },
-        initial: {
-            left: "90%",
-            opacity: 0,
-            display: "none",
-            transition: {
-                ease: "easeOut",
-                duration: 0.3
-            },
-        },
-    };
-
     return (
         <>
-            <motion.ul variants={childAnimation} className="w-[250px] bg-white absolute left-0 top-full py-[12px] mr-[1px] rounded-[0px_0px_6px_6px] z-50">
+            <ul className=" w-[250px] h-auto bg-white absolute left-0 top-full py-[12px] mr-[1px] rounded-[0px_0px_6px_6px] z-50 invisible group-hover/catnav:visible scale-y-0 group-hover/catnav:scale-y-100 opacity-0 group-hover/catnav:opacity-100 origin-[0_0] transition ease-in-out">
                 {categories?.map((item, index) => (
-                    <motion.li initial="initial" whileHover={"hover"} key={index}>
-                        <a href="#" className="text-sm p-[8px_20px_8px_25px] flex items-center justify-between">
+                    <li key={index} className="group/subCatnav hover:bg-blue-50 transition">
+                        <a href="#" className="text-sm p-[8px_20px_8px_25px] flex items-center justify-between transition">
                             <span>{item.name}</span>
                             {item?.icon}
                         </a>
                         {item?.subList && (
-                            <AnimatePresence>
-                                <motion.div variants={subVariants}
-                                    className="min-h-full max-h-[550px] min-w-[950px] bg-white p-[30px_35px_20px] absolute top-0">
-                                    <ul className="flex flex-1 gap-10 relative">
-                                        {item?.subList}
-                                    </ul>
-                                </motion.div>
-                            </AnimatePresence>
+                            <div className="max-h-[550px] min-w-[950px] bg-white p-[30px_35px_20px] absolute top-0 left-full invisible group-hover/subCatnav:visible scale-y-0 group-hover/subCatnav:scale-y-100 opacity-0 group-hover/subCatnav:opacity-100 origin-[100_100] transition">
+                                <ul className="flex flex-1 gap-10 relative">
+                                    {item?.subList}
+                                </ul>
+                            </div>
                         )}
-                    </motion.li>
+                    </li>
                 ))}
-            </motion.ul>
+            </ul>
         </>
     )
 }
