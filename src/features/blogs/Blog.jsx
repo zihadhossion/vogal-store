@@ -5,6 +5,8 @@ import { CiCalendar } from "react-icons/ci";
 function Blog({ blog }) {
     const { title, image, date, user, tags, desc } = blog;
 
+    if (!image) return;
+
     return (
         <article className="flex-auto md:flex-1">
             <div className="block mb-4 overflow-hidden">

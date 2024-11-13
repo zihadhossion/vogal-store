@@ -8,14 +8,11 @@ function Categories() {
     if (isLoading || !categories) return <Loader />;
 
     return (
-        <>
-            <SectionContainer title={"Top Categories"}>
-                <div className="grid grid-cols-2 gap-12 sm:grid-cols-3 lg:grid-cols-5 lg:gap-16">
-                    {categories?.map((item) => <Category key={item.id} category={item} />)}
-                </div>
-            </SectionContainer>
-        </>
-
+        <SectionContainer title={"Top Categories"}>
+            <div className="grid grid-cols-2 gap-12 sm:grid-cols-3 lg:grid-cols-5 lg:gap-16">
+                {categories?.map((item) => <Category key={item.id} category={item} />)}
+            </div>
+        </SectionContainer>
     )
 };
 

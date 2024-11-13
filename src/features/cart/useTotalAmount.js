@@ -16,7 +16,6 @@ export default function useTotalAmount() {
         const channel = supabase
             .channel('cart-changes')
             .on('postgres_changes', { event: '*', schema: 'public', table: 'cart' }, (payload) => {
-                // console.log('Cart change detected:', payload);
             })
             .subscribe();
 

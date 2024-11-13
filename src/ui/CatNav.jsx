@@ -6,7 +6,6 @@ function CatNav() {
 
     return (
         <div className="flex-[1_0_22%] relative border-r-2 border-[#666] pr-[15px] transition">
-            {/* <div className="flex-[1_0_22%] self-center relative border-r-2 border-[#666] pr-[15px] transition"> */}
             <span className="group/catnav text-white hover:text-[#fdd162] inline-flex items-center gap-3 py-4 transition cursor-pointer">
                 <CiMenuFries />
                 <span className="block text-xs font-medium uppercase">Browse Categories</span>

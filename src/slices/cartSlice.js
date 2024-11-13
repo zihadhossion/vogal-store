@@ -22,7 +22,6 @@ export const fetchCartItems = createAsyncThunk(
         }
     }
 );
-
 export const fetchTotalQuantity = createAsyncThunk(
     'cart/fetchTotalQuantity',
     async (_, { getState }) => {

@@ -1,6 +1,6 @@
-import React, { useContext, useRef, useEffect } from "react";
+import React, { useContext, useRef, } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { AnimatePresence, motion } from "framer-motion";
 import { CartContext } from "../../context/CartContext";
 import useClickOutside from "../../hooks/useClickOutside";
@@ -12,16 +12,11 @@ import useTotalAmount from "./useTotalAmount";
 import NoItem from "../../ui/NoItem";
 
 export default function CartSideBar() {
-    const dispatch = useDispatch();
-    const isLoading = useSelector((state) => state.cart.isLoading);
-    const { isCartOpen, setIsCartOpen, toggleCartSidebar } = useContext(CartContext);
+    const { isCartOpen, setIsCartOpen, } = useContext(CartContext);
     const cachedCartItems = useCartItems();
-    // const user = useSelector((state) => state.auth?.user.id)
-
 
     const cartRef = useRef(null);
     function handleOutside() {
-        // toggleCartSidebar();
         setIsCartOpen(false);
     }
     useClickOutside(cartRef, handleOutside);
@@ -53,7 +48,7 @@ export default function CartSideBar() {
 }
 
 function SideBar({ setCartOpen, cachedCartItems }) {
-    const isLoading = useSelector((state) => state.cart.isLoading);
+    const isLoading = useSelector((state) => state?.cart?.isLoading);
 
     return (
         <div className="h-full relative">

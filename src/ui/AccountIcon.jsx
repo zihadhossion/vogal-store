@@ -3,7 +3,6 @@ import { Link } from "react-router-dom";
 import IconBox from "./IconBox";
 import { FaRegUserCircle } from "react-icons/fa";
 
-
 export default function AccountIcon({ handleClick }) {
 
     return (

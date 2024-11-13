@@ -1,12 +1,11 @@
-import React, { useState, useRef, useContext, useEffect } from "react";
-import { AnimatePresence, motion } from "framer-motion";
+import React, { useState, useRef, useContext, useEffect, useCallback, useMemo } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { AnimatePresence, motion } from "framer-motion";
 import toast from "react-hot-toast";
 import { setUser } from "../slices/authSlice";
 import supabase from "../services/supabase";
 import { useUpdateUserMutation } from "../services/apiAuth";
 import SectionContainer from "../ui/SectionContainer";
-import useUser from "../features/authentication/useUser";
 import Logout from "../features/authentication/Logout";
 import Loader from "../ui/Loader";
 import FormRow from "../ui/FormRow";
@@ -15,7 +14,11 @@ import useWindowSize from "../hooks/useWindowSize";
 import useClickOutside from "../hooks/useClickOutside";
 import { DrawerContext } from "../context/DrawerContext";
 import { IoCloseOutline } from "react-icons/io5";
-
+import { useGetAddressQuery, useGetOrderQuery } from "../services/apiOrder";
+import { MdDeleteOutline } from "react-icons/md";
+import Address from "../ui/Address";
+import Modal from "../ui/Modal";
+import { FaRegEdit } from "react-icons/fa";
 
 export default function Account() {
     const { isDrawerOpen, setDrawerOpen, activeSection, setActiveSection, } = useContext(DrawerContext);
@@ -23,6 +26,7 @@ export default function Account() {
     const isAuthenticated = useSelector((state) => state?.auth?.isAuthenticated);
     const isLoading = useSelector((state) => state?.auth?.isLoading);
     const userData = useSelector((state) => state?.auth?.user);
+
 
     useEffect(() => {
         if (isDrawerOpen) {
@@ -62,10 +66,10 @@ function DesktopAccount({ data, activeSection, onSectionChange }) {
             <>
                 <Info user={data} activeSection={activeSection} onSectionChange={onSectionChange} />
             </>
-            <div className="min-h-96">
+            <div className="mt-2- min-h-96">
                 {activeSection === 'profile' && <Profile user={data} />}
                 {activeSection === 'orders' && <MyOrder />}
-                {activeSection === 'address' && <MyAddress />}
+                {activeSection === 'address' && <MyAddress user={data} />}
             </div>
         </article>
     );
@@ -111,7 +115,7 @@ function MobAccount({ data, activeSection, onSectionChange, isDrawerOpen, closeD
                 <div className="p-4">
                     {activeSection === 'profile' && <Profile user={data} />}
                     {activeSection === 'orders' && <MyOrder />}
-                    {activeSection === 'address' && <MyAddress />}
+                    {activeSection === 'address' && <MyAddress user={data} />}
                 </div>
             )}
         </>
@@ -164,7 +168,7 @@ function Profile({ user }) {
         const formattedPhone = phone.startsWith('+88') ? phone : `+88${phone}`;
 
         try {
-            const { data, error } = await supabase.auth.updateUser({ fullName, phone: formattedPhone });
+            const { data, error } = await updateUser({ fullName, phone: formattedPhone });
             if (data) {
                 dispatch(setUser(data?.user));
                 toast.success("Profile updated successfully!");
@@ -204,6 +208,10 @@ function Profile({ user }) {
 }
 
 function MyOrder() {
+    const { data, } = useGetOrderQuery();
+
+    console.log(data);
+
     return (
         <article>
             <h2 className="text-base font-medium mb-3">Order history</h2>
@@ -215,24 +223,110 @@ function MyOrder() {
     );
 }
 
-function MyAddress() {
+function MyAddress({ user }) {
+    const { data, isLoading, refetch } = useGetAddressQuery();
+
+    const cachedAddress = useMemo(() => data, [data]);
+
+    const handleRemove = useCallback(async (userId) => {
+        const { error } = await supabase
+            .from('address')
+            .delete()
+            .eq('user_id', userId);
+
+        if (error) {
+            console.log(error);
+        } else {
+            toast.success("Address Removed");
+            refetch();
+        }
+    }, [user?.id, refetch]);
+
+    if (isLoading) return <Loader />
+
     return (
-        <article>
+        <Modal>
             <h2 className="text-base font-medium mb-3">Your Address</h2>
-            <form>
-                <FormRow label={"District"} customStyle={"grid grid-cols-[150px_1fr] items-center mb-3"}>
-                    <input type="text" id="district" className="formInput focus:border-blue-700 p-2" />
-                </FormRow>
-                <FormRow label={"Upazila"} customStyle={"grid grid-cols-[150px_1fr] items-center mb-3"}>
-                    <input type="text" id="upazila" className="formInput focus:border-blue-700 p-2" />
-                </FormRow>
-                <FormRow label={"Union"} customStyle={"grid grid-cols-[150px_1fr] items-center"}>
-                    <input type="text" id="union" className="formInput focus:border-blue-700 p-2" />
-                </FormRow>
-            </form>
-            <div className="w-full text-center mt-5">
-                <button className="w-40 text-white bg-blue-600 hover:bg-blue-900 rounded transition p-3 mt-5">Add new address</button>
-            </div>
-        </article>
+            {cachedAddress.length > 0 ?
+                <div className="mt-1">
+                    {cachedAddress?.map((item, index) =>
+                        <article key={index} className="text-base">
+                            <div className="flex gap-4">
+                                <p><strong>District:</strong> {item?.district}</p>
+                                <p><strong>Upazila:</strong> {item?.upazila}</p>
+                                <p><strong>Union:</strong> {item?.union}</p>
+                                <p><strong>Village:</strong> {item?.village}</p>
+                                <Modal.Open opens={"edit"}>
+                                    <button className="hover:text-red-500 transition">
+                                        <FaRegEdit style={{ width: "25px", height: "25px", padding: "2px " }} />
+                                    </button>
+                                </Modal.Open>
+                                <button onClick={() => handleRemove(user?.id)} className="hover:text-red-500 transition">
+                                    <MdDeleteOutline style={{ width: "25px", height: "25px" }} />
+                                </button>
+                            </div>
+                            <Modal.Window name={"edit"}>
+                                <EditAddress userId={user?.id} />
+                            </Modal.Window>
+                        </article>
+                    )}
+                </div>
+                : <Address />}
+        </Modal>
     );
+}
+
+function EditAddress({ userId }) {
+    const { data, isLoading, refetch } = useGetAddressQuery();
+
+    const { district, upazila, union, village } = data[0];
+
+    const [isDistrict, setIsDistrict] = useState(district);
+    const [isUpazila, setIsUpazila] = useState(upazila);
+    const [isUnion, setIsUnion] = useState(union);
+    const [isVillage, setIsVillage] = useState(village);
+
+    const handleEditAddress = async (e) => {
+        e.preventDefault();
+
+        const { data, error } = await supabase
+            .from('address')
+            .update({
+                district: isDistrict,
+                upazila: isUpazila,
+                union: isUnion,
+                village: isVillage,
+            })
+            .eq('user_id', userId)
+
+        if (error) {
+            console.log(error);
+        }
+        refetch();
+        toast.success("Address Updated!");
+    }
+
+    return (
+        <>
+            <form onSubmit={handleEditAddress} className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-20">
+                <FormRow label={"District"}>
+                    <input type="text" id="district" value={isDistrict} onChange={(e) => setIsDistrict(e.target.value)} className="formInput focus:border-blue-700 p-2" required />
+                </FormRow>
+                <FormRow label={"Upazila"}>
+                    <input type="text" id="upazila" value={isUpazila} onChange={(e) => setIsUpazila(e.target.value)} className="focus:border-blue-700 p-2 formInput" required />
+                </FormRow>
+                <FormRow label={"Union"}>
+                    <input type="text" id="union" value={isUnion} onChange={(e) => setIsUnion(e.target.value)} className="focus:border-blue-700 p-2 formInput" required />
+                </FormRow>
+                <FormRow label={"Village"}>
+                    <input type="text" id="village" value={isVillage} onChange={(e) => setIsVillage(e.target.value)} className="focus:border-blue-700 p-2 formInput" required />
+                </FormRow>
+                <div className="text-right col-span-full">
+                    <button className="w-40 text-white bg-blue-600 hover:bg-blue-900 rounded transition p-3" aria-busy={isLoading}>
+                        {isLoading ? 'Updating...' : 'Update Address'}
+                    </button>
+                </div>
+            </form>
+        </>
+    )
 }

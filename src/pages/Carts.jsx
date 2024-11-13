@@ -15,7 +15,7 @@ import NoItem from "../ui/NoItem";
 
 export default function Carts() {
     const isLoading = useSelector((state) => state.cart.isLoading);
-    const { isCartOpen, setIsCartOpen } = useContext(CartContext);
+    const { setIsCartOpen } = useContext(CartContext);
     const windowWidth = useWindowSize();
     const cachedCartItems = useCartItems();
     const cachedTotalAmount = useTotalAmount();

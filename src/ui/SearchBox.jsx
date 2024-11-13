@@ -1,34 +1,31 @@
-import { useEffect, useState, useRef } from "react";
+import { useState, } from "react";
 import { Link } from "react-router-dom";
-import { CiSearch } from "react-icons/ci";
 import { useGetProductsQuery } from "../services/apiProducts";
-import Loader from "./Loader";
+import { CiSearch } from "react-icons/ci";
 import { IoCloseOutline } from "react-icons/io5";
+import Loader from "./Loader";
 
 function SearchBox() {
     const [searchItem, setSearchItem] = useState('');
-    const [filteredProducts, setFilteredProducts] = useState();
+    const [filteredProducts, setFilteredProducts] = useState([]);
     const [isLoading, setLoading] = useState(true);
     const [isCancelButton, setIsCancelButton] = useState(false);
-    const { data: products } = useGetProductsQuery();
+    const { data: products, } = useGetProductsQuery();
 
     function handleInputChange(e) {
         let searchTerm = e.target.value;
         setSearchItem(searchTerm);
 
         if (searchTerm) {
-            let filteredProducts = products.filter((product) =>
+            const filteredProducts = products?.filter((product) =>
                 product.title.toLowerCase().includes(searchTerm.toLowerCase()))
-
             if (searchTerm.length > 2) {
                 setLoading(false);
-                setFilteredProducts(filteredProducts);
-                setIsCancelButton(true)
+                setFilteredProducts(filteredProducts || []);
+                setIsCancelButton(true);
             }
         } else {
-            setLoading(true);
-            setFilteredProducts();
-            setIsCancelButton(false);
+            clearSearch()
         }
     }
 

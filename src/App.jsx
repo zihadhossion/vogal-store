@@ -66,8 +66,8 @@ export default function App() {
           <Route path='/login/reset' element={<ResetProtectedRoute><UpdatePasswordForm /></ResetProtectedRoute>} />
           <Route path='/signup' element={<SignupForm />} />
           <Route path='/account' element={<ProtectedRoute><Account /></ProtectedRoute>} />
-          <Route path='/checkout' element={<Checkout />} />
         </Route>
+        <Route path='/checkout' element={<ProtectedRoute><Checkout /></ProtectedRoute>} />
         <Route path='/*' element={<NotFound />} />
       </Routes>
       <Toaster

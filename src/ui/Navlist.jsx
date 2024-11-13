@@ -16,7 +16,7 @@ function Navlist() {
     return (
         <ul className="flex items-center">
             {navTitles?.map((item, index) => (
-                <li className="relative group/navList">
+                <li key={index} className="relative group/navList">
                     <a href="#" className="text-white text-xs font-medium flex items-center gap-[2px] px-3 py-4 xl:px-4 uppercase">
                         <span>{item.title}</span><GoChevronDown style={{ width: "15px", height: "15px" }} />
                     </a>

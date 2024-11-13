@@ -9,8 +9,8 @@ import IconBox from "./IconBox";
 
 function CartIcon({ onHandleClick }) {
     const dispatch = useDispatch();
-    const totalQuantity = useSelector((state) => state.cart.totalQuantity);
-    const { cartOpen, isCartOpen, toggleCartSidebar } = useContext(CartContext);
+    const totalQuantity = useSelector((state) => state?.cart?.totalQuantity);
+    const { toggleCartSidebar } = useContext(CartContext);
     const windowWidth = useWindowSize();
 
     useEffect(() => {
@@ -21,7 +21,6 @@ function CartIcon({ onHandleClick }) {
         const channel = supabase
             .channel('cart-changes')
             .on('postgres_changes', { event: '*', schema: 'public', table: 'cart' }, (payload) => {
-                dispatch(fetchCartItems());
                 dispatch(fetchTotalQuantity());
             })
             .subscribe();
@@ -47,14 +46,3 @@ function CartIcon({ onHandleClick }) {
 };
 
 export default CartIcon;
-
-
-// const subscription = supabase
-//     .channel('public:cart')
-//     .on('postgres_changes', { event: '*', schema: 'public', table: 'cart' }, payload => {
-//         dispatch(fetchTotalQuantity());
-//     })
-//     .subscribe();
-// return () => {
-//     supabase.removeChannel(subscription);
-// };

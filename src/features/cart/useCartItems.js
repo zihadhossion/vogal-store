@@ -3,7 +3,6 @@ import { useDispatch, useSelector } from "react-redux";
 import supabase from "../../services/supabase";
 import { fetchCartItems } from "../../slices/cartSlice";
 
-
 export default function useCartItems() {
     const cartItems = useSelector((state) => state.cart.items);
     const dispatch = useDispatch();

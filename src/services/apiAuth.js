@@ -1,7 +1,6 @@
 import { createApi, fakeBaseQuery } from '@reduxjs/toolkit/query/react';
 import supabase, { supabaseUrl } from "./supabase";
 
-
 export const apiAuth = createApi({
     reducerPath: 'apiAuth',
     baseQuery: fakeBaseQuery(),
@@ -31,6 +30,8 @@ export const apiAuth = createApi({
                     if (error) {
                         console.log(error);
                     }
+                    console.log(data);
+
                     return { data };
                 } catch (error) {
                     return { error: { status: 'Log In Failed!!!', error: error.message } };

@@ -2,7 +2,7 @@ import { cloneElement, createContext, useContext, useRef, useState } from "react
 import { createPortal } from "react-dom";
 import { HiXMark } from "react-icons/hi2";
 import useClickOutside from "../hooks/useClickOutside";
-import { AnimatePresence, motion } from "framer-motion";
+import { motion } from "framer-motion";
 
 export const ModalContext = createContext();
 
@@ -41,7 +41,7 @@ function Window({ children, name }) {
         <button onClick={close} className="w-full text-right mb-3">
           <HiXMark style={{ width: "25px", height: "25px" }} />
         </button>
-        <>{cloneElement(children, { onCloseModal: close })}</>
+        {children}
       </motion.div>
     </section>,
     document.body

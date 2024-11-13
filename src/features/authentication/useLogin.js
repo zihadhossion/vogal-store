@@ -11,16 +11,16 @@ export default function useLogin() {
     const dispatch = useDispatch();
     const [login, { isLoading, }] = useLoginMutation();
 
-
     const handleLogin = async ({ email, password }) => {
         try {
             const { data, error } = await login({ email, password });
 
             if (error) {
-                throw new Error(error);
+                toast.error(error)
             }
 
-            if (data) {
+            if (data?.user) {
+                console.log(data?.user);
                 toast.success("Successfully Login!")
                 navigate('/account');
                 dispatch(setUser(data?.user));

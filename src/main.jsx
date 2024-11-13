@@ -1,12 +1,15 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
-import { Provider } from 'react-redux';
 import { BrowserRouter } from 'react-router-dom';
+import { Provider } from 'react-redux';
 import App from './App.jsx';
 import './index.css';
 import store from './app/store.js';
 import { CartContextProvider } from './context/CartContext.jsx';
 import { MenuContextProvider } from './context/MenuContext.jsx';
+import { DrawerContextProvider } from './context/DrawerContext.jsx';
+import { register } from 'swiper/element/bundle';
+register();// register Swiper custom elements
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
@@ -23,10 +26,3 @@ ReactDOM.createRoot(document.getElementById('root')).render(
     </Provider>
   </React.StrictMode>,
 )
-
-
-// import function to register Swiper custom elements
-import { register } from 'swiper/element/bundle';
-import { DrawerContextProvider } from './context/DrawerContext.jsx';
-// register Swiper custom elements
-register();

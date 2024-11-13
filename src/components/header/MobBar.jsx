@@ -9,7 +9,6 @@ import AccountIcon from "../../ui/AccountIcon";
 import { MenuContext } from "../../context/MenuContext";
 import { DrawerContext } from "../../context/DrawerContext";
 
-
 export default function MobBar() {
     return (
         <section className="bg-white w-full">
@@ -23,7 +22,7 @@ export default function MobBar() {
 };
 
 function MenuBar() {
-    const { menuOpen, setMenuOpen } = useContext(MenuContext);
+    const { setMenuOpen } = useContext(MenuContext);
 
     function handleMenu() {
         setMenuOpen(true);
@@ -31,7 +30,7 @@ function MenuBar() {
 
     return (
         <div className="min-w-10 max-w-10 flex items-center flex-1 mgr" onClick={handleMenu}>
-            <a href="#" className="block p-[5px]">
+            <a className="block p-[5px]">
                 <IoMenu className="w-8 h-8" />
             </a>
         </div>
