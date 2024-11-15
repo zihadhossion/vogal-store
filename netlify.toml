@@ -1,5 +1,0 @@
-[[redirects]]
-  from = "/login/reset-password*"
-  to = "/login/reset-password"
-  status = 200
-  force = true
