@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import useWindowSize from "../../hooks/useWindowSize";
 import Topbar from "./Topbar";
 import Navbar from "./Navbar";

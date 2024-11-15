@@ -12,7 +12,7 @@ import { BiShow, BiHide } from "react-icons/bi";
 
 export default function LoginForm() {
     const { login, isLoading } = useLogin();
-    const { register, formState: { errors, isSubmitting }, getValues, handleSubmit, reset, watch } = useForm();
+    const { register, formState: { errors, isSubmitting }, handleSubmit, reset, watch } = useForm();
     const [isResetActive, setIsResetActive] = useState(false);
     const [isPasswordVisible, setIsPasswordVisible] = useState(false);
     const passwordValue = watch("password", ""); // Adding a default empty string
@@ -77,7 +77,7 @@ export default function LoginForm() {
 };
 
 function ResetPassword({ onIsResetActive }) {
-    const { register, formState: { errors, isSubmitting }, handleSubmit, reset } = useForm();
+    const { register, formState: { errors, }, handleSubmit, reset } = useForm();
 
     const handleForgotPassword = async ({ email }) => {
         try {

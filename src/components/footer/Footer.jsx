@@ -6,7 +6,6 @@ import { FaInstagram } from "react-icons/fa";
 import { FaLinkedin } from "react-icons/fa";
 import { FaYoutube } from "react-icons/fa";
 import FooterList from "./FooterList";
-import { Link } from "react-router-dom";
 
 export default function Footer() {
 

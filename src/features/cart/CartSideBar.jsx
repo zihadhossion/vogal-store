@@ -1,5 +1,5 @@
 import React, { useContext, useRef, } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { AnimatePresence, motion } from "framer-motion";
 import { CartContext } from "../../context/CartContext";

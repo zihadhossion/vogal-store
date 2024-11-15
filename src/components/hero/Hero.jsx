@@ -1,4 +1,4 @@
-import React, { useRef, useState } from 'react';
+import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import { IoIosArrowBack, IoIosArrowForward } from "react-icons/io";
 // Import Swiper React components

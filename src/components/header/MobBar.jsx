@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, } from "react";
 import { useNavigate } from "react-router-dom";
 import { IoMenu } from "react-icons/io5";
 import { RiHome3Line } from "react-icons/ri";
@@ -36,7 +36,6 @@ function MenuBar() {
         </div>
     )
 };
-
 
 function BottomFixed() {
     const navigate = useNavigate();

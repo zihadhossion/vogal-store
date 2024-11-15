@@ -3,7 +3,6 @@ import { useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 import Loader from "../../ui/Loader";
 
-
 export default function ProtectedRoute({ children }) {
     const [isAuthResolved, setIsAuthResolved] = useState(false);
     const isAuthenticated = useSelector((state) => state?.auth?.isAuthenticated);

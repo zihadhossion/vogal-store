@@ -1,5 +1,4 @@
 import { createContext, useState, } from "react";
-import { useToggleScroll } from "../hooks/useToggleScroll";
 
 export const DrawerContext = createContext();
 
@@ -17,8 +16,6 @@ export function DrawerContextProvider({ children }) {
         setActiveSection(section);
         setDrawerOpen(true);
     };
-
-    // useToggleScroll(isDrawerOpen);
 
     return (
         <DrawerContext.Provider value={{ isDrawerOpen, setDrawerOpen, activeSection, setActiveSection, openDrawer, }}>
