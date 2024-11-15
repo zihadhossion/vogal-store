@@ -5,7 +5,7 @@ import toast from "react-hot-toast";
 import { useGetAddressQuery } from "../services/apiOrder";
 import FormRow from "./FormRow";
 
-export default function Address() {
+export default function AddressForm() {
     const user = useSelector((state) => state?.auth?.user);
     const { refetch } = useGetAddressQuery();
 

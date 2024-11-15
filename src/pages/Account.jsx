@@ -40,7 +40,7 @@ export default function Account() {
 
     return (
         <SectionContainer title={"My Account"}>
-            {isLoading ? (
+            {!isAuthenticated ? (
                 <Loader />
             ) : (
                 windowWidth > 992 ? (
@@ -208,9 +208,6 @@ function Profile({ user }) {
 }
 
 function MyOrder() {
-    const { data, } = useGetOrderQuery();
-
-    console.log(data);
 
     return (
         <article>
@@ -246,16 +243,16 @@ function MyAddress({ user }) {
 
     return (
         <Modal>
-            <h2 className="text-base font-medium mb-3">Your Address</h2>
+            <h2 className="text-base font-bold mb-3">Your Address</h2>
             {cachedAddress.length > 0 ?
-                <div className="mt-1">
+                <>
                     {cachedAddress?.map((item, index) =>
                         <article key={index} className="text-base">
-                            <div className="flex gap-4">
-                                <p><strong>District:</strong> {item?.district}</p>
-                                <p><strong>Upazila:</strong> {item?.upazila}</p>
-                                <p><strong>Union:</strong> {item?.union}</p>
-                                <p><strong>Village:</strong> {item?.village}</p>
+                            <div className="flex flex-wrap lg:flex-row gap-4">
+                                <p><span className="font-medium">District:</span> {item?.district}</p>
+                                <p><span className="font-medium">Upazila:</span> {item?.upazila}</p>
+                                <p><span className="font-medium">Union:</span> {item?.union}</p>
+                                <p><span className="font-medium">Village:</span> {item?.village}</p>
                                 <Modal.Open opens={"edit"}>
                                     <button className="hover:text-red-500 transition">
                                         <FaRegEdit style={{ width: "25px", height: "25px", padding: "2px " }} />
@@ -270,7 +267,7 @@ function MyAddress({ user }) {
                             </Modal.Window>
                         </article>
                     )}
-                </div>
+                </>
                 : <Address />}
         </Modal>
     );

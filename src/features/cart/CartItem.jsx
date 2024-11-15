@@ -18,9 +18,9 @@ function CartItem({ product }) {
             <div onClick={handleCollection} className="w-32 cursor-pointer">
                 <img src={image} alt="" className="w-full h-full" />
             </div>
-            <div className="text-base">
-                <h3 onClick={handleCollection} className="text-base font-medium mb-2 cursor-pointer transition">{title}</h3>
-                <p className="text-base font-medium mb-3">${price}</p>
+            <div className="text-base font-medium">
+                <h3 onClick={handleCollection} className="mb-2 cursor-pointer transition">{title}</h3>
+                <p className="mb-3">${price}</p>
                 <QuantityBtnSet product={product} />
             </div>
         </article>

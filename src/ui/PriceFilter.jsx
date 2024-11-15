@@ -59,11 +59,11 @@ export default function PriceFilter({ onPriceChange }) {
             <div className="w-48 relative">
                 <input type="range"
                     min="0" max={maxRange} value={minPrice} step="100" onChange={handleRangeMinChange}
-                    className="w-full h-1.5 absolute -top-1.5 bg-transparent pointer-events-none appearance-none focus:border-none"
+                    className="w-full h-1.5 absolute -top-1.5 bg-transparent cursor-pointer pointer-events-none appearance-none focus:border-none"
                 />
                 <input type="range"
                     min="0" max={maxRange} value={maxPrice} step="100" onChange={handleRangeMaxChange}
-                    className="w-full h-1.5 absolute -top-1.5 bg-transparent pointer-events-none appearance-none focus:border-none"
+                    className="w-full h-1.5 absolute -top-1.5 bg-transparent cursor-pointer pointer-events-none appearance-none focus:border-none"
                 />
             </div>
         </div>

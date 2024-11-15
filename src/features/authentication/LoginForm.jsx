@@ -28,9 +28,9 @@ export default function LoginForm() {
                 {isResetActive ? <ResetPassword onIsResetActive={setIsResetActive} /> :
                     <>
                         <h1 className="text-xl font-medium text-center mb-3">Log In</h1>
-                        <form onSubmit={handleSubmit(handleLogin)} className="w-96 border border-[#ddd] p-10">
+                        <form onSubmit={handleSubmit(handleLogin)} className="w-full max-w-96 border border-[#ddd] p-10">
                             <FormRow customStyle={"block mb-4"} error={errors?.email?.message}>
-                                <CiAt className="h-10 text-[#6e5e28] absolute top-0.5 left-5 transition" />
+                                <CiAt className=" text-[#6e5e28] absolute top-[50%] translate-y-[-50%] left-5 transition" />
                                 <input type="email" id="email" placeholder="Enter Your E-mail" className="formInput pl-10"
                                     {...register("email", {
                                         required: "This field is required",
@@ -57,7 +57,7 @@ export default function LoginForm() {
                                     {isPasswordVisible ? <BiHide className="h-10" /> : <BiShow className="h-10" />}
                                 </span>
                             </FormRow>
-                            <div className="flex items-center justify-between mt-5">
+                            <div className="flex items-center justify-between mt-5 gap-7 sm:gap-[auto]">
                                 <button type="button" className="text-sm hover:bg-slate-50 p-3 rounded-full" onClick={() => setIsResetActive((prev) => !prev)}>Forgot password?</button>
                                 <button type="submit" className="bg-slate-300 hover:text-white hover:bg-black text-base px-7 py-2 uppercase transition">Login</button>
                             </div>
@@ -97,7 +97,7 @@ function ResetPassword({ onIsResetActive }) {
     return (
         <>
             <h1 className="text-xl font-medium text-center mb-3">Reset your password</h1>
-            <form onSubmit={handleSubmit(handleForgotPassword)} className="w-96 border border-[#ddd] p-10">
+            <form onSubmit={handleSubmit(handleForgotPassword)} className="w-80 border border-[#ddd] p-10">
                 <FormRow customStyle={"block mb-4"} error={errors?.email?.message}>
                     <CiAt className="h-10 text-[#6e5e28] absolute top-0.5 left-5 transition" />
                     <input type="email" id="email" placeholder="Enter Your E-mail" className="formInput pl-10"
@@ -112,7 +112,7 @@ function ResetPassword({ onIsResetActive }) {
                 </FormRow>
                 <div className="flex items-center justify-between mt-3">
                     <button type="button" className="text-sm hover:bg-slate-50 p-2 rounded-xl" onClick={() => onIsResetActive((prev) => !prev)}>Cancel</button>
-                    <button type="submit" className="bg-slate-300 hover:text-white hover:bg-black text-base px-7 py-2 uppercase transition">Submit</button>
+                    <button type="submit" className="text-sm bg-slate-300 hover:text-white hover:bg-black lg:text-base px-7 py-2 uppercase transition">Submit</button>
                 </div>
             </form>
         </>

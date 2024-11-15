@@ -7,7 +7,7 @@ export default function Support() {
     return (
         <section className="relative bg-[#fafafa] py-10">
             <div className="pageWidth">
-                <div className="flex flex-wrap lg:flex-nowrap gap-4">
+                <div className="grid grid-cols-1 md:grid-cols-2 justify-items-center gap-4">
                     <Item icon={<CiDeliveryTruck style={{ width: "40px", height: "40px" }} />} title={"FREE DELIVERY"} desc={"For all orders over $120"} />
                     <Item icon={<BiSupport style={{ width: "40px", height: "40px" }} />} title={"HELP CENTER"} desc={"Dedicated 24/7 support"} />
                     <Item icon={<RiRefund2Line style={{ width: "40px", height: "40px" }} />} title={"SATISFIED OR REFUNDED"} desc={"Free returns within 14 days"} />
@@ -20,14 +20,15 @@ export default function Support() {
 
 
 function Item({ icon, title, desc }) {
-
-    return (<div className="flex-1 basis-1/3 md:basis-0">
-        <article className="flex gap-2">
-            <span className="w-10 h-10">{icon}</span>
-            <div className="text-sm">
-                <h2 className="font-bold uppercase">{title}</h2>
-                <p>{desc}</p>
+    return (
+        <article className="w-full max-w-80 text-left p-3 bg-white rounded-md shadow-md hover:shadow-lg transition-shadow cursor-pointer">
+            <div className="flex items-center gap-4">
+                <span className="flex-shrink-0 text-primary w-12 h-12">{icon}</span>
+                <div className="text-sm">
+                    <h2 className="text-sm font-medium uppercase mb-1">{title}</h2>
+                    <p className="text-sm text-gray-600">{desc}</p>
+                </div>
             </div>
         </article>
-    </div>)
+    );
 }
