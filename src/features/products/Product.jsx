@@ -105,9 +105,9 @@ export default function Product({ product }) {
                             <h1 className="text-sm lg:text-base transition hover:text-red-500">{title}</h1>
                         </Link>
                         {discountPrice ? <>
-                            <p className="text-sm lg:text-base font-semibold flex justify-center items-center gap-3"><span>${discountPrice}</span><del className="text-sm font-normal">${price}</del></p>
+                            <p className="text-sm lg:text-lg font-semibold flex justify-center items-center gap-3"><span>${discountPrice}</span><del className="text-sm font-normal">${price}</del></p>
                         </> :
-                            <p className="text-sm lg:text-base font-semibold flex justify-center items-center gap-3">${price}</p>
+                            <p className="text-sm lg:text-lg font-semibold flex justify-center items-center gap-3">${price}</p>
                         }
                     </div>
                 </motion.div>

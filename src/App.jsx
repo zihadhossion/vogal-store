@@ -1,4 +1,4 @@
-import { useEffect, useContext } from 'react';
+import { useEffect, } from 'react';
 import { Routes, Route, Outlet, useLocation } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import toast, { Toaster } from "react-hot-toast";
@@ -63,7 +63,7 @@ export default function App() {
           <Route path='/collections' element={<Collections />} />
           <Route path='/collections/:productId' element={<ProductDetail />} />
           {!isAuthenticated && <Route path='/login' element={<LoginForm />} />}
-          <Route path='/login/reset' element={<ResetProtectedRoute><UpdatePasswordForm /></ResetProtectedRoute>} />
+          <Route path='/login/reset-password' element={<ResetProtectedRoute><UpdatePasswordForm /></ResetProtectedRoute>} />
           <Route path='/signup' element={<SignupForm />} />
           <Route path='/account' element={<ProtectedRoute><Account /></ProtectedRoute>} />
         </Route>

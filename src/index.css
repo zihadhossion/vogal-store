@@ -101,7 +101,7 @@ svg {
 }
 
 .formInput {
-    @apply w-full h-10 text-sm font-medium rounded border border-[#c4c3ca] transition placeholder:text-sm focus:placeholder:opacity-0;
+    @apply w-full h-10 text-sm lg:text-base font-medium rounded border border-[#c4c3ca] transition placeholder:text-sm focus:placeholder:opacity-0;
 }
 
 .swiperButton {

@@ -1,11 +1,13 @@
 import { useEffect } from 'react';
-import { useNavigate, useSearchParams } from 'react-router-dom';
+import { useNavigate, useSearchParams, useLocation } from 'react-router-dom';
 import Loader from '../../ui/Loader';
 
 const ResetProtectedRoute = ({ children }) => {
     const navigate = useNavigate();
     const [searchParams] = useSearchParams();
-    const tokenHash = searchParams.get("token_hash");
+    // const tokenHash = searchParams.get("token_hash");
+    const location = useLocation();
+    const tokenHash = new URLSearchParams(location.search).get('token_hash');
 
     useEffect(() => {
         if (!tokenHash) {

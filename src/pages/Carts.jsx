@@ -39,7 +39,7 @@ export default function Carts() {
     )
 };
 
-function Shipping({ totalPrice, price }) {
+function Shipping({ totalPrice, }) {
 
     return (
         <>
@@ -52,10 +52,10 @@ function Shipping({ totalPrice, price }) {
                     <span>Total</span><span>${totalPrice} USD</span>
                 </p>
                 <div className="lg:flex gap-20 mt-4">
-                    <Link to={"/collections"} className="block w-full text-center text-black hover:text-white text-xs lg:text-sm bg-white hover:bg-black uppercase p-[15px_30px] border rounded mb-3 lg:mb-0 tracking-wider transition">
+                    <Link to={"/collections"} className="block w-full text-center text-black hover:text-white text-sm bg-white hover:bg-black uppercase p-[15px_30px] border rounded mb-3 lg:mb-0 tracking-wider transition">
                         Continue shopping
                     </Link>
-                    <Link to={"/checkout"} className="block w-full text-center text-white hover:text-black text-xs lg:text-sm bg-black hover:bg-white uppercase p-[15px_30px] border rounded tracking-wider transition">
+                    <Link to={"/checkout"} className="block w-full text-center text-white hover:text-black text-sm  bg-black hover:bg-white uppercase p-[15px_30px] border rounded tracking-wider transition">
                         Proceed to checkout
                     </Link>
                 </div>
@@ -94,12 +94,3 @@ const RenderCartItems = ({ cartItems, isCartOpen }) => {
 const RenderMobileCartItems = ({ cartItems }) => {
     return cartItems.map((item, i) => <CartItem key={i} product={item} />);
 };
-
-function AddressBook() {
-
-    return (
-        <>
-
-        </>
-    )
-}

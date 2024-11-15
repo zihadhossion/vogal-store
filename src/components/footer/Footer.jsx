@@ -6,6 +6,7 @@ import { FaInstagram } from "react-icons/fa";
 import { FaLinkedin } from "react-icons/fa";
 import { FaYoutube } from "react-icons/fa";
 import FooterList from "./FooterList";
+import { Link } from "react-router-dom";
 
 export default function Footer() {
 
@@ -28,9 +29,10 @@ export default function Footer() {
                         <div className="mb-3">
                             <img src="./payments.png" alt="" />
                         </div>
-                        <p>
-                            &copy;                            2024 Vogal. All Rights Reserved
-                        </p>
+                        <div className="text-center">
+                            <p>&copy; 2024 Vogal Ltd. All Rights Reserved.</p>
+                            Developed by <a href="https://www.linkedin.com/in/zihad-hossion" target="_blank">ZH</a>
+                        </div>
                     </div>
                 </article>
             </section>
