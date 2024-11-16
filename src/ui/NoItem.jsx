@@ -1,9 +1,8 @@
 import React, { useContext } from "react";
 import { useNavigate } from "react-router-dom";
+import { useSelector } from "react-redux";
 import { CartContext } from "../context/CartContext";
 import { FiShoppingCart } from "react-icons/fi";
-import { useSelector } from "react-redux";
-
 
 export default function NoItem() {
     const navigate = useNavigate();

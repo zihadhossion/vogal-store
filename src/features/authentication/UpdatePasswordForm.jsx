@@ -15,9 +15,12 @@ export default function UpdatePasswordForm() {
 
     async function handleForm({ password }) {
         try {
-            await updateUser({ password });
-            toast.success("Password updated successfully!");
-            reset(); // Reset form fields after successful update
+            const { data, error } = await updateUser({ password });
+            if (data) {
+                toast.success("Password updated successfully!");
+                reset(); // Reset form fields after successful update        
+            }
+
         } catch (error) {
             toast.error("Failed to update password: " + error.message);
         }
@@ -25,7 +28,7 @@ export default function UpdatePasswordForm() {
 
     return (
         <div>
-            <h1 className="text-base mb-5">Update Password</h1>
+            <h1 className="text-base font-medium mb-5">Update Password</h1>
             <form action="" onSubmit={handleSubmit(handleForm)} className="grid grid-cols-1 md:grid-cols-2 gap-3">
                 <FormRow label={"Password"} customStyle={"mb-5"} error={errors?.password?.message} errStyle={"col-start-2"}>
                     <input type={isPasswordVisible ? "text" : "password"} id="password" autoComplete="current-password" className="formInput focus:border-blue-700 p-2"

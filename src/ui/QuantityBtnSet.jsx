@@ -1,8 +1,7 @@
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { removeFromCart, updateQuantity, fetchTotalAmount, fetchTotalQuantity } from "../slices/cartSlice";
-import { FaPlus } from "react-icons/fa6";
-import { FaMinus } from "react-icons/fa6";
+import { FaPlus, FaMinus } from "react-icons/fa6";
 import { RiDeleteBinLine } from "react-icons/ri";
 
 export default function QuantityBtnSet({ product }) {

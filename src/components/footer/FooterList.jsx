@@ -23,7 +23,7 @@ function DeskLists() {
 function DeskList() {
     return (
         <div className="footerList col-span-3  lg:col-span-2">
-            <h1 className="text-[13px] lg:text-sm font-medium uppercase tracking-[1px] mb-2">Information</h1>
+            <h1 className="text-sm font-medium uppercase tracking-[1px] mb-2">Information</h1>
             <ul className="mt-6">
                 <li><a href="#">Latest News</a></li>
                 <li><a href="#">Career</a></li>
@@ -58,12 +58,12 @@ function MobLists() {
 function MobList({ title, onClickList, isOpen }) {
     return (
         <div className="mb-4 footerList col-span-full">
-            <div onClick={onClickList} className="flex justify-between flist">
-                <h1 className="text-xs font-medium uppercase tracking-[1px] mb-2">{title}</h1>
+            <div onClick={onClickList} className="flex justify-between mb-1">
+                <h1 className="text-sm font-medium uppercase tracking-[1px]">{title}</h1>
                 <FaChevronDown className={`${isOpen ? "-rotate-180" : ""} w-3 h-3 transition`} />
             </div>
             {isOpen && (
-                <ul className={`${isOpen ? "h-auto visible scale-y-100" : "h-0 scale-y-0 hidden"} origin-[0_0] transition-transform`}>
+                <ul className={`${isOpen ? "h-auto visible scale-y-100" : "h-0 scale-y-0 hidden"} origin-[0_0] transition-transform mt-3`}>
                     <li><a href="#">Latest News</a></li>
                     <li><a href="#">Career</a></li>
                     <li><a href="#">My Account</a></li>

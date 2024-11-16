@@ -20,11 +20,11 @@ import Loader from './ui/Loader';
 import ResetProtectedRoute from './features/authentication/ResetProtectedRoute';
 import UpdatePasswordForm from './features/authentication/UpdatePasswordForm';
 import Checkout from './pages/Checkout';
-
+import { useGetCategoriesQuery } from './services/apiCategories';
 
 function Layout() {
   const { pathname } = useLocation();
-  const { isLoading } = useGetProductsQuery();
+  const { isLoading } = useGetCategoriesQuery();
 
   useEffect(() => {
     window.scrollTo(0, 0);

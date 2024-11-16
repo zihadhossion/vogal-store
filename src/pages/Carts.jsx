@@ -1,5 +1,5 @@
 import React, { useContext } from "react";
-import { Link, } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { CartContext } from "../context/CartContext";
 import useWindowSize from "../hooks/useWindowSize";
@@ -14,7 +14,7 @@ import useTotalAmount from "../features/cart/useTotalAmount";
 import NoItem from "../ui/NoItem";
 
 export default function Carts() {
-    const isLoading = useSelector((state) => state.cart.isLoading);
+    const isLoading = useSelector((state) => state?.cart?.isLoading);
     const { setIsCartOpen } = useContext(CartContext);
     const windowWidth = useWindowSize();
     const cachedCartItems = useCartItems();
@@ -39,7 +39,7 @@ export default function Carts() {
     )
 };
 
-function Shipping({ totalPrice, }) {
+function Shipping({ totalPrice }) {
 
     return (
         <>

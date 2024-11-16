@@ -2,7 +2,6 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { apiAuth } from "../services/apiAuth";
 
-
 // get data from local storage
 const userFromStorage = JSON.parse(localStorage.getItem('user'));
 

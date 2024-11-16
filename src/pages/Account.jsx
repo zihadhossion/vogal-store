@@ -2,8 +2,8 @@ import React, { useState, useRef, useContext, useEffect, useCallback, useMemo } 
 import { useDispatch, useSelector } from "react-redux";
 import { AnimatePresence, motion } from "framer-motion";
 import toast from "react-hot-toast";
-import { setUser } from "../slices/authSlice";
 import supabase from "../services/supabase";
+import { setUser } from "../slices/authSlice";
 import { useUpdateUserMutation } from "../services/apiAuth";
 import SectionContainer from "../ui/SectionContainer";
 import Logout from "../features/authentication/Logout";
@@ -24,9 +24,8 @@ export default function Account() {
     const { isDrawerOpen, setDrawerOpen, activeSection, setActiveSection, } = useContext(DrawerContext);
     const windowWidth = useWindowSize();
     const isAuthenticated = useSelector((state) => state?.auth?.isAuthenticated);
-    const isLoading = useSelector((state) => state?.auth?.isLoading);
     const userData = useSelector((state) => state?.auth?.user);
-
+    const isLoading = useSelector((state) => state?.auth?.isLoading);
 
     useEffect(() => {
         if (isDrawerOpen) {
@@ -34,26 +33,22 @@ export default function Account() {
         }
     }, [isDrawerOpen, setActiveSection])
 
-    if (!isAuthenticated) return <Loader />;
-
     const closeDrawer = () => setDrawerOpen(false);
+
+    if (isLoading) return <Loader />;
 
     return (
         <SectionContainer title={"My Account"}>
-            {!isAuthenticated ? (
-                <Loader />
-            ) : (
+            {isLoading || !isAuthenticated ? <Loader /> : (
                 windowWidth > 992 ? (
                     <DesktopAccount data={userData} activeSection={activeSection} onSectionChange={setActiveSection} />
-                ) : (
-                    <MobAccount
-                        data={userData}
-                        activeSection={activeSection}
-                        onSectionChange={setActiveSection}
-                        isDrawerOpen={isDrawerOpen}
-                        closeDrawer={closeDrawer}
-                    />
-                )
+                ) : (<MobAccount
+                    data={userData}
+                    activeSection={activeSection}
+                    onSectionChange={setActiveSection}
+                    isDrawerOpen={isDrawerOpen}
+                    closeDrawer={closeDrawer}
+                />)
             )}
         </SectionContainer>
     );

@@ -1,11 +1,11 @@
 import React from "react";
-import { Link, } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 export default function NotFound() {
 
     return (
         <section className="h-dvh grid place-items-center">
-            <article className="text-center flex flex-col " >
+            <article className="text-center flex flex-col" >
                 <h1 className="text-2xl lg:text-5xl font-bold uppercase mb-20">404 Not found</h1>
                 <div className="max-w-96 self-center">
                     <img className="w-full" src={"/Scarecrow.png"} alt="404-Scarecrow" />

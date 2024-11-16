@@ -13,16 +13,16 @@ function Blog({ blog }) {
                 <img src={image} alt="" className="w-full h-40 sm:h-32 md:h-36 lg:h-40 xl:h-44" />
             </div>
             <div className="text-left">
-                <h1 className="text-sm lg:text-lg font-medium mb-3">{title}</h1>
-                <div className="flex mb-3 gap-4">
-                    <p className="flex items-center gap-1"><CiCalendar /> {date}</p>
-                    <p className="flex items-center gap-1"><FaRegUserCircle /> {user}</p>
+                <h1 className="text-base lg:text-lg font-medium mb-3">{title}</h1>
+                <div className="text-sm flex gap-4 mb-3">
+                    <p className="flex items-center gap-1"><CiCalendar />{date}</p>
+                    <p className="flex items-center gap-1"><FaRegUserCircle />{user}</p>
                 </div>
                 <div className="flex gap-3 mb-3">
                     {tags?.map((tag, i) => <Tag key={i} tag={tag} />)}
                 </div>
-                <p>{desc}</p>
-                <button className="border-b-[1px] mt-5">Read More</button>
+                <p className="text-sm md:text-base">{desc}</p>
+                <button className="text-sm border-b-[1px] mt-5 uppercase">Read More</button>
             </div>
         </article>
     )
@@ -31,7 +31,7 @@ function Blog({ blog }) {
 export default Blog;
 
 function Tag({ tag }) {
-    return (<span className="border border-[#999] rounded-md p-[2px_8px]">{tag}</span>)
+    return (<span className="text-xs md:text-sm hover:text-white hover:bg-gray-700  border border-[#999] rounded-md p-[2px_8px] transition cursor-pointer">{tag}</span>)
 }
 
 

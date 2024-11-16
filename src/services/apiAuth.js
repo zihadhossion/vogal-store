@@ -1,5 +1,5 @@
 import { createApi, fakeBaseQuery } from '@reduxjs/toolkit/query/react';
-import supabase, { supabaseUrl } from "./supabase";
+import supabase from "./supabase";
 
 export const apiAuth = createApi({
     reducerPath: 'apiAuth',
@@ -30,8 +30,6 @@ export const apiAuth = createApi({
                     if (error) {
                         console.log(error);
                     }
-                    console.log(data);
-
                     return { data };
                 } catch (error) {
                     return { error: { status: 'Log In Failed!!!', error: error.message } };
@@ -83,6 +81,7 @@ export const apiAuth = createApi({
                     if (password) updateData.password = password;
 
                     const { data, error } = await supabase.auth.updateUser(updateData);
+
                     if (error) {
                         console.error("Supabase Update Error:", error);
                         return { error: { status: 'CUSTOM_ERROR', error: error.message } };

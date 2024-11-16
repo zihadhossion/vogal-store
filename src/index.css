@@ -6,7 +6,7 @@
 
 @layer base {
     body {
-        @apply font-roboto text-[14px] text-[#333] min-h-dvh;
+        @apply font-roboto text-sm text-[#333] min-h-dvh;
     }
 
     input,
@@ -57,7 +57,7 @@ svg {
 }
 
 .mgr {
-    @apply mr-4 sm:mr-[60px] lg:mr-[80px];
+    @apply mr-4 sm:mr-[60px] lg:mr-20;
 }
 
 .loader {
@@ -82,7 +82,7 @@ svg {
 
 .sectionTitle::before,
 .sectionTitle::after {
-    @apply content-[""] block w-12 lg:w-16 h-[2px] bg-[#f9a81a] absolute top-[50%] translate-y-[-50%];
+    @apply content-[""] block w-12 lg:w-16 h-0.5 bg-[#f9a81a] absolute top-[50%] translate-y-[-50%];
 }
 
 .sectionTitle::before {
@@ -101,7 +101,7 @@ svg {
 }
 
 .formInput {
-    @apply w-full h-10 text-sm lg:text-base font-medium rounded border border-[#c4c3ca] transition placeholder:text-sm focus:placeholder:opacity-0;
+    @apply w-full h-10 lg:text-base font-medium rounded border border-[#c4c3ca] transition placeholder:text-sm focus:placeholder:opacity-0;
 }
 
 .swiperButton {
@@ -113,7 +113,7 @@ svg {
 }
 
 .cartItemBtn svg {
-    @apply w-[14px] h-[14px];
+    @apply w-3.5 h-3.5;
 }
 
 .activeList svg {
@@ -138,19 +138,23 @@ footer a {
 }
 
 .footerLinkTitle {
-    @apply text-[13px] lg:text-sm font-medium uppercase tracking-[1px] mb-2;
+    @apply font-medium uppercase tracking-[1px] mb-2;
 }
 
 .footerLinkDesc {
-    @apply text-xs sm:text-sm mb-2;
+    @apply text-xs md:text-sm mb-2;
 }
 
 .footerList li {
-    @apply text-[13px] mb-4;
+    @apply mb-4;
 }
 
 .socialIcon svg {
     @apply w-5 h-5
+}
+
+.socialIcon li a {
+    @apply hover:text-amber-300 transition;
 }
 
 /* header section custom style*/

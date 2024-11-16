@@ -238,6 +238,69 @@ export const updateQuantity = createAsyncThunk(
         }
     }
 );
+export const mergeCartItems = createAsyncThunk(
+    'cart/mergeCartItems',
+    async (_, { getState }) => {
+        const { auth } = getState();
+        const userId = auth?.user ? auth.user.id : null;
+
+        if (userId) {
+            const localCartItems = JSON.parse(localStorage.getItem("cart")) || [];
+
+            if (localCartItems.length > 0) {
+                // Fetch existing cart items from Supabase
+                const { data: supabaseCartItems, error } = await supabase
+                    .from('cart')
+                    .select('*')
+                    .eq('user_id', userId);
+
+                if (error) {
+                    throw new Error(error.message);
+                }
+
+                // Find items in localStorage that are not in Supabase
+                const itemsToMerge = localCartItems.filter(localItem => {
+                    return !supabaseCartItems.some(supabaseItem => supabaseItem.id === localItem.id);
+                });
+
+
+                // If there are items to merge, add them to the Supabase cart
+                if (itemsToMerge.length > 0) {
+                    const { error: insertError } = await supabase
+                        .from('cart')
+                        .insert(itemsToMerge.map(item => ({
+                            id: item.id,
+                            user_id: userId,
+                            title: item.title,
+                            image: item.image,
+                            price: item.price,
+                            quantity: item.quantity,
+                        })));
+
+                    if (insertError) {
+                        throw new Error(insertError.message);
+                    }
+                }
+
+                // Clear localStorage cart after merging
+                localStorage.removeItem('cart');
+
+                // Fetch the updated cart from Supabase
+                const { data, error: fetchError } = await supabase
+                    .from('cart')
+                    .select('*')
+                    .eq('user_id', userId);
+
+                if (fetchError) {
+                    throw new Error(fetchError.message);
+                }
+
+                // Update Redux store with merged items
+                return data;
+            }
+        }
+    }
+);
 
 const cartSlice = createSlice({
     name: 'cart',
@@ -321,6 +384,19 @@ const cartSlice = createSlice({
                     }
                 });
                 state.totalAmount = calculateTotalAmount(action.payload);
+            })
+            .addCase(mergeCartItems.pending, (state) => {
+                state.isLoading = true;
+            })
+            .addCase(mergeCartItems.fulfilled, (state, action) => {
+                state.isLoading = false;
+                state.items = action.payload;
+                state.totalQuantity = calculateTotalQuantity(action.payload);
+                state.totalAmount = calculateTotalAmount(action.payload);
+            })
+            .addCase(mergeCartItems.rejected, (state, action) => {
+                state.isLoading = false;
+                state.error = action.error.message;
             });
     }
 });

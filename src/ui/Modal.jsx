@@ -1,8 +1,8 @@
 import { cloneElement, createContext, useContext, useRef, useState } from "react";
 import { createPortal } from "react-dom";
+import { motion } from "framer-motion";
 import { HiXMark } from "react-icons/hi2";
 import useClickOutside from "../hooks/useClickOutside";
-import { motion } from "framer-motion";
 
 export const ModalContext = createContext();
 

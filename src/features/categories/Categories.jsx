@@ -5,7 +5,6 @@ import Loader from "../../ui/Loader";
 
 function Categories() {
     const { isLoading, data: categories } = useGetCategoriesQuery();
-    if (isLoading || !categories) return <Loader />;
 
     return (
         <SectionContainer title={"Top Categories"}>

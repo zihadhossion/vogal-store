@@ -12,7 +12,7 @@ export default function Collections() {
     return (
         <section className="products">
             <Header />
-            <div className="p-3 sm:p-5 lg:p-10">
+            <div className="px-5 py-10 sm:p-5 lg:p-10">
                 <div className="grid grid-cols-1 lg:grid-cols-[280px_1fr]">
                     <div className="flex lg:flex-col items-start lg:items-stretch justify-around lg:justify-stretch mb-5 lg:mb-0">
                         <PriceFilter onPriceChange={handlePriceChange} />
@@ -46,18 +46,16 @@ function Stock() {
     };
 
     return (
-        <>
-            <div className="bg-white mb-5">
-                <h1 className="text-lg mb-4">Availability</h1>
-                <div className="flex items-center gap-1 mb-1">
-                    <input type="radio" value={"radio1"} checked={selectedRadio === "radio1"} onChange={handleRadioChange} name="stock" id="instock" className="" />
-                    <label htmlFor="instock" className="text-sm lg:text-base">In Stock</label>
-                </div>
-                <div className="flex items-center gap-1">
-                    <input type="radio" value={"radio2"} checked={selectedRadio === "radio2"} onChange={handleRadioChange} name="stock" id="outstock" className="" />
-                    <label htmlFor="outstock" className="text-sm lg:text-base">Out Stock</label>
-                </div>
+        <div className="bg-white mb-5">
+            <h1 className="text-lg mb-4">Availability</h1>
+            <div className="flex items-center gap-1 mb-1">
+                <input type="radio" value={"radio1"} checked={selectedRadio === "radio1"} onChange={handleRadioChange} name="stock" id="instock" className="" />
+                <label htmlFor="instock" className="lg:text-base">In Stock</label>
             </div>
-        </>
+            <div className="flex items-center gap-1">
+                <input type="radio" value={"radio2"} checked={selectedRadio === "radio2"} onChange={handleRadioChange} name="stock" id="outstock" className="" />
+                <label htmlFor="outstock" className="lg:text-base">Out Stock</label>
+            </div>
+        </div>
     )
 }

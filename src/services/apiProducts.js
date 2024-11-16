@@ -8,13 +8,13 @@ export const apiProducts = createApi({
         getProducts: builder.query({
             async queryFn() {
                 try {
-                    let { data, error } = await supabase.from('products').select('*')
+                    let { data, error } = await supabase
+                        .from('products')
+                        .select('*');
 
                     if (error) {
                         console.log(error);
-                        throw new Error("Products could not be loaded");
                     }
-
                     return { data };
 
                 } catch (err) {

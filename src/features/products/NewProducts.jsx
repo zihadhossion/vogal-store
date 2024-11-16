@@ -9,11 +9,13 @@ import Product from "./Product";
 export default function NewProducts() {
     const { isLoading, data: products } = useGetProductsQuery();
 
+    products?.map((item) => console.log(item?.id));
+
     return (
         <>
             <SectionContainer secStyle="bg-[#FAFAFA] text-center" title={"New products"}>
                 <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-                    {products?.map((item) => <Product key={item.id} product={item} />)}
+                    {products?.map(item => <Product key={item.id} product={item} />)}
                 </div>
                 <Link to={"/collections"}>
                     <span className="inline-block border border-black p-[10px_30px] uppercase mt-10 transition hover:text-white hover:bg-black">

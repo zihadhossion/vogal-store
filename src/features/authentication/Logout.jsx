@@ -8,14 +8,14 @@ import { fetchCartItems } from "../../slices/cartSlice";
 export default function Logout() {
     const [logout, { isLoading, }] = useLogoutMutation();
     const navigate = useNavigate();
-    const dispatch = useDispatch()
+    const dispatch = useDispatch();
 
     const handleLogout = async () => {
         try {
             await logout();
-            navigate('/login', { replace: true });
             dispatch(clearUser());
             dispatch(fetchCartItems());
+            navigate('/login', { replace: true });
         } catch (error) {
             console.error("Logout failed:", error);
         }

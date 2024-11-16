@@ -1,5 +1,5 @@
 import { createApi, fakeBaseQuery } from "@reduxjs/toolkit/query/react";
-import supabase, { supabaseUrl } from "./supabase";
+import supabase from "./supabase";
 
 export const apiCategories = createApi({
     reducerPath: "apiCategories",

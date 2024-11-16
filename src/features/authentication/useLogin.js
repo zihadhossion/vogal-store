@@ -1,10 +1,9 @@
 import { useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
-import { useLoginMutation } from '../../services/apiAuth';
-import { fetchCartItems } from '../../slices/cartSlice';
-import { setUser } from '../../slices/authSlice';
 import toast from 'react-hot-toast';
-
+import { useLoginMutation } from '../../services/apiAuth';
+import { fetchCartItems, mergeCartItems } from '../../slices/cartSlice';
+import { setUser } from '../../slices/authSlice';
 
 export default function useLogin() {
     const navigate = useNavigate();
@@ -19,17 +18,16 @@ export default function useLogin() {
                 toast.error(error)
             }
 
-            if (data?.user) {
-                console.log(data?.user);
+            if (!isLoading && data?.user) {
                 toast.success("Successfully Login!")
-                navigate('/account');
                 dispatch(setUser(data?.user));
                 dispatch(fetchCartItems());
+                dispatch(mergeCartItems());
+                navigate('/account');
             }
         } catch (error) {
             console.error('Failed to log in:', error);
         }
     }
     return { login: handleLogin, isLoading };
-
 }

@@ -23,7 +23,7 @@ import 'swiper/css/navigation';
 import { Navigation } from 'swiper/modules';
 
 export default function Product({ product }) {
-    const { isCartOpen, setIsCartOpen } = useContext(CartContext);
+    const { setIsCartOpen } = useContext(CartContext);
     const { id, title, image, hoverImage, price, discountPrice, offerPercentage, desc } = product;
     const [modalQuantity, setModalQuantity] = useState(1);
     const windowWidth = useWindowSize();
@@ -139,8 +139,9 @@ export default function Product({ product }) {
                                 </>
                             </div>
                             <div className="flex-1">
-                                <h1 className="text-2xl font-semibold mb-3">{title}</h1>
-                                <p className="font-medium mb-5"><span className="text-lg">${price}</span>
+                                <h1 className="text-xl font-medium mb-3">{title}</h1>
+                                <p className="font-medium flex items-center gap-4 mb-5">
+                                    <span className="text-xl">${price}</span>
                                     {discountPrice && <del className="text-base text-[#696868]">${discountPrice}</del>}</p>
                                 <p className="mb-5">{desc}</p>
                                 <div className="flex gap-1 mb-10">
@@ -148,8 +149,8 @@ export default function Product({ product }) {
                                     <input className="w-10 h-7 text-center border border-[#ddd]" type="number" value={modalQuantity || "1"} onChange={handleInput} />
                                     <button onClick={handleIncrease} className="cartItemBtn"><FaPlus /></button>
                                 </div>
-                                <button className="w-full text-white bg-black p-[10px_0] mb-3 uppercase" onClick={() => handleAddToCart(product)}>Add to Cart</button>
-                                <Link to={`/collections/${id}`} className="inline-block w-full text-[#cf9530] hover:text-[#092143] text-base font-semibold text-center p-[10px_0] capitalize transition">
+                                <button className="w-full text-white hover:text-black bg-black hover:bg-white border p-[10px_0] mb-3 uppercase transition" onClick={() => handleAddToCart(product)}>Add to Cart</button>
+                                <Link to={`/collections/${id}`} className="inline-block w-full text-blue-500 hover:text-[#092143] text-base font-semibold text-center p-[10px_0] capitalize transition">
                                     <span>
                                         View more details
                                     </span>

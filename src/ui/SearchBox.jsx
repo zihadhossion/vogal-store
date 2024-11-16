@@ -1,4 +1,4 @@
-import { useState, } from "react";
+import { useState } from "react";
 import { Link } from "react-router-dom";
 import { useGetProductsQuery } from "../services/apiProducts";
 import { CiSearch } from "react-icons/ci";
@@ -8,7 +8,7 @@ import Loader from "./Loader";
 function SearchBox() {
     const [searchItem, setSearchItem] = useState('');
     const [filteredProducts, setFilteredProducts] = useState([]);
-    const [isLoading, setLoading] = useState(true);
+    const [isLoading, setIsLoading] = useState(true);
     const [isCancelButton, setIsCancelButton] = useState(false);
     const { data: products, } = useGetProductsQuery();
 
@@ -20,8 +20,8 @@ function SearchBox() {
             const filteredProducts = products?.filter((product) =>
                 product.title.toLowerCase().includes(searchTerm.toLowerCase()))
             if (searchTerm.length > 2) {
-                setLoading(false);
                 setFilteredProducts(filteredProducts || []);
+                setIsLoading(false);
                 setIsCancelButton(true);
             }
         } else {

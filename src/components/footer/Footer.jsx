@@ -26,11 +26,11 @@ export default function Footer() {
                 <article className="pageWidth">
                     <div className="flex flex-col lg:flex-row items-center md:items-stretch gap-3 md:justify-between">
                         <div className="mb-3">
-                            <img src="./payments.png" alt="" />
+                            <img src="/payments.png" alt="" />
                         </div>
                         <div className="text-center">
-                            <p>&copy; 2024 Vogal Ltd. All Rights Reserved.</p>
-                            Developed by <a href="https://www.linkedin.com/in/zihad-hossion" target="_blank">ZH</a>
+                            <p className="text-xs lg:text-sm">&copy; 2024 Vogal Ltd. All Rights Reserved.</p>
+                            <span>Developed by <a href="https://www.linkedin.com/in/zihad-hossion" target="_blank">ZH</a></span>
                         </div>
                     </div>
                 </article>
@@ -41,13 +41,13 @@ export default function Footer() {
 
 function CompanyInfo() {
     return (
-        <div className="max-w-[300px]">
+        <div className="max-w-[300px] text-sm">
             <div className="max-w-[150px] mb-4">
-                <img src="./logo-white.png" alt="Company Logo" />
+                <img src="/logo-white.png" alt="Company Logo" />
             </div>
             <p className="mb-6">Our aim is to provide high quality, easy to use, fastest and affordable Shopify themes.</p>
-            <p className="flex items-center gap-1 mb-3"><SlPhone /><span>: (440) 000 000 0000</span></p>
-            <p className="flex items-center gap-1 mb-3"><MdOutlineEmail /><span>: sales@yousite.com</span></p>
+            <p className="flex items-center gap-1 mb-3 cursor-pointer"><SlPhone /><span>: (440) 000 000 0000</span></p>
+            <p className="flex items-center gap-1 mb-3 cursor-pointer"><MdOutlineEmail /><span>: sales@yousite.com</span></p>
             <SocialLinks />
         </div>
     );
@@ -75,13 +75,13 @@ function SocialLinks() {
 function NewsLetter() {
 
     return (
-        <div className="mb-7">
+        <div className="my-5">
             <h1 className="footerLinkTitle mb-2">subscribe to our newsletter</h1>
             <p className="footerLinkDesc mb-3">Get notified about product launches, special offers and news.</p>
             <div className="rounded-[5px] relative border border-[rgba(0,0,0,0)]">
                 <div className="flex items-center">
-                    <input type="search" className="w-full h-[42px] text-sm text-[#444] bg-[#f5f5f5] rounded-[5px] relative px-[10px] appearance-none" placeholder="Email address" />
-                    <button type="submit" className=" absolute right-[3px] text-xs text-white font-semibold bg-black p-[8px_10px] rounded-3xl uppercase tracking-[1px]">
+                    <input type="email" className="w-full h-[42px] text-sm text-[#444] bg-[#f5f5f5] rounded-[5px] relative px-[10px] appearance-none" placeholder="Email address" />
+                    <button type="submit" className="absolute right-[3px] text-xs text-white font-semibold bg-black p-[8px_10px] rounded-3xl uppercase tracking-[1px]">
                         subscribe
                     </button>
                 </div>

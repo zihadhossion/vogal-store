@@ -6,7 +6,6 @@ import Hero from "../components/hero/Hero";
 import Exclusive from "../components/Exclusive";
 import Support from "../components/Support";
 
-
 function Home() {
 
     return (

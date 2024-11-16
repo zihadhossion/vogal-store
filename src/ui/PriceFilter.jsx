@@ -43,10 +43,10 @@ export default function PriceFilter({ onPriceChange }) {
             <h1 className="text-lg mb-4">Price</h1>
             <div className="flex mb-5">
                 <input type="number" name="min" value={minPrice} onChange={handleMinInputChange}
-                    className="block max-w-[80px] border border-[#ddd] px-[10px] py-[5px]" />
+                    className="block max-w-20 border border-[#ddd] px-2.5 py-[5px]" />
                 <span className="text-3xl mx-2">-</span>
                 <input type="number" name="max" value={maxPrice} onChange={handleMaxInputChange}
-                    className="block max-w-[80px] border border-[#ddd] px-[10px] py-[5px]" />
+                    className="block max-w-20 border border-[#ddd] px-2.5 py-[5px]" />
             </div>
             <div className="w-48 h-1.5 bg-[#ddd] relative rounded-md overflow-hidden">
                 <div className="h-full bg-[#17A2B8] absolute rounded-md"

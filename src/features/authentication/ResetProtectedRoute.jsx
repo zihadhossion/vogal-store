@@ -17,7 +17,7 @@ const ResetProtectedRoute = ({ children }) => {
 
     if (!tokenHash) return <Loader />;
 
-    return children;
+    return <section className='grid place-items-center py-20'>{children}</section>;
 };
 
 export default ResetProtectedRoute;

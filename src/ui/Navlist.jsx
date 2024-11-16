@@ -39,7 +39,7 @@ function NavImage() {
     return (
         <li>
             <a href="#">
-                <img src="./tvBanner.jpg" alt="" className="max-w-[250px]" />
+                <img src="/tvBanner.jpg" alt="" className="max-w-[250px]" />
             </a>
         </li>
     )

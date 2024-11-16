@@ -75,7 +75,7 @@ function CatNavList() {
                             {item?.icon}
                         </a>
                         {item?.subList && (
-                            <div className="max-h-[550px] min-w-[950px] bg-white p-[30px_35px_20px] absolute top-0 left-full invisible group-hover/subCatnav:visible scale-y-0 group-hover/subCatnav:scale-y-100 opacity-0 group-hover/subCatnav:opacity-100 origin-[100_100] transition">
+                            <div className="max-h-[550px] bg-white p-[30px_35px_20px] absolute top-0 left-full invisible group-hover/subCatnav:visible scale-y-0 group-hover/subCatnav:scale-y-100 opacity-0 group-hover/subCatnav:opacity-100 origin-[0_0] transition">
                                 <ul className="flex flex-1 gap-10 relative">
                                     {item?.subList}
                                 </ul>

@@ -1,5 +1,5 @@
-import React, { useState, } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import React, { useState } from "react";
+import { useSelector } from "react-redux";
 import supabase from "../services/supabase";
 import toast from "react-hot-toast";
 import { useGetAddressQuery } from "../services/apiOrder";
