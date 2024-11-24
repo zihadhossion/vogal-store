@@ -7,19 +7,15 @@ import useWindowSize from "../../hooks/useWindowSize";
 import { motion } from "framer-motion";
 import { CiHeart, CiSearch } from "react-icons/ci";
 import { BsCart2 } from "react-icons/bs";
-import Loader from "../../ui/Loader";
 import Modal from "../../ui/Modal";
 import { IoIosArrowBack, IoIosArrowForward } from "react-icons/io";
 import { FaMinus, FaPlus } from "react-icons/fa6";
+import DotLoader from "../../ui/DotLoader";
 
 // Import Swiper React components
 import { Swiper, SwiperSlide } from 'swiper/react';
-
-// Import Swiper styles
 import 'swiper/css';
 import 'swiper/css/navigation';
-
-// import required modules
 import { Navigation } from 'swiper/modules';
 
 export default function Product({ product }) {
@@ -55,8 +51,6 @@ export default function Product({ product }) {
         setModalQuantity(value);
     }
 
-    if (!image) return <Loader />;
-
     const hoverVariants = {
         hover: {
             opacity: 1,
@@ -79,38 +73,40 @@ export default function Product({ product }) {
     return (
         <Modal>
             <article className="bg-white border border-[#eee]">
-                <motion.div initial="rest" whileHover="hover" className="relative block group/product" >
-                    <div className="relative">
-                        <Link to={`/collections/${id}`}>
-                            <div className="relative group/figure overflow-hidden">
-                                <img className="w-full h-full object-cover" src={image} alt="" />
-                                <motion.img
-                                    initial={{ scale: 1.1, }}
-                                    transition={{ duration: 0.5 }}
-                                    whileHover={{ scale: 1 }}
-                                    src={hoverImage} className="w-full h-full absolute top-0 left-0 right-0 bottom-0 object-contain opacity-0 transition-opacity duration-200 group-hover/figure:opacity-100" alt="" />
-                            </div>
-                        </Link>
-                        {windowWidth > 768 && (
-                            <motion.div
-                                variants={hoverVariants}
-                                className="absolute top-[80%] w-full flex justify-center">
-                                <ButtonSet product={product} />
-                            </motion.div>
-                        )}
-                        {offerPercentage && <span className="text-white text-xs bg-[#d75e78] p-1 rounded-full absolute top-3 left-3 lg:top-5 lg:left-5">-{offerPercentage}%</span>}
-                    </div>
-                    <div className="text-center pb-5">
-                        <Link to={`/collections/${id}`} className="inline-block mb-2">
-                            <h1 className="text-sm lg:text-base transition hover:text-red-500">{title}</h1>
-                        </Link>
-                        {discountPrice ? <>
-                            <p className="text-sm lg:text-lg font-semibold flex justify-center items-center gap-3"><span>${discountPrice}</span><del className="text-sm font-normal">${price}</del></p>
-                        </> :
-                            <p className="text-sm lg:text-lg font-semibold flex justify-center items-center gap-3">${price}</p>
-                        }
-                    </div>
-                </motion.div>
+                {image ? <>
+                    <motion.div initial="rest" whileHover="hover" className="relative block" >
+                        <div className="relative">
+                            <Link to={`/collections/${id}`}>
+                                <div className="relative group/figure overflow-hidden">
+                                    <img className="w-full h-full object-cover" src={image} alt="product image" />
+                                    <motion.img
+                                        initial={{ scale: 1.1, }}
+                                        transition={{ duration: 0.5 }}
+                                        whileHover={{ scale: 1 }}
+                                        src={hoverImage} className="w-full h-full absolute top-0 left-0 right-0 bottom-0 object-contain opacity-0 transition-opacity duration-200 group-hover/figure:opacity-100" alt="" />
+                                </div>
+                            </Link>
+                            {windowWidth > 768 && (
+                                <motion.div
+                                    variants={hoverVariants}
+                                    className="absolute top-[80%] w-full flex justify-center">
+                                    <ButtonSet product={product} />
+                                </motion.div>
+                            )}
+                            {offerPercentage && <span className="text-white text-xs bg-[#d75e78] p-1 rounded-full absolute top-3 left-3 lg:top-5 lg:left-5">-{offerPercentage}%</span>}
+                        </div>
+                        <div className="text-center pb-5">
+                            <Link to={`/collections/${id}`} className="inline-block mb-2">
+                                <h1 className="text-sm lg:text-base transition hover:text-red-500">{title}</h1>
+                            </Link>
+                            {discountPrice ? <>
+                                <p className="text-sm lg:text-lg font-semibold flex justify-center items-center gap-3"><span>${discountPrice}</span><del className="text-sm font-normal">${price}</del></p>
+                            </> :
+                                <p className="text-sm lg:text-lg font-semibold flex justify-center items-center gap-3">${price}</p>
+                            }
+                        </div>
+                    </motion.div>
+                </> : <DotLoader />}
             </article>
             <Modal.Window name={"view"}>
                 {image && hoverImage ?
@@ -157,7 +153,7 @@ export default function Product({ product }) {
                                 </Link>
                             </div>
                         </article>
-                    </> : <Loader />}
+                    </> : <DotLoader />}
             </Modal.Window>
         </Modal>
     )

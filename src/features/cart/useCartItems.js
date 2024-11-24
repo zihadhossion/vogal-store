@@ -4,7 +4,7 @@ import supabase from "../../services/supabase";
 import { fetchCartItems } from "../../slices/cartSlice";
 
 export default function useCartItems() {
-    const cartItems = useSelector((state) => state.cart.items);
+    const cartItems = useSelector((state) => state.cart?.items);
     const dispatch = useDispatch();
 
     useEffect(() => {
@@ -22,7 +22,6 @@ export default function useCartItems() {
         return () => {
             supabase.removeChannel(channel);
         };
-
     }, [dispatch, cartItems.length]);
 
     const cachedCartItems = useMemo(() => cartItems, [cartItems]);

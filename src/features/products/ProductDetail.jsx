@@ -1,15 +1,16 @@
-import React, { useState, useContext } from 'react';
+import React, { useState, useContext, useRef, useEffect } from 'react';
 import { Link, useParams, } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { useGetProductsQuery } from '../../services/apiProducts';
 import { CartContext } from '../../context/CartContext';
 import { addToCart } from "../../slices/cartSlice";
-import Loader from '../../ui/Loader';
 import Modal, { ModalContext } from '../../ui/Modal';
 import { FaMinus, FaPlus } from "react-icons/fa6";
 import { CiCircleQuestion } from "react-icons/ci";
 import useWindowSize from '../../hooks/useWindowSize';
 import toast from 'react-hot-toast';
+import DotLoader from '../../ui/DotLoader';
+import useMouseOverZoom from '../../hooks/useMouseOverZoom';
 
 export default function ProductDetail() {
     const { productId } = useParams();
@@ -19,12 +20,17 @@ export default function ProductDetail() {
     const dispatch = useDispatch();
     const windowWidth = useWindowSize();
 
-    console.log(products);
-
     const curProduct = products?.find(item => item?.id === Number(productId));
 
-    if (isLoading && !curProduct) return <Loader />;
+    // Refs for zoom functionality
+    const imageRef = useRef(null);
+    const cursorRef = useRef(null);
+    const canvasRef = useRef(null);
 
+    // Initialize the zoom functionality
+    const { isActive } = useMouseOverZoom(imageRef, canvasRef, cursorRef);
+
+    if (isLoading || !curProduct) return <DotLoader />;
     const { id, title, image, hoverImage, price, discountPrice, offerPercentage, desc } = curProduct;
 
     const handleAddToCart = (product) => {
@@ -58,15 +64,27 @@ export default function ProductDetail() {
     return (
         <section className='pt-3 md:pt-12'>
             <div className='pageWidth'>
-                {offerPercentage && <span className='text-white bg-red-600 p-1 rounded-full'>{offerPercentage}%</span>}
                 <article className='grid grid-cols-1 md:grid-cols-[60%_1fr]'>
+                    {offerPercentage && <span className='text-xs text-white bg-red-600 p-1.5 absolute lg:left-1/4 lg:-translate-x-1/4 z-10 rounded-full'>{offerPercentage}%</span>}
                     <div className='overflow-hidden flex justify-center'>
-                        <div className='max-w-96 group/imgHover'>
-                            <img src={image} alt="" className='group-hover/imgHover:scale-105' />
-                        </div>
+                        {windowWidth > 992 ? <>
+                            <div className='w-96 relative'>
+                                <img ref={imageRef} src={image} alt="product image" className='cursor-crosshair' />
+                            </div>
+                            {/* The cursor overlay that indicates the zoom area */}
+                            <div ref={cursorRef} className='absolute pointer-events-none' />
+                            {/* The canvas that shows the zoomed-in portion of the image */}
+                            <canvas ref={canvasRef} className='w-64 h-64 absolute top-1/2 -translate-y-1/2 left-10 border border-[#ccc] pointer-events-none'
+                                style={{ visibility: isActive ? "visible" : "hidden" }}
+                            />
+                        </> :
+                            <div className='w-96 relative'>
+                                <img src={image} alt="product image" className='cursor-crosshair' />
+                            </div>
+                        }
                     </div>
                     <div className='p-3'>
-                        <h1 className='text-lg lg:text-2xl font-medium mb-5'>{title}</h1>
+                        <h1 className='text-base lg:text-2xl font-medium mb-5'>{title}</h1>
                         <div className='font-medium flex items-center gap-5 mb-7'>
                             {discountPrice ?
                                 <>
@@ -95,7 +113,6 @@ export default function ProductDetail() {
                             <button className="w-full text-white text-xs lg:text-sm bg-slate-800 hover:bg-black py-3 mb-3 border rounded uppercase transition" onClick={() => handleAddToCart(curProduct)}>Add to Cart</button>
                             <Link to={"/checkout"} className="block w-full text-center text-white text-xs lg:text-sm bg-yellow-600 hover:bg-yellow-900 py-3 mb-3 border rounded uppercase transition">But it now</Link>
                         </div>
-
                     </div>
                 </article>
             </div>
@@ -114,8 +131,11 @@ function AskQuestion({ title }) {
 
     function handleForm(e) {
         e.preventDefault();
-        toast.success("Successfully sent")
-        close()
+
+        if (userName && email && phone) {
+            toast.success("Successfully sent");
+            close();
+        }
     }
 
     return (

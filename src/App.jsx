@@ -2,7 +2,6 @@ import { useEffect, } from 'react';
 import { Routes, Route, Outlet, useLocation } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import toast, { Toaster } from "react-hot-toast";
-import { useGetProductsQuery } from './services/apiProducts';
 import ProtectedRoute from './features/authentication/ProtectedRoute';
 import ProductDetail from './features/products/ProductDetail';
 import SignupForm from './features/authentication/SignupForm';
@@ -17,8 +16,6 @@ import Account from './pages/Account';
 import Collections from './pages/Collections';
 import MenuSidebar from './ui/MenuSidebar';
 import Loader from './ui/Loader';
-import ResetProtectedRoute from './features/authentication/ResetProtectedRoute';
-import UpdatePasswordForm from './features/authentication/UpdatePasswordForm';
 import Checkout from './pages/Checkout';
 import { useGetCategoriesQuery } from './services/apiCategories';
 
@@ -63,7 +60,6 @@ export default function App() {
           <Route path='/collections' element={<Collections />} />
           <Route path='/collections/:productId' element={<ProductDetail />} />
           {!isAuthenticated && <Route path='/login' element={<LoginForm />} />}
-          <Route path='/login/reset-password' element={<ResetProtectedRoute><UpdatePasswordForm /></ResetProtectedRoute>} />
           <Route path='/signup' element={<SignupForm />} />
           <Route path='/account' element={<ProtectedRoute><Account /></ProtectedRoute>} />
         </Route>

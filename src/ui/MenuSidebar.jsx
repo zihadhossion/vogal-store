@@ -4,7 +4,6 @@ import { IoCloseOutline } from "react-icons/io5";
 import { MenuContext } from "../context/MenuContext";
 import useClickOutside from "../hooks/useClickOutside";
 
-
 export default function MenuSidebar() {
     const { isMenuOpen, setMenuOpen } = useContext(MenuContext);
 
@@ -35,7 +34,6 @@ export default function MenuSidebar() {
                         className="w-64 xs:w-80 h-full bg-white relative"
                         ref={menubarRef}
                     >
-
                         <MenuBar />
                         <MenuClose onMenuOpen={setMenuOpen} />
                     </motion.div>

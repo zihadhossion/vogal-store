@@ -3,9 +3,9 @@ import supabase from "../services/supabase";
 
 const calculateTotalQuantity = (items) => {
     const validItems = Array.isArray(items) ? items : [];
-    return validItems.reduce((sum, item) => sum + item.quantity, 0);
+    return validItems?.reduce((sum, item) => sum + item.quantity, 0);
 };
-const calculateTotalAmount = (items) => items.reduce((total, item) => total + item.price * item.quantity, 0);
+const calculateTotalAmount = (items) => items?.reduce((total, item) => total + item.price * item.quantity, 0);
 
 export const fetchCartItems = createAsyncThunk(
     'cart/fetchCartItems',
@@ -244,61 +244,101 @@ export const mergeCartItems = createAsyncThunk(
         const { auth } = getState();
         const userId = auth?.user ? auth.user.id : null;
 
-        if (userId) {
-            const localCartItems = JSON.parse(localStorage.getItem("cart")) || [];
+        if (!userId) {
+            return JSON.parse(localStorage.getItem('cart')) || [];
+        }
 
-            if (localCartItems.length > 0) {
-                // Fetch existing cart items from Supabase
-                const { data: supabaseCartItems, error } = await supabase
-                    .from('cart')
-                    .select('*')
-                    .eq('user_id', userId);
+        const localCartItems = JSON.parse(localStorage.getItem("cart")) || [];
 
-                if (error) {
-                    throw new Error(error.message);
-                }
+        if (localCartItems.length === 0) {
+            const { data, error } = await supabase
+                .from('cart')
+                .select('*')
+                .eq('user_id', userId);
 
-                // Find items in localStorage that are not in Supabase
-                const itemsToMerge = localCartItems.filter(localItem => {
-                    return !supabaseCartItems.some(supabaseItem => supabaseItem.id === localItem.id);
+            if (error) {
+                throw new Error(error.message);
+            }
+            return data;
+        }
+
+        // Fetch existing cart items from Supabase
+        const { data: supabaseCartItems, error: supabaseError } = await supabase
+            .from('cart')
+            .select('*')
+            .eq('user_id', userId);
+
+        if (supabaseError) {
+            throw new Error(supabaseError.message);
+        }
+
+        // Prepare items to merge
+        const itemsToInsert = [];
+        const itemsToUpdate = [];
+
+        localCartItems.forEach((localItem) => {
+            const existingItem = supabaseCartItems.find(
+                (supabaseItem) => supabaseItem.id === localItem.id
+            );
+            if (existingItem) {
+                // If item exists in Supabase, update its quantity
+                itemsToUpdate.push({
+                    id: existingItem.id,
+                    quantity: existingItem.quantity + localItem.quantity,
                 });
+            } else {
+                // If item does not exist, prepare it for insertion
+                itemsToInsert.push({
+                    id: localItem.id,
+                    user_id: userId,
+                    title: localItem.title,
+                    image: localItem.image,
+                    price: localItem.price,
+                    quantity: localItem.quantity,
+                });
+            }
+        });
 
+        // Perform Supabase updates and insertions
+        if (itemsToInsert.length > 0) {
+            const { error: insertError } = await supabase
+                .from('cart')
+                .insert(itemsToInsert);
 
-                // If there are items to merge, add them to the Supabase cart
-                if (itemsToMerge.length > 0) {
-                    const { error: insertError } = await supabase
-                        .from('cart')
-                        .insert(itemsToMerge.map(item => ({
-                            id: item.id,
-                            user_id: userId,
-                            title: item.title,
-                            image: item.image,
-                            price: item.price,
-                            quantity: item.quantity,
-                        })));
-
-                    if (insertError) {
-                        throw new Error(insertError.message);
-                    }
-                }
-
-                // Clear localStorage cart after merging
-                localStorage.removeItem('cart');
-
-                // Fetch the updated cart from Supabase
-                const { data, error: fetchError } = await supabase
-                    .from('cart')
-                    .select('*')
-                    .eq('user_id', userId);
-
-                if (fetchError) {
-                    throw new Error(fetchError.message);
-                }
-
-                // Update Redux store with merged items
-                return data;
+            if (insertError) {
+                throw new Error(insertError.message);
             }
         }
+
+        if (itemsToUpdate.length > 0) {
+            for (const item of itemsToUpdate) {
+                const { error: updateError } = await supabase
+                    .from('cart')
+                    .update({ quantity: item.quantity })
+                    .eq('id', item.id)
+                    .eq('user_id', userId);
+
+                if (updateError) {
+                    throw new Error(updateError.message);
+                }
+            }
+        }
+
+        // Clear localStorage cart after merging
+        localStorage.removeItem('cart');
+
+        // Fetch the updated cart from Supabase
+        const { data: updatedCartItems, error: fetchError } = await supabase
+            .from('cart')
+            .select('*')
+            .eq('user_id', userId);
+
+        if (fetchError) {
+            throw new Error(fetchError.message);
+        }
+
+        // Return merged items to update Redux store
+        return updatedCartItems;
     }
 );
 

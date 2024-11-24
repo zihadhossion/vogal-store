@@ -15,16 +15,18 @@ export default function useLogin() {
             const { data, error } = await login({ email, password });
 
             if (error) {
-                toast.error(error)
+                toast.error(error);
             }
 
             if (!isLoading && data?.user) {
                 toast.success("Successfully Login!")
-                dispatch(setUser(data?.user));
+                dispatch(setUser(data.user));
                 dispatch(fetchCartItems());
                 dispatch(mergeCartItems());
-                navigate('/account');
+                // Show a loader before redirecting
+                navigate("/account", { state: { loading: true } });
             }
+
         } catch (error) {
             console.error('Failed to log in:', error);
         }

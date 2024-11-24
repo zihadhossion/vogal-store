@@ -60,7 +60,7 @@ function MobList({ title, onClickList, isOpen }) {
         <div className="mb-4 footerList col-span-full">
             <div onClick={onClickList} className="flex justify-between mb-1">
                 <h1 className="text-sm font-medium uppercase tracking-[1px]">{title}</h1>
-                <FaChevronDown className={`${isOpen ? "-rotate-180" : ""} w-3 h-3 transition`} />
+                <FaChevronDown className={`${isOpen ? "-rotate-180" : ""} w-3 h-3 transition duration-75`} />
             </div>
             {isOpen && (
                 <ul className={`${isOpen ? "h-auto visible scale-y-100" : "h-0 scale-y-0 hidden"} origin-[0_0] transition-transform mt-3`}>

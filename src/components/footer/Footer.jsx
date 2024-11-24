@@ -2,9 +2,7 @@ import React from "react";
 import { MdOutlineEmail } from "react-icons/md";
 import { SlPhone } from "react-icons/sl";
 import { GrFacebookOption } from "react-icons/gr";
-import { FaInstagram } from "react-icons/fa";
-import { FaLinkedin } from "react-icons/fa";
-import { FaYoutube } from "react-icons/fa";
+import { FaInstagram, FaLinkedin, FaYoutube } from "react-icons/fa";
 import FooterList from "./FooterList";
 
 export default function Footer() {
@@ -80,8 +78,8 @@ function NewsLetter() {
             <p className="footerLinkDesc mb-3">Get notified about product launches, special offers and news.</p>
             <div className="rounded-[5px] relative border border-[rgba(0,0,0,0)]">
                 <div className="flex items-center">
-                    <input type="email" className="w-full h-[42px] text-sm text-[#444] bg-[#f5f5f5] rounded-[5px] relative px-[10px] appearance-none" placeholder="Email address" />
-                    <button type="submit" className="absolute right-[3px] text-xs text-white font-semibold bg-black p-[8px_10px] rounded-3xl uppercase tracking-[1px]">
+                    <input type="email" className="w-full h-[42px] text-sm text-[#444] bg-[#f5f5f5] rounded-[5px] relative px-2.5 appearance-none" placeholder="Email address" />
+                    <button type="submit" className="absolute right-[3px] text-xs text-white font-semibold bg-black px-2.5 py-2 rounded-3xl uppercase tracking-[1px]">
                         subscribe
                     </button>
                 </div>
@@ -97,8 +95,8 @@ function DownloadApp() {
             <h1 className="footerLinkTitle">Download App</h1>
             <p className="footerLinkDesc">Vogal App is now available on App Store & Google Play. Get it now.</p>
             <ul className="flex gap-3">
-                <li><a href="#"><img src="./apple.png" alt="" /></a></li>
-                <li><a href="#"><img src="./google-pay.png" alt="" /></a></li>
+                <li><a href="#"><img src="/apple.png" alt="" /></a></li>
+                <li><a href="#"><img src="/google-pay.png" alt="" /></a></li>
             </ul>
         </div>
     )

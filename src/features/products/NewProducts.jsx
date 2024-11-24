@@ -1,15 +1,12 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { useGetProductsQuery } from "../../services/apiProducts";
-import Loader from "../../ui/Loader";
 import SectionContainer from "../../ui/SectionContainer";
 import Product from "./Product";
 
 
 export default function NewProducts() {
     const { isLoading, data: products } = useGetProductsQuery();
-
-    products?.map((item) => console.log(item?.id));
 
     return (
         <>

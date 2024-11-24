@@ -1,24 +1,31 @@
-import React, { useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import React, { useEffect, useState } from "react";
+import { useNavigate, useLocation } from "react-router-dom";
 import { useSelector } from "react-redux";
 import Loader from "../../ui/Loader";
 
 export default function ProtectedRoute({ children }) {
-    const isAuthenticated = useSelector((state) => state?.auth?.isAuthenticated);
-    const isLoading = useSelector((state) => state?.auth?.isLoading);
+    const isAuthenticated = useSelector((state) => state.auth.isAuthenticated);
+    const isLoading = useSelector((state) => state.auth.isLoading);
     const navigate = useNavigate();
+    const location = useLocation();
+
+    const [isRedirecting, setIsRedirecting] = useState(false);
 
     useEffect(() => {
-        if (!isLoading && isAuthenticated) {
-            navigate("/account");
-        } else if (!isLoading && !isAuthenticated) {
-            navigate("/login");
+        if (!isAuthenticated) {
+            navigate("/login", { state: { from: location } });
+        } else if (location.state?.loading) {
+            setIsRedirecting(true);
+            //  wait for actual redirection to complete
+            setTimeout(() => {
+                setIsRedirecting(false);
+            }, 1000); // Adjust the delay as needed
         }
-    }, [isAuthenticated, isLoading, navigate]);
+    }, [isAuthenticated, isLoading, navigate, location]);
 
-    // Show loader while checking authentication
-    if (isLoading) return <Loader />;
+    if (isLoading || isRedirecting) {
+        return <Loader />;
+    }
 
-    // Render the protected content if authenticated
     return isAuthenticated ? children : null;
 }

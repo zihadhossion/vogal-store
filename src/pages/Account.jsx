@@ -3,21 +3,21 @@ import { useDispatch, useSelector } from "react-redux";
 import { AnimatePresence, motion } from "framer-motion";
 import toast from "react-hot-toast";
 import supabase from "../services/supabase";
-import { setUser } from "../slices/authSlice";
 import { useUpdateUserMutation } from "../services/apiAuth";
-import SectionContainer from "../ui/SectionContainer";
+import { setUser } from "../slices/authSlice";
+import { DrawerContext } from "../context/DrawerContext";
+import { useGetAddressQuery, } from "../services/apiOrder";
 import Logout from "../features/authentication/Logout";
-import Loader from "../ui/Loader";
-import FormRow from "../ui/FormRow";
 import UpdatePasswordForm from "../features/authentication/UpdatePasswordForm";
 import useWindowSize from "../hooks/useWindowSize";
 import useClickOutside from "../hooks/useClickOutside";
-import { DrawerContext } from "../context/DrawerContext";
 import { IoCloseOutline } from "react-icons/io5";
-import { useGetAddressQuery, } from "../services/apiOrder";
 import { MdDeleteOutline } from "react-icons/md";
-import Modal from "../ui/Modal";
 import { FaRegEdit } from "react-icons/fa";
+import SectionContainer from "../ui/SectionContainer";
+import Loader from "../ui/Loader";
+import FormRow from "../ui/FormRow";
+import Modal from "../ui/Modal";
 import AddressForm from "../ui/AddressForm";
 
 export default function Account() {
@@ -40,15 +40,12 @@ export default function Account() {
     return (
         <SectionContainer title={"My Account"}>
             {isLoading || !isAuthenticated ? <Loader /> : (
-                windowWidth > 992 ? (
-                    <DesktopAccount data={userData} activeSection={activeSection} onSectionChange={setActiveSection} />
-                ) : (<MobAccount
-                    data={userData}
-                    activeSection={activeSection}
-                    onSectionChange={setActiveSection}
-                    isDrawerOpen={isDrawerOpen}
-                    closeDrawer={closeDrawer}
-                />)
+                windowWidth > 992 ? <DesktopAccount data={userData} activeSection={activeSection} onSectionChange={setActiveSection} />
+                    : <MobAccount data={userData}
+                        activeSection={activeSection}
+                        onSectionChange={setActiveSection}
+                        isDrawerOpen={isDrawerOpen}
+                        closeDrawer={closeDrawer} />
             )}
         </SectionContainer>
     );

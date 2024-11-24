@@ -14,13 +14,13 @@ function CartItem({ product }) {
     };
 
     return (
-        <article className="flex items-center justify-start  gap-7 lg:gap-5 my-2 py-1 border-b border-[#f5f5f5]">
-            <div onClick={handleCollection} className="w-32 cursor-pointer">
-                <img src={image} alt="" className="w-full h-full" />
+        <article className="flex items-center justify-start gap-7 lg:gap-2 border-b border-[#f5f5f5] py-4">
+            <div onClick={handleCollection} className="w-28 cursor-pointer">
+                <img src={image} alt="product item" />
             </div>
-            <div className="text-base font-medium">
-                <h3 onClick={handleCollection} className="mb-2 cursor-pointer transition">{title}</h3>
-                <p className="mb-3">${price}</p>
+            <div className="text-sm font-medium">
+                <h3 onClick={handleCollection} className="mb-3 cursor-pointer transition">{title}</h3>
+                <p className="text-base mb-5">${price}</p>
                 <QuantityBtnSet product={product} />
             </div>
         </article>
